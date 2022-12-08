@@ -1,6 +1,6 @@
 package backend.Entities;
 
-import DBS;
+import backend.DBS;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,8 +26,8 @@ public class Part_query {
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts_queries (part_number, query_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            s.setBigInteger(1, part_number);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, part_number);
+            s.setObject(2, query_id);
             s.executeUpdate();
 
             try (ResultSet r = s.getGeneratedKeys()) {
@@ -39,8 +39,8 @@ public class Part_query {
 
     public void update() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts_queries SET part_number = ?, query_id = ? WHERE part_query_id = ?")) {
-            s.setBigInteger(1, part_number);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, part_number);
+            s.setObject(2, query_id);
             s.setInt(3, part_query_id);
 
             s.executeUpdate();
