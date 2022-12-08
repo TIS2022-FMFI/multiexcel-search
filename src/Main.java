@@ -1,3 +1,5 @@
+import backend.DBS;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,7 +16,7 @@ public class Main {
                     prop.getProperty("database"),
                     prop.getProperty("user"),
                     prop.getProperty("password"));
-
+            DBS.setConnection(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
