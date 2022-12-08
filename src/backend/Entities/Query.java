@@ -1,6 +1,6 @@
 package backend.Entities;
 
-import DBS;
+import backend.DBS;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,7 +76,7 @@ public class Query {
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO queries (user_id, rubber, diameter_AT, length_L_AT, diameter_IT, length_L_IT, diameter_ZT, length_L_ZT, cr_steg, cr_niere, ca, ct, ck, date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-            s.setInteger(1, user_id);
+            s.setInt(1, user_id);
             s.setShort(2, rubber);
             s.setDouble(3, diameter_AT);
             s.setDouble(4, length_L_AT);
@@ -84,7 +84,7 @@ public class Query {
             s.setDouble(6, length_L_IT);
             s.setDouble(7, diameter_ZT);
             s.setDouble(8, length_L_ZT);
-            s.setInteger(9, cr_steg);
+            s.setInt(9, cr_steg);
             s.setShort(10, cr_niere);
             s.setShort(11, ca);
             s.setDouble(12, ct);
@@ -101,7 +101,7 @@ public class Query {
 
     public void update() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE queries SET user_id = ?, rubber = ?, diameter_AT = ?, length_L_AT = ?, diameter_IT = ?, length_L_IT = ?, diameter_ZT = ?, length_L_ZT = ?, cr_steg = ?, cr_niere = ?, ca = ?, ct = ?, ck = ?, date = ? WHERE query_id = ?")) {
-            s.setInteger(1, user_id);
+            s.setInt(1, user_id);
             s.setShort(2, rubber);
             s.setDouble(3, diameter_AT);
             s.setDouble(4, length_L_AT);
@@ -109,7 +109,7 @@ public class Query {
             s.setDouble(6, length_L_IT);
             s.setDouble(7, diameter_ZT);
             s.setDouble(8, length_L_ZT);
-            s.setInteger(9, cr_steg);
+            s.setInt(9, cr_steg);
             s.setShort(10, cr_niere);
             s.setShort(11, ca);
             s.setDouble(12, ct);

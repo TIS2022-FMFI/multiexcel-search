@@ -1,32 +1,46 @@
 package backend.Entities;
 
-import DBS;
+import backend.DBS;
 
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.math.BigInteger;
 
 public class Part_names_queries {
     private Integer part_query_id;
     private BigInteger part_number;
     private BigInteger query_id;
 
-    public Integer getPart_query_id() {return part_query_id;}
-    public void setPart_query_id(Integer part_query_id) {this.part_query_id = part_query_id;}
+    public Integer getPart_query_id() {
+        return part_query_id;
+    }
 
-    public BigInteger getPart_number() {return part_number;}
-    public void setPart_number(BigInteger part_number) {this.part_number = part_number;}
+    public void setPart_query_id(Integer part_query_id) {
+        this.part_query_id = part_query_id;
+    }
 
-    public BigInteger getQuery_id() {return query_id;}
-    public void setQuery_id(BigInteger query_id) {this.query_id = query_id;}
+    public BigInteger getPart_number() {
+        return part_number;
+    }
+
+    public void setPart_number(BigInteger part_number) {
+        this.part_number = part_number;
+    }
+
+    public BigInteger getQuery_id() {
+        return query_id;
+    }
+
+    public void setQuery_id(BigInteger query_id) {
+        this.query_id = query_id;
+    }
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO part_name_queries (part_number, query_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            s.setBigInteger(1, part_number);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, part_number);
+            s.setObject(2, query_id);
             s.executeUpdate();
 
             try (ResultSet r = s.getGeneratedKeys()) {
@@ -38,8 +52,8 @@ public class Part_names_queries {
 
     public void update() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE part_name_queries SET part_number = ?, query_id = ? WHERE part_query_id = ?")) {
-            s.setBigInteger(1, part_number);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, part_number);
+            s.setObject(2, query_id);
             s.setInt(3, part_query_id);
 
             s.executeUpdate();

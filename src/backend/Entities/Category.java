@@ -1,6 +1,6 @@
 package backend.Entities;
 
-import DBS;
+import backend.DBS;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
