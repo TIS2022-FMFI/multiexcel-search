@@ -44,6 +44,5 @@ public class Categories {
             s.executeUpdate();
         }
     }
-
 }
 

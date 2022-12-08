@@ -44,6 +44,5 @@ public class Customers {
             s.executeUpdate();
         }
     }
-
 }
 
