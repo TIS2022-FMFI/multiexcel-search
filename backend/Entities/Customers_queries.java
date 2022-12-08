@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import java.math.BigInteger;
 
-public class Part_names_queries {
+public class Part_name_query {
     private Integer customer_query_id;
     private BigInteger customer_id;
     private BigInteger query_id;

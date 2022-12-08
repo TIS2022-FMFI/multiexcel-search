@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import java.sql.Blob;
 
-public class Drawings {
+public class Drawing {
 
     private Integer drawing_id;
     private Blob drawing;

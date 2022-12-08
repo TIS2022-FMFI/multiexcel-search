@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class Parts {
+public class Part {
 
     private Integer part_number;
     private BigInteger customer_id;

@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 import java.math.BigInteger;
 
-public class Categories_queries {
+public class Category_query {
     private Integer category_query_id;
     private BigInteger category_id;
     private BigInteger query_id;

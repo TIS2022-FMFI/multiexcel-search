@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public class Queries {
+public class Query {
 
     private Integer query_id;
     private Integer user_id;

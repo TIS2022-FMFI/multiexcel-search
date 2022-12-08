@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Users {
+public class User {
 
     private Integer user_id;
     private String user_name;

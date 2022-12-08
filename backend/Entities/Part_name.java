@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Part_names {
+public class Part_name {
 
     private Integer part_name_id;
     private String part_name;
