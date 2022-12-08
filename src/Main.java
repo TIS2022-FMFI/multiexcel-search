@@ -1,28 +1,26 @@
 import backend.DBS;
-import backend.Entities.Category;
-import backend.Entities.Category_query;
-import backend.Entities.User;
 
-import java.math.BigInteger;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/multiexcel", "root", "root");
+            java.util.Properties prop = new Properties();
+            prop.loadFromXML(new FileInputStream("configuration/configuration.xml"));
+            Connection connection = DriverManager.getConnection(
+                    prop.getProperty("database"),
+                    prop.getProperty("user"),
+                    prop.getProperty("password"));
             DBS.setConnection(connection);
-//            Category_query c = new Category_query();
-//            c.setCategory_id(new BigInteger("1"));
-//            c.setQuery_id(new BigInteger("1"));
-//            c.insert();
-            System.out.println("Success");
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
     }
 }
