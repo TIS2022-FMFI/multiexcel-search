@@ -1,5 +1,7 @@
 package backend.Entities;
 
+import backend.DBS;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,8 +36,8 @@ public class Category_query {
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO categories_queries (category_id, query_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            s.setBigInteger(1, category_id);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, category_id);
+            s.setObject(2, query_id);
             s.executeUpdate();
 
             try (ResultSet r = s.getGeneratedKeys()) {
@@ -47,8 +49,8 @@ public class Category_query {
 
     public void update() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE categories_queries SET category_id = ?, query_id = ? WHERE category_query_id = ?")) {
-            s.setBigInteger(1, category_id);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, category_id);
+            s.setObject(2, query_id);
             s.setInt(3, category_query_id);
 
             s.executeUpdate();

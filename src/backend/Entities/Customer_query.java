@@ -1,6 +1,6 @@
 package backend.Entities;
 
-import DBS;
+import backend.DBS;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 import java.math.BigInteger;
 
-public class Part_name_query {
+public class Customer_query {
     private Integer customer_query_id;
     private BigInteger customer_id;
     private BigInteger query_id;
@@ -25,8 +25,8 @@ public class Part_name_query {
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO customers_queries (customer_id, query_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            s.setBigInteger(1, customer_id);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, customer_id);
+            s.setObject(2, query_id);
             s.executeUpdate();
 
             try (ResultSet r = s.getGeneratedKeys()) {
@@ -38,8 +38,8 @@ public class Part_name_query {
 
     public void update() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE customers_queries SET customer_id = ?, query_id = ? WHERE customer_query_id = ?")) {
-            s.setBigInteger(1, customer_id);
-            s.setBigInteger(2, query_id);
+            s.setObject(1, customer_id);
+            s.setObject(2, query_id);
             s.setInt(3, customer_query_id);
 
             s.executeUpdate();
