@@ -4,6 +4,7 @@ import backend.DBS;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -14,24 +15,24 @@ public class Part {
     private BigInteger part_name_id;
     private BigInteger category_id;
     private BigInteger drawing_id;
-    private Short rubber;
-    private Double diameter_AT;
+    private Short rubber = null;
+    private Double diameter_AT = null;
     private String diameter_AT_tol;
-    private Double length_L_AT;
+    private Double length_L_AT = null;
     private String length_L_AT_tol;
-    private Double diameter_IT;
+    private Double diameter_IT = null;
     private String diameter_IT_tol;
-    private Double length_L_IT;
+    private Double length_L_IT = null;
     private String length_L_IT_tol;
-    private Double diameter_ZT;
+    private Double diameter_ZT = null;
     private String diameter_ZT_tol;
-    private Double length_L_ZT;
+    private Double length_L_ZT = null;
     private String length_L_ZT_tol;
-    private Integer cr_steg;
-    private Short cr_niere;
-    private Short ca;
-    private Double ct;
-    private Double ck;
+    private Integer cr_steg = null;
+    private Short cr_niere = null;
+    private Short ca = null;
+    private Double ct = null;
+    private Double ck = null;
     private Integer rating;
 
     public String getPart_number() {
@@ -227,63 +228,57 @@ public class Part {
     }
 
     public void insert() throws SQLException {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-            s.setObject(1, customer_id);
-            s.setObject(2, part_name_id);
-            s.setObject(3, category_id);
-            s.setObject(4, drawing_id);
-            s.setShort(5, rubber);
-            s.setDouble(6, diameter_AT);
-            s.setString(7, diameter_AT_tol);
-            s.setDouble(8, length_L_AT);
-            s.setString(9, length_L_AT_tol);
-            s.setDouble(10, diameter_IT);
-            s.setString(11, diameter_IT_tol);
-            s.setDouble(12, length_L_IT);
-            s.setString(13, length_L_IT_tol);
-            s.setDouble(14, diameter_ZT);
-            s.setString(15, diameter_ZT_tol);
-            s.setDouble(16, length_L_ZT);
-            s.setString(17, length_L_ZT_tol);
-            s.setInt(18, cr_steg);
-            s.setShort(19, cr_niere);
-            s.setShort(20, ca);
-            s.setDouble(21, ct);
-            s.setDouble(22, ck);
-            s.setInt(23, rating);
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating, part_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+            setVariables(s);
             s.executeUpdate();
-
         }
+    }
+
+    private void setVariables(PreparedStatement s) throws SQLException {
+        s.setObject(1, customer_id);
+        s.setObject(2, part_name_id);
+        s.setObject(3, category_id);
+        s.setObject(4, drawing_id);
+        s.setObject(5, rubber);
+        s.setObject(6, diameter_AT);
+        s.setObject(7, diameter_AT_tol);
+        s.setObject(8, length_L_AT);
+        s.setObject(9, length_L_AT_tol);
+        s.setObject(10, diameter_IT);
+        s.setObject(11, diameter_IT_tol);
+        s.setObject(12, length_L_IT);
+        s.setObject(13, length_L_IT_tol);
+        s.setObject(14, diameter_ZT);
+        s.setObject(15, diameter_ZT_tol);
+        s.setObject(16, length_L_ZT);
+        s.setObject(17, length_L_ZT_tol);
+        s.setObject(18, cr_steg);
+        s.setObject(19, cr_niere);
+        s.setObject(20, ca);
+        s.setObject(21, ct);
+        s.setObject(22, ck);
+        s.setObject(23, rating);
+        s.setObject(24, part_number);
     }
 
     public void update() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET customer_id = ?, part_name_id = ?, category_id = ?, drawing_id = ?, rubber = ?, diameter_AT = ?, diameter_AT_tol = ?, length_L_AT = ?, length_L_AT_tol = ?, diameter_IT = ?, diameter_IT_tol = ?, length_L_IT = ?, length_L_IT_tol = ?, diameter_ZT = ?, diameter_ZT_tol = ?, length_L_ZT = ?, length_L_ZT_tol = ?, cr_steg = ?, cr_niere = ?, ca = ?, ct = ?, ck = ?, rating = ? WHERE part_number = ?")) {
-            s.setObject(1, customer_id);
-            s.setObject(2, part_name_id);
-            s.setObject(3, category_id);
-            s.setObject(4, drawing_id);
-            s.setShort(5, rubber);
-            s.setDouble(6, diameter_AT);
-            s.setString(7, diameter_AT_tol);
-            s.setDouble(8, length_L_AT);
-            s.setString(9, length_L_AT_tol);
-            s.setDouble(10, diameter_IT);
-            s.setString(11, diameter_IT_tol);
-            s.setDouble(12, length_L_IT);
-            s.setString(13, length_L_IT_tol);
-            s.setDouble(14, diameter_ZT);
-            s.setString(15, diameter_ZT_tol);
-            s.setDouble(16, length_L_ZT);
-            s.setString(17, length_L_ZT_tol);
-            s.setInt(18, cr_steg);
-            s.setShort(19, cr_niere);
-            s.setShort(20, ca);
-            s.setDouble(21, ct);
-            s.setDouble(22, ck);
-            s.setInt(23, rating);
-            s.setString(24, part_number);
+            setVariables(s);
 
             s.executeUpdate();
+        }
+    }
+
+    public void upsert() throws SQLException {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT part_number from parts WHERE part_number = ?", Statement.RETURN_GENERATED_KEYS)) {
+            s.setString(1, part_number);
+
+            ResultSet rs = s.executeQuery();
+            if (rs.next()) {
+                update();
+            } else {
+                insert();
+            }
         }
     }
 
