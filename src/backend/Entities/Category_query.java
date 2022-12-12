@@ -2,12 +2,11 @@ package backend.Entities;
 
 import backend.DBS;
 
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.math.BigInteger;
 
 public class Category_query {
     private Integer category_query_id;
@@ -15,7 +14,10 @@ public class Category_query {
     private BigInteger query_id;
 
 
-    public Integer getCategory_query_id() {return category_query_id;}
+    public Integer getCategory_query_id() {
+        return category_query_id;
+    }
+
     public void setCategory_query_id(Integer category_query_id) {
         this.category_query_id = category_query_id;
     }
@@ -23,6 +25,7 @@ public class Category_query {
     public BigInteger getCategory_id() {
         return category_id;
     }
+
     public void setCategory_id(BigInteger category_id) {
         this.category_id = category_id;
     }
@@ -30,6 +33,7 @@ public class Category_query {
     public BigInteger getQuery_id() {
         return query_id;
     }
+
     public void setQuery_id(BigInteger query_id) {
         this.query_id = query_id;
     }

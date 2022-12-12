@@ -2,17 +2,9 @@ package backend.Entities;
 
 import backend.DBS;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Date;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.sql.*;
 
 public class Query {
-
     private Integer query_id;
     private Integer user_id;
     private Short rubber;
@@ -29,50 +21,125 @@ public class Query {
     private Double ck;
     private Date date;
 
-    public Integer getQuery_id() {return query_id;}
-    public void setQuery_id(Integer query_id) {this.query_id = query_id;}
+    public Integer getQuery_id() {
+        return query_id;
+    }
 
-    public Integer getUser_id() {return user_id;}
-    public void setUser_id(Integer user_id) {this.user_id = user_id;}
+    public void setQuery_id(Integer query_id) {
+        this.query_id = query_id;
+    }
 
-    public Short getRubber() {return rubber;}
-    public void setRubber(Short rubber) {this.rubber = rubber;}
+    public Integer getUser_id() {
+        return user_id;
+    }
 
-    public Double getDiameter_AT() {return diameter_AT;}
-    public void setDiameter_AT(Double diameter_AT) {this.diameter_AT = diameter_AT;}
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
+    }
 
-    public Double getLength_L_AT() {return length_L_AT;}
-    public void setLength_L_AT(Double length_L_AT) {this.length_L_AT = length_L_AT;}
+    public Short getRubber() {
+        return rubber;
+    }
 
-    public Double getDiameter_IT() {return diameter_IT;}
-    public void setDiameter_IT(Double diameter_IT) {this.diameter_IT = diameter_IT;}
+    public void setRubber(Short rubber) {
+        this.rubber = rubber;
+    }
 
-    public Double getLength_L_IT() {return length_L_IT;}
-    public void setLength_L_IT(Double length_L_IT) {this.length_L_IT = length_L_IT;}
+    public Double getDiameter_AT() {
+        return diameter_AT;
+    }
 
-    public Double getDiameter_ZT() {return diameter_ZT;}
-    public void setDiameter_ZT(Double diameter_ZT) {this.diameter_ZT = diameter_ZT;}
+    public void setDiameter_AT(Double diameter_AT) {
+        this.diameter_AT = diameter_AT;
+    }
 
-    public Double getLength_L_ZT() {return length_L_ZT;}
-    public void setLength_L_ZT(Double length_L_ZT) {this.length_L_ZT = length_L_ZT;}
+    public Double getLength_L_AT() {
+        return length_L_AT;
+    }
 
-    public Integer getCr_steg() {return cr_steg;}
-    public void setCr_steg(Integer cr_steg) {this.cr_steg = cr_steg;}
+    public void setLength_L_AT(Double length_L_AT) {
+        this.length_L_AT = length_L_AT;
+    }
 
-    public Short getCr_niere() {return cr_niere;}
-    public void setCr_niere(Short cr_niere) {this.cr_niere = cr_niere;}
+    public Double getDiameter_IT() {
+        return diameter_IT;
+    }
 
-    public Short getCa() {return ca;}
-    public void setCa(Short ca) {this.ca = ca;}
+    public void setDiameter_IT(Double diameter_IT) {
+        this.diameter_IT = diameter_IT;
+    }
 
-    public Double getCt() {return ct;}
-    public void setCt(Double ct) {this.ct = ct;}
+    public Double getLength_L_IT() {
+        return length_L_IT;
+    }
 
-    public Double getCk() {return ck;}
-    public void setCk(Double ck) {this.ck = ck;}
+    public void setLength_L_IT(Double length_L_IT) {
+        this.length_L_IT = length_L_IT;
+    }
 
-    public Date getDate() {return date;}
-    public void setDate(Date date) {this.date = date;}
+    public Double getDiameter_ZT() {
+        return diameter_ZT;
+    }
+
+    public void setDiameter_ZT(Double diameter_ZT) {
+        this.diameter_ZT = diameter_ZT;
+    }
+
+    public Double getLength_L_ZT() {
+        return length_L_ZT;
+    }
+
+    public void setLength_L_ZT(Double length_L_ZT) {
+        this.length_L_ZT = length_L_ZT;
+    }
+
+    public Integer getCr_steg() {
+        return cr_steg;
+    }
+
+    public void setCr_steg(Integer cr_steg) {
+        this.cr_steg = cr_steg;
+    }
+
+    public Short getCr_niere() {
+        return cr_niere;
+    }
+
+    public void setCr_niere(Short cr_niere) {
+        this.cr_niere = cr_niere;
+    }
+
+    public Short getCa() {
+        return ca;
+    }
+
+    public void setCa(Short ca) {
+        this.ca = ca;
+    }
+
+    public Double getCt() {
+        return ct;
+    }
+
+    public void setCt(Double ct) {
+        this.ct = ct;
+    }
+
+    public Double getCk() {
+        return ck;
+    }
+
+    public void setCk(Double ck) {
+        this.ck = ck;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO queries (user_id, rubber, diameter_AT, length_L_AT, diameter_IT, length_L_IT, diameter_ZT, length_L_ZT, cr_steg, cr_niere, ca, ct, ck, date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
