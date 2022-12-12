@@ -2,26 +2,40 @@ package backend.Entities;
 
 import backend.DBS;
 
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.math.BigInteger;
 
 public class Customer_query {
     private Integer customer_query_id;
     private BigInteger customer_id;
     private BigInteger query_id;
 
-    public Integer getCustomer_query_id() {return customer_query_id;}
-    public void setCustomer_query_id(Integer customer_query_id) {this.customer_query_id = customer_query_id;}
+    public Integer getCustomer_query_id() {
+        return customer_query_id;
+    }
 
-    public BigInteger getCustomer_id() {return customer_id;}
-    public void setCustomer_id(BigInteger customer_id) {this.customer_id = customer_id;}
+    public void setCustomer_query_id(Integer customer_query_id) {
+        this.customer_query_id = customer_query_id;
+    }
 
-    public BigInteger getQuery_id() {return query_id;}
-    public void setQuery_id(BigInteger query_id) {this.query_id = query_id;}
+    public BigInteger getCustomer_id() {
+        return customer_id;
+    }
+
+    public void setCustomer_id(BigInteger customer_id) {
+        this.customer_id = customer_id;
+    }
+
+    public BigInteger getQuery_id() {
+        return query_id;
+    }
+
+    public void setQuery_id(BigInteger query_id) {
+        this.query_id = query_id;
+    }
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO customers_queries (customer_id, query_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {

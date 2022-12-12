@@ -12,11 +12,21 @@ public class Part_name {
     private Integer part_name_id;
     private String part_name;
 
-    public Integer getPart_name_id() {return part_name_id;}
-    public void setPart_name_id(Integer part_name_id) {this.part_name_id = part_name_id;}
+    public Integer getPart_name_id() {
+        return part_name_id;
+    }
 
-    public String getPart_name() {return part_name;}
-    public void setPart_name(String part_name) {this.part_name = part_name;}
+    public void setPart_name_id(Integer part_name_id) {
+        this.part_name_id = part_name_id;
+    }
+
+    public String getPart_name() {
+        return part_name;
+    }
+
+    public void setPart_name(String part_name) {
+        this.part_name = part_name;
+    }
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO part_names (part_name) VALUES (?)", Statement.RETURN_GENERATED_KEYS)) {

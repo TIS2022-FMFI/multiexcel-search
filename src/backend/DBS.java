@@ -20,6 +20,7 @@ public class DBS {
         DBS.connection = connection;
         DBS.getConnection().setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
     }
+
     public static void clear() {
         connection = null;
     }
