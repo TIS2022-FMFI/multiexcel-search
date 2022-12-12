@@ -51,4 +51,20 @@ public class CategoryManager {
             return false;
         }
     }
+
+    /**
+     * Delete category from database
+     *
+     * @param categoryId - id of category
+     */
+    public static boolean deleteCatrgory(Integer categoryId){
+        try{
+            Category category = new Category();
+            category.setCategory_id(categoryId);
+            category.delete();
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+    }
 }
