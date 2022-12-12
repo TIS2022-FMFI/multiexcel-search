@@ -1,7 +1,9 @@
-package backend;
+package backend.Managers;
 
+import backend.DBS;
 import backend.Entities.Category;
 
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,19 +11,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryManager {
+    public static BigInteger getCategoryId(String categoryName) throws SQLException {
+
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT category_id FROM categories WHERE category_name = ?")) {
+            s.setString(1, categoryName);
+
+            ResultSet rs = s.executeQuery();
+            if (rs.next()) {
+                return BigInteger.valueOf(rs.getInt("category_id"));
+            } else {
+                Category category = new Category();
+                category.setCategory_name(categoryName);
+                category.insert();
+                return BigInteger.valueOf(category.getCategory_id());
+            }
+        }
+
+    }
+
     /**
      * Returns all categories from database
      *
      * @return List of all Categories
      */
-    public static List<Category> getAllCategories(){
+    public static List<Category> getAllCategories() {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories")) {
             try (ResultSet r = s.executeQuery()) {
                 List<Category> categories = new ArrayList<>();
                 while (r.next()) {
                     Category category = new Category();
                     category.setCategory_id(r.getInt("category_id"));
-                    category.setCustomer_name(r.getString("customer_name"));
+                    category.setCategory_name(r.getString("customer_name"));
 
                     categories.add(category);
                 }
@@ -37,14 +57,14 @@ public class CategoryManager {
     /**
      * Inserts category to database
      *
-     * @param categoryId - id of category
+     * @param categoryId   - id of category
      * @param customerName - name of customer
      */
-    public static boolean insertCatrgory(Integer categoryId, String customerName){
-        try{
+    public static boolean insertCatrgory(Integer categoryId, String customerName) {
+        try {
             Category category = new Category();
             category.setCategory_id(categoryId);
-            category.setCustomer_name(customerName);
+            category.setCategory_name(customerName);
             category.insert();
             return true;
         } catch (SQLException e) {
