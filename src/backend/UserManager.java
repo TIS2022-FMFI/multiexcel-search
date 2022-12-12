@@ -9,10 +9,19 @@ import backend.Entities.User;
 
 public class UserManager {
 
-    public static boolean addUser(String user_name, String password, Boolean suspended) {
+    /**
+     * Adds new user to database
+     *
+     * @param userName username
+     * @param password password (encrypted)
+     * @param suspended true if you want to create suspended account
+     *
+     * @return True if succeeded otherwise False
+     */
+    public static boolean addUser(String userName, String password, Boolean suspended) {
         try {
             User user = new User();
-            user.setUser_name(user_name);
+            user.setUser_name(userName);
             user.setPassword(password);
             user.setSuspended(suspended);
             user.insert();
@@ -22,6 +31,13 @@ public class UserManager {
         return true;
     }
 
+    /**
+     * Suspends user account
+     *
+     * @param accountToSuspend user
+     *
+     * @return True if succeeded otherwise False
+     */
     public static boolean suspendAccount(User accountToSuspend){
         try{
             accountToSuspend.setSuspended(true);
@@ -32,9 +48,34 @@ public class UserManager {
         return true;
     }
 
+    /**
+     * Enable suspended user account
+     *
+     * @param accountToEnable user
+     *
+     * @return True if succeeded otherwise False
+     */
+    public static boolean enableAccount(User accountToEnable){
+        try{
+            accountToEnable.setSuspended(false);
+            accountToEnable.update();
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * Get list of all or only active users
+     *
+     * @param onlyActive set to True if you want only active accounts. False if all
+     *
+     * @return List if succeeded otherwise returns NULL
+     */
     public static List<User> getUsers(boolean onlyActive){
         try(
-                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM users");
+                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users");
                 ResultSet r = s.executeQuery()
         ){
             List<User> allUsers = new ArrayList<>();
@@ -58,6 +99,14 @@ public class UserManager {
         }
     }
 
+    /**
+     * Get list of all or only active users
+     *
+     * @param user user
+     * @param password new password (encrypted)
+     *
+     * @return True if succeeded otherwise False
+     */
     public static boolean changeUserPassword(User user, String password){
         try{
             user.setPassword(password);
