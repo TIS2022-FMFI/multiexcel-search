@@ -19,7 +19,7 @@ public class PartManager {
     private static Integer check(Integer i) {
         return i == 0 ? null : i;
     }
-    public static Part getPartByName(String partNumber) throws SQLException {
+    public static Part getPartByPartNumber(String partNumber) throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM parts WHERE part_number = ?")) {
             s.setString(1, partNumber);
 
