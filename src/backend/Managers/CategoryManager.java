@@ -12,7 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryManager {
-    public static BigInteger getCategoryId(String categoryName) throws SQLException {
+    /**
+     * Returns id of category associated with input name
+     *
+     * @param categoryName - name of category
+     * @return Id of category
+     */
+    public static BigInteger getCategoryId(String categoryName)  {
 
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT category_id FROM categories WHERE category_name = ?")) {
             s.setString(1, categoryName);
@@ -26,6 +32,8 @@ public class CategoryManager {
                 category.insert();
                 return BigInteger.valueOf(category.getCategory_id());
             }
+        } catch (SQLException ignored){
+            return null;
         }
 
     }
@@ -42,7 +50,7 @@ public class CategoryManager {
                 while (r.next()) {
                     Category category = new Category();
                     category.setCategory_id(r.getInt("category_id"));
-                    category.setCategory_name(r.getString("customer_name"));
+                    category.setCategory_name(r.getString("category_name"));
 
                     categories.add(category);
                 }
@@ -59,13 +67,13 @@ public class CategoryManager {
      * Inserts category to database
      *
      * @param categoryId   - id of category
-     * @param customerName - name of customer
+     * @param categoryName - name of category
      */
-    public static boolean insertCatrgory(Integer categoryId, String customerName) {
+    public static boolean insertCategory(Integer categoryId, String categoryName) {
         try {
             Category category = new Category();
             category.setCategory_id(categoryId);
-            category.setCategory_name(customerName);
+            category.setCategory_name(categoryName);
             category.insert();
             return true;
         } catch (SQLException e) {
@@ -90,6 +98,22 @@ public class CategoryManager {
             return null;
         } catch (SQLException ignored){
             return null;
+        }
+    }
+
+    /**
+     * Delete category from database
+     *
+     * @param categoryId - id of category
+     */
+    public static boolean deleteCategory(Integer categoryId){
+        try{
+            Category category = new Category();
+            category.setCategory_id(categoryId);
+            category.delete();
+            return true;
+        } catch (SQLException e) {
+            return false;
         }
     }
 }
