@@ -29,6 +29,8 @@ import java.util.Properties;
 public class Export {
     final static short COLUMN_SIZE = 10000;
     final static short BIAS = 100;
+    private final static String TEMPLATE_PATH = "./src/backend/XLSImportExport/template.xlsx";
+    private final static String PDF_CONVERT_SCRIPT_PATH = "./src/backend/XLSImportExport/xl2pdf.vbs";
 
     private static CellStyle getCellStyle(XSSFWorkbook workbook) {
         CellStyle cellStyle = workbook.createCellStyle();
@@ -62,7 +64,7 @@ public class Export {
 
     public static boolean exportPartsToXLS(List<Part> parts, String path) {
         try {
-            File tempalateXLS = new File("./src/backend/template.xlsx");
+            File tempalateXLS = new File(TEMPLATE_PATH);
             File newXLS = new File(path);
             Files.copy(tempalateXLS.toPath(), newXLS.toPath(), StandardCopyOption.REPLACE_EXISTING);
             XSSFWorkbook workbook = new XSSFWorkbook(Files.newInputStream(Paths.get(path)));
@@ -214,15 +216,15 @@ public class Export {
             workbook.write(Files.newOutputStream(Paths.get(path)));
             return true;
         } catch (Exception e) {
-//            throw new RuntimeException(e);
-            return false;
+            throw new RuntimeException(e);
+//            return false;
         }
     }
 
     public static void exportXLSToPdf(String inputPath, String outputPath) {
         try {
             Path tempScript = Files.createTempFile("script", ".vbs");
-            List<String> script = Files.readAllLines(Paths.get("./src/backend/xl2pdf.vbs"));
+            List<String> script = Files.readAllLines(Paths.get(PDF_CONVERT_SCRIPT_PATH));
 
             String origPath = Paths.get(inputPath).toAbsolutePath().toString();
             origPath = origPath.replace("\\", "\\\\");
