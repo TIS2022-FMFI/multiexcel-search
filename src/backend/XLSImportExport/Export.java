@@ -1,15 +1,22 @@
-package backend;
+package backend.XLSImportExport;
 
+
+import backend.DBS;
 import backend.Entities.Category;
 import backend.Entities.Customer;
 import backend.Entities.Part;
 import backend.Entities.Part_name;
 import backend.Managers.*;
+import javafx.scene.control.Alert;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
@@ -18,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
-
 
 public class Export {
     final static short COLUMN_SIZE = 10000;
@@ -47,6 +53,13 @@ public class Export {
         }
     }
 
+    private static void setPrinterSettings(Sheet sheet) {
+        sheet.setFitToPage(true);
+        sheet.getPrintSetup().setFitWidth((short) 1);
+        sheet.getPrintSetup().setFitHeight((short) 0);
+        sheet.getPrintSetup().setLandscape(true);
+    }
+
     public static boolean exportPartsToXLS(List<Part> parts, String path) {
         try {
             File tempalateXLS = new File("./src/backend/template.xlsx");
@@ -56,6 +69,7 @@ public class Export {
 
             int index = 1;
             Sheet sheet = workbook.getSheetAt(0);
+            setPrinterSettings(sheet);
             sheet.setColumnWidth(0, COLUMN_SIZE);
             XSSFDrawing drawingPatriarch = (XSSFDrawing) sheet.createDrawingPatriarch();
             CellStyle cellStyle = getCellStyle(workbook);
@@ -197,19 +211,46 @@ public class Export {
                 index++;
             }
 
-//            drawingPatriarch.getShapes().forEach(x -> {
-//                XSSFPicture pic = ((XSSFPicture) x);
-//                pic.resize();
-//                pic.resize((double) poiWidthToPixels(COLUMN_SIZE) / pic.getImageDimension().width);
-//            });
-
             workbook.write(Files.newOutputStream(Paths.get(path)));
             return true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
-//            return false;
+//            throw new RuntimeException(e);
+            return false;
         }
     }
+
+    public static void exportXLSToPdf(String inputPath, String outputPath) {
+        try {
+            Path tempScript = Files.createTempFile("script", ".vbs");
+            List<String> script = Files.readAllLines(Paths.get("./src/backend/xl2pdf.vbs"));
+
+            String origPath = Paths.get(inputPath).toAbsolutePath().toString();
+            origPath = origPath.replace("\\", "\\\\");
+            origPath = origPath.replace("/", "\\\\");
+
+            String pdfPath = Paths.get(outputPath).toAbsolutePath().toString();
+            pdfPath = pdfPath.replace("\\", "\\\\");
+            pdfPath = pdfPath.replace("/", "\\\\");
+            for (int i = 0; i < script.size(); i++) {
+                script.set(i, script.get(i).replaceAll("XL_FILE", origPath));
+                script.set(i, script.get(i).replaceAll("PDF_FILE", pdfPath));
+            }
+
+            Files.write(tempScript, script);
+
+            ProcessBuilder pb = new ProcessBuilder("wscript", tempScript.toString());
+
+            pb.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert saveAsPdfAlert = new Alert(Alert.AlertType.ERROR);
+            saveAsPdfAlert.setTitle("ERROR: Error converting to pdf.");
+            saveAsPdfAlert.setHeaderText("Exception message is:");
+            saveAsPdfAlert.setContentText(e.getMessage());
+            saveAsPdfAlert.showAndWait();
+        }
+    }
+
 
     public static void main(String[] args) {
         try {
@@ -230,6 +271,7 @@ public class Export {
             Part part7 = PartManager.getPartByPartNumber("714.221.148.739");
 
             System.out.println(exportPartsToXLS(Arrays.asList(part, part1, part2, part3, part4, part5, part6, part7), "./src/backend/export.xlsx"));
+            exportXLSToPdf("./src/backend/export.xlsx", "./src/backend/export.pdf");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

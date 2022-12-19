@@ -1,6 +1,7 @@
-package backend;
+package backend.XLSImportExport;
 
 
+import backend.DBS;
 import backend.Entities.Part;
 import backend.Managers.*;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
@@ -8,7 +9,6 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.*;
 
 import javax.imageio.ImageIO;
@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
-public class XLSImport {
+public class Import {
 
     private static String checkCell(String cell) {
         if (cell == null || cell.equals("") || cell.equals("-"))
