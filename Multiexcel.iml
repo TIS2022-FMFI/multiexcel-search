@@ -12,5 +12,6 @@
     <orderEntry type="library" name="mariadb-java-client-3.1.0" level="project" />
     <orderEntry type="library" name="apache.poi.ooxml" level="project" />
     <orderEntry type="library" name="apache.poi.scratchpad" level="project" />
+    <orderEntry type="library" name="commons.beanutils" level="project" />
   </component>
 </module>
