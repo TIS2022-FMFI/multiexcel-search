@@ -33,7 +33,7 @@ public class Part {
     private Short ca = null;
     private Double ct = null;
     private Double ck = null;
-    private Integer rating;
+    private Integer rating = 0;
 
     public String getPart_number() {
         return part_number;
