@@ -13,13 +13,23 @@ public class PasswordChacker {
     private String user_name;
     private String password;
 
-    public void setUser_name(String user_name) {this.user_name = user_name;}
-    public String getUser_name() {return user_name;}
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
 
-    public void setPassword(String password) {this.password = password;}
-    private String getPassword() {return password;}
+    public String getUser_name() {
+        return user_name;
+    }
 
-    /*
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String getPassword() {
+        return password;
+    }
+
+    /**
     Return User instance filtered by user_name
      */
     private static User getUserByName(String user_name) throws SQLException {
@@ -41,7 +51,7 @@ public class PasswordChacker {
         }
     }
 
-    /*
+    /**
     Return true when passwords are equal
      */
     public Boolean correctPassword() throws SQLException {
