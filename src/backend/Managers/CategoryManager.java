@@ -2,6 +2,7 @@ package backend.Managers;
 
 import backend.DBS;
 import backend.Entities.Category;
+import backend.Entities.Part_name;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -17,7 +18,7 @@ public class CategoryManager {
      * @param categoryName - name of category
      * @return Id of category
      */
-    public static BigInteger getCategoryId(String categoryName) throws SQLException {
+    public static BigInteger getCategoryId(String categoryName)  {
 
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT category_id FROM categories WHERE category_name = ?")) {
             s.setString(1, categoryName);
@@ -31,6 +32,8 @@ public class CategoryManager {
                 category.insert();
                 return BigInteger.valueOf(category.getCategory_id());
             }
+        } catch (SQLException ignored){
+            return null;
         }
 
     }
@@ -66,7 +69,7 @@ public class CategoryManager {
      * @param categoryId   - id of category
      * @param categoryName - name of category
      */
-    public static boolean insertCatrgory(Integer categoryId, String categoryName) {
+    public static boolean insertCategory(Integer categoryId, String categoryName) {
         try {
             Category category = new Category();
             category.setCategory_id(categoryId);
@@ -78,12 +81,32 @@ public class CategoryManager {
         }
     }
 
+    public static Category getCategory(BigInteger categoryId){
+        if (categoryId == null)
+            return null;
+
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT category_name FROM categories where category_id = ?")){
+            s.setObject(1, categoryId);
+
+            ResultSet rs = s.executeQuery();
+            if (rs.next()) {
+                Category category = new Category();
+                category.setCategory_id(categoryId.intValue());
+                category.setCategory_name(rs.getString("category_name"));
+                return category;
+            }
+            return null;
+        } catch (SQLException ignored){
+            return null;
+        }
+    }
+
     /**
      * Delete category from database
      *
      * @param categoryId - id of category
      */
-    public static boolean deleteCatrgory(Integer categoryId){
+    public static boolean deleteCategory(Integer categoryId){
         try{
             Category category = new Category();
             category.setCategory_id(categoryId);

@@ -1,9 +1,11 @@
-package backend;
+package backend.XLSImportExport;
 
 
+import backend.DBS;
 import backend.Entities.Part;
 import backend.Managers.*;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,14 +18,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
-public class XLSImport {
+public class Import {
 
     private static String checkCell(String cell) {
         if (cell == null || cell.equals("") || cell.equals("-"))
@@ -114,7 +119,7 @@ public class XLSImport {
             part.setDrawing_id(getDrawingId(image, index, pics));
 
             part.setPart_number(nextString(dataFormatter, cellIterator));
-            Part partInDatabse = PartManager.getPartByNumber(part.getPart_number());
+            Part partInDatabse = PartManager.getPartByPartNumber(part.getPart_number());
             if (partInDatabse != null)
                 part = partInDatabse;
 
@@ -225,13 +230,18 @@ public class XLSImport {
 
     public static void main(String[] args) {
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/multiexcel", "root", "root");
+
+            java.util.Properties prop = new Properties();
+            prop.loadFromXML(Files.newInputStream(Paths.get("configuration/configuration.xml")));
+            Connection connection = DriverManager.getConnection(
+                    prop.getProperty("database"),
+                    prop.getProperty("user"),
+                    prop.getProperty("password"));
             DBS.setConnection(connection);
 
             XSSFWorkbook workbook = new XSSFWorkbook(new File("./src/backend/testData.xlsx"));
             uploadXLStoDBS(workbook);
-
-        } catch (Exception e) {
+        } catch (IOException | InvalidFormatException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
