@@ -216,8 +216,8 @@ public class Export {
             workbook.write(Files.newOutputStream(Paths.get(path)));
             return true;
         } catch (Exception e) {
-            throw new RuntimeException(e);
-//            return false;
+//            throw new RuntimeException(e);
+            return false;
         }
     }
 
