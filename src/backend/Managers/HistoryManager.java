@@ -130,19 +130,34 @@ public class HistoryManager {
                 Query q = new Query();
                 q.setQuery_id(r.getInt("query_id"));
                 q.setUser_id(r.getInt("user_id"));
-                q.setRubber(r.getShort("rubber"));
-                q.setDiameter_AT(r.getDouble("diameter_AT"));
-                q.setLength_L_AT(r.getDouble("length_L_AT"));
-                q.setDiameter_IT(r.getDouble("diameter_IT"));
-                q.setLength_L_IT(r.getDouble("length_L_IT"));
-                q.setDiameter_ZT(r.getDouble("diameter_ZT"));
-                q.setLength_L_ZT(r.getDouble("length_L_ZT"));
-                q.setCr_steg(r.getInt("cr_steg"));
-                q.setCr_niere(r.getShort("cr_niere"));
-                q.setCa(r.getShort("ca"));
-                q.setCt(r.getDouble("ct"));
-                q.setCk(r.getDouble("ck"));
+
+                q.setRubber_from(r.getShort("rubber_from"));
+                q.setDiameter_AT_from(r.getDouble("diameter_AT_from"));
+                q.setLength_L_AT_from(r.getDouble("length_L_AT_from"));
+                q.setDiameter_IT_from(r.getDouble("diameter_IT_from"));
+                q.setLength_L_IT_from(r.getDouble("length_L_IT_from"));
+                q.setDiameter_ZT_from(r.getDouble("diameter_ZT_from"));
+                q.setLength_L_ZT_from(r.getDouble("length_L_ZT_from"));
+                q.setCr_steg_from(r.getInt("cr_steg_from"));
+                q.setCr_niere_from(r.getShort("cr_niere_from"));
+                q.setCa_from(r.getShort("ca_from"));
+                q.setCt_from(r.getDouble("ct_from"));
+                q.setCk_from(r.getDouble("ck_from"));
+
                 q.setDate(r.getDate("date"));
+
+                q.setRubber_to(r.getShort("rubber_to"));
+                q.setDiameter_AT_to(r.getDouble("diameter_AT_to"));
+                q.setLength_L_AT_to(r.getDouble("length_L_AT_to"));
+                q.setDiameter_IT_to(r.getDouble("diameter_IT_to"));
+                q.setLength_L_IT_to(r.getDouble("length_L_IT_to"));
+                q.setDiameter_ZT_to(r.getDouble("diameter_ZT_to"));
+                q.setLength_L_ZT_to(r.getDouble("length_L_ZT_to"));
+                q.setCr_steg_to(r.getInt("cr_steg_to"));
+                q.setCr_niere_to(r.getShort("cr_niere_to"));
+                q.setCa_to(r.getShort("ca_to"));
+                q.setCt_to(r.getDouble("ct_to"));
+                q.setCk_to(r.getDouble("ck_to"));
 
                 queries.add(q);
             }
