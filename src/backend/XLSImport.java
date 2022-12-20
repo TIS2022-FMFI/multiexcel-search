@@ -114,7 +114,7 @@ public class XLSImport {
             part.setDrawing_id(getDrawingId(image, index, pics));
 
             part.setPart_number(nextString(dataFormatter, cellIterator));
-            Part partInDatabse = PartManager.getPartByName(part.getPart_number());
+            Part partInDatabse = PartManager.getPartByNumber(part.getPart_number());
             if (partInDatabse != null)
                 part = partInDatabse;
 
