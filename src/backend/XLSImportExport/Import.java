@@ -4,6 +4,8 @@ package backend.XLSImportExport;
 import backend.DBS;
 import backend.Entities.Part;
 import backend.Managers.*;
+import backend.Models.MutablePair;
+import javafx.util.Pair;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -25,10 +27,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class Import {
+    final static int PASSED = -1;
 
     private static String checkCell(String cell) {
         if (cell == null || cell.equals("") || cell.equals("-"))
@@ -101,10 +105,12 @@ public class Import {
 
     /**
      * Upserts every part from XLSFile into database
+     *
      * @param XLSFile - xls file of parts to upsert into database
-     * @return true, if all parts were inserted correctly
+     * @return number of Parts that were inserted and updated
+     * @throws RuntimeException - throws exception with line on which the reading of the document failed
      */
-    private static boolean uploadXLStoDBS(XSSFWorkbook XLSFile) {
+    public static MutablePair uploadXLStoDBS(XSSFWorkbook XLSFile) throws RuntimeException{
         XSSFSheet sheet = XLSFile.getSheetAt(0);
         DataFormatter dataFormatter = new DataFormatter();
         XSSFDrawing dp = sheet.createDrawingPatriarch();
@@ -113,9 +119,10 @@ public class Import {
         Iterator<Row> rowIterator = sheet.rowIterator();
         rowIterator.next();
         int index = 0;
+        MutablePair insertUpdate = new MutablePair(0, 0);
 
-        try {
-            while (rowIterator.hasNext()) {
+        while (rowIterator.hasNext()) {
+            try {
                 Row row = rowIterator.next();
                 index++;
                 Part part = new Part();
@@ -231,17 +238,21 @@ public class Import {
                     } catch (NumberFormatException ignored) {
                     }
 
-                part.upsert();
+                if (partInDatabse == null || !PartManager.getPartByPartNumber(part.getPart_number()).equals(part))
+                     if (part.upsert()){
+                         insertUpdate.second++;
+                    } else {
+                        insertUpdate.first++;
+                    }
+            } catch (Exception ignored) {
+                throw new RuntimeException("Error at line: " + index);
             }
-        } catch (SQLException ignored) {
-            return false;
         }
-        return true;
+        return insertUpdate;
     }
 
     public static void main(String[] args) {
         try {
-
             java.util.Properties prop = new Properties();
             prop.loadFromXML(Files.newInputStream(Paths.get("configuration/configuration.xml")));
             Connection connection = DriverManager.getConnection(
