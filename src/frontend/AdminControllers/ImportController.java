@@ -15,8 +15,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -49,6 +47,8 @@ public class ImportController implements Initializable {
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
         fc.setInitialDirectory(new File("."));
         filesToImport = fc.showOpenMultipleDialog(null);
+        if (filesToImport == null)
+            return;
         for (File f : filesToImport) {
             Text text = new Text(f.getName());
             scrollVBox.getChildren().add(text);
