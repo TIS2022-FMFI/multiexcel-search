@@ -121,8 +121,8 @@ public class HistoryMainController implements Initializable {
 
         resetFilters();
         updateTableContent();
+        calculatePageIndexes();
 
-        currentPageIndex = 0;
         currentSelectedIndex = -1;
         updatePageButtonsDisabledStatus();
 
@@ -146,6 +146,7 @@ public class HistoryMainController implements Initializable {
             currentPageIndex = 0;
             updateQueryFilter();
             updateTableContent();
+            calculatePageIndexes();
             updatePageButtonsDisabledStatus();
             System.out.println("Updated filters, page buttons and table");
         });
@@ -154,6 +155,10 @@ public class HistoryMainController implements Initializable {
     private void calculatePageIndexes(){
         totalItemCount = HistoryManager.getTotalNumberOfQueriesWithFilters(dateFromTo, users);
         maxPagesIndex = (int) Math.ceil((double)totalItemCount/itemsPerPage);
+        if(maxPagesIndex == 0){
+            currentPageIndex = -1;
+        }
+        updatePageTextLabel();
     }
     private void updatePageTextLabel(){
         label_page_index.setText(pageTextInfo());
@@ -167,7 +172,6 @@ public class HistoryMainController implements Initializable {
         currentSelectedIndex = -1;
         queries = HistoryManager.getQueriesWithFilters(dateFromTo, users, itemsPerPage, currentPageIndex);
         table_queries.setItems(queries);
-        calculatePageIndexes();
         updatePageTextLabel();
 
         System.out.printf("Updated table content. Total rows: %d. Current Page: %d. Max page index: %d.%n", totalItemCount, currentPageIndex, maxPagesIndex);
