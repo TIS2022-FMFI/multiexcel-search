@@ -3,6 +3,8 @@ package backend.Managers;
 import backend.Entities.Query;
 import backend.Entities.User;
 import backend.DBS;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.util.Pair;
 
 import java.sql.PreparedStatement;
@@ -111,25 +113,25 @@ public class HistoryManager {
      *
      * @return List of queries if succeeded otherwise returns null
      */
-    public static List<Query> getQueriesWithFilters(Pair<Date, Date> dateFromTo, List<User> users, int queriesPerPage, int pageIndex){
+    public static ObservableList<Query> getQueriesWithFilters(Pair<Date, Date> dateFromTo, List<User> users, int queriesPerPage, int pageIndex){
 
         int itemsPerPage;
         int pageNumber;
         itemsPerPage = Math.max(queriesPerPage, 0);
-        pageNumber = Math.max(pageIndex-1, 0);
+        pageNumber = Math.max(pageIndex, 0);
         
         
         String sqlString = "SELECT * FROM multiexcel.queries ";
         sqlString += (new HistoryManager()).CreateQueryString(dateFromTo, users);
 
-        sqlString += String.format("ORDER BY date ASC LIMIT %d, %d",pageNumber * itemsPerPage, itemsPerPage);
+        sqlString += String.format("ORDER BY date DESC LIMIT %d, %d",pageNumber * itemsPerPage, itemsPerPage);
         //sqlString+= "ORDER BY date ASC LIMIT " + pageNumber * itemsPerPage + ", " + itemsPerPage;
-        System.out.println("Query: " + sqlString);
+        System.out.println("Filtered List Query: " + sqlString);
         try(
                 PreparedStatement s = DBS.getConnection().prepareStatement(sqlString);
                 ResultSet r = s.executeQuery()
         ){
-            List<Query> queries = new ArrayList<>();
+            ObservableList<Query> queries = FXCollections.observableArrayList();
             while (r.next()){
                 Query q = new Query();
                 q.setQuery_id(r.getInt("query_id"));
@@ -176,8 +178,11 @@ public class HistoryManager {
      *
      * @return Integer if successful otherwise -1
      * */
-    public static int getTotalNumberOfQueries(){
-        String sqlString = "SELECT COUNT(query_id) as query_total_count FROM multiexcel.queries";
+    public static int getTotalNumberOfQueriesWithFilters(Pair<Date, Date> dateFromTo, List<User> users){
+        String sqlString = "SELECT COUNT(query_id) as query_total_count FROM multiexcel.queries ";
+        sqlString += (new HistoryManager()).CreateQueryString(dateFromTo, users);
+
+        System.out.println("Filtered Count Query: " + sqlString);
         try(
                 PreparedStatement s = DBS.getConnection().prepareStatement(sqlString);
                 ResultSet r = s.executeQuery()
