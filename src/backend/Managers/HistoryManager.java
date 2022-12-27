@@ -70,28 +70,32 @@ public class HistoryManager {
         String columnUserId = "user_id=";
 
         boolean isFirst = true;
-        if (queryUsers){
-            queryString.append("WHERE ");
-            for (User u : users) {
-                if (isFirst){
-                    queryString.append(columnUserId).append(u.getUser_id());
-                    isFirst = false;
-                }else{
-                    queryString.append(" OR ").append(columnUserId).append(u.getUser_id());
-                }
-            }
-            queryString.append(" ");
-        }
-
         if(queryDate){
             if (queryString.length() == 0){
                 queryString.append("WHERE ");
             }else{
                 queryString.append("AND ");
             }
-            queryString.append("date >= ").append(dateFromTo.getKey());
-            queryString.append(" AND date <= ").append(dateFromTo.getValue());
-            queryString.append(" ");
+            queryString.append(String.format("(date <= '%s' AND date >= '%s') ", dateFromTo.getValue(), dateFromTo.getKey()));
+        }
+
+        isFirst = true;
+        if (queryUsers){
+            if (queryString.length() == 0){
+                queryString.append("WHERE ");
+            }else{
+                queryString.append("AND ");
+            }
+            for (User u : users) {
+                if (isFirst){
+                    queryString.append("(");
+                    queryString.append(columnUserId).append(u.getUser_id());
+                    isFirst = false;
+                }else{
+                    queryString.append(" OR ").append(columnUserId).append(u.getUser_id());
+                }
+            }
+            queryString.append(") ");
         }
 
         return queryString.toString();
@@ -164,6 +168,26 @@ public class HistoryManager {
             return queries;
         }catch (SQLException e){
             return null;
+        }
+    }
+
+    /**
+     *  gets total number of rows in Query table (i.e. item count)
+     *
+     * @return Integer if successful otherwise -1
+     * */
+    public static int getTotalNumberOfQueries(){
+        String sqlString = "SELECT COUNT(query_id) as query_total_count FROM multiexcel.queries";
+        try(
+                PreparedStatement s = DBS.getConnection().prepareStatement(sqlString);
+                ResultSet r = s.executeQuery()
+        ){
+            if(r.next()){
+                return r.getInt("query_total_count");
+            }
+            return  0;
+        }catch (SQLException e){
+            return -1;
         }
     }
 }
