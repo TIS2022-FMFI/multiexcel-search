@@ -4,6 +4,7 @@ import backend.Entities.Query;
 
 import backend.Entities.User;
 import backend.Managers.HistoryManager;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+//TODO: Add clear all filters button
 public class HistoryMainController implements Initializable {
 
     @FXML
@@ -119,6 +121,7 @@ public class HistoryMainController implements Initializable {
         col_ck.setCellValueFactory(new PropertyValueFactory<>("ck_from"));
         col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
+        queries = FXCollections.observableArrayList();
         resetFilters();
         updateTableContent();
         calculatePageIndexes();
@@ -170,7 +173,8 @@ public class HistoryMainController implements Initializable {
 
     private void updateTableContent(){
         currentSelectedIndex = -1;
-        queries = HistoryManager.getQueriesWithFilters(dateFromTo, users, itemsPerPage, currentPageIndex);
+        queries.clear();
+        queries.addAll(HistoryManager.getQueriesWithFilters(dateFromTo, users, itemsPerPage, currentPageIndex));
         table_queries.setItems(queries);
         updatePageTextLabel();
 
