@@ -10,9 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -93,8 +93,8 @@ public class HistoryDetailsController implements Initializable {
     @FXML
     private TableColumn<Part, String> col_ck;
 
-    @FXML
-    private TableColumn<Part, Boolean> col_checkbox;
+    /*@FXML
+    private TableColumn<Part, Boolean> col_checkbox;*/
 
     //TODO: how to add pictures?
     //TODO: do we show rating?
@@ -119,6 +119,7 @@ public class HistoryDetailsController implements Initializable {
         idToPartName = new HashMap<>();
         idToCategoryName = new HashMap<>();
         idToCustomerName = new HashMap<>();
+        table_parts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         initializeController();
         populateTable();
     }
@@ -166,8 +167,8 @@ public class HistoryDetailsController implements Initializable {
         col_ca.setCellValueFactory(new PropertyValueFactory<>("ca"));
         col_ct.setCellValueFactory(new PropertyValueFactory<>("ct"));
         col_ck.setCellValueFactory(new PropertyValueFactory<>("ck"));
-        col_checkbox.setCellValueFactory( new PropertyValueFactory<>( "isSelected" ));
-        col_checkbox.setCellFactory( CheckBoxTableCell.forTableColumn(col_checkbox));
+        //col_checkbox.setCellValueFactory( new PropertyValueFactory<>( "isSelected" ));
+        //col_checkbox.setCellFactory( CheckBoxTableCell.forTableColumn(col_checkbox));
 
     }
 

@@ -30,7 +30,7 @@
           <TableColumn fx:id="col_ca" editable="false" prefWidth="46.0" sortable="false" text="Ca" />
           <TableColumn fx:id="col_ct" editable="false" prefWidth="45.0" sortable="false" text="Ct" />
           <TableColumn fx:id="col_ck" editable="false" prefWidth="49.0" sortable="false" text="Ck" />
-          <TableColumn fx:id="col_checkbox" editable="true" minWidth="5.0" prefWidth="44.0" sortable="false" text="selected" />
+          <!--<TableColumn fx:id="col_checkbox" editable="true" minWidth="5.0" prefWidth="44.0" sortable="false" text="selected" /-->
           <!--TableColumn fx:id="col_rating" editable="false" prefWidth="75.0" sortable="false" text="Rating" /-->
       </columns>
     </TableView>
