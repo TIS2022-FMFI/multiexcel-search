@@ -60,7 +60,7 @@ public class UserFilterController implements Initializable {
     @FXML void onConfirmAction(ActionEvent event){
         if(historyMainController != null){
             historyMainController.setUserFilter(collectCheckedUsers());
-            historyMainController.refreshTable();
+            //historyMainController.refreshTable(); need to click filter instead
         }else{
             System.err.println("historyMainController == null");
         }

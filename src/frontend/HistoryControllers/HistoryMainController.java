@@ -30,8 +30,8 @@ import java.util.*;
 //todo: SELECT (pre category filter)
 //TODO: Add category filter button/window
 
-//todo: add refresh button
-//TODO: Add clear all filters button
+//DONE: add refresh button
+//DONE: Add clear all filters button
 //todo: resize columns
 //DONE: polozky od do napis v jednom stlpci
 //DONE: pridaj tam username a nezobrazuj query id ani user id (to su len interne)
@@ -326,6 +326,16 @@ public class HistoryMainController implements Initializable {
         updateTableContent();
         calculatePageIndexesAndUpdate();
         updatePageButtonsDisabledStatus();
+        System.out.println("Performed table refresh!");
+    }
+
+    @FXML
+    public void clearAllFiltersAndRefreshTable(){
+        resetFilters();
+        date_picker_from.setValue(null);
+        date_picker_to.setValue(null);
+        System.out.println("Filters cleared!");
+        refreshTable();
     }
 
     public void setUserFilter(List<User> users){
