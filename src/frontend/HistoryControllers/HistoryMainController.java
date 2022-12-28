@@ -106,6 +106,7 @@ public class HistoryMainController implements Initializable {
     private Map<Integer, String> userIdToName;
 
     private HistorySession historySession;
+    private boolean ignorePageCalculation = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -223,9 +224,9 @@ public class HistoryMainController implements Initializable {
     }
 
     private void resetFilters(){
-        users = new ArrayList<>();
-        categories = new ArrayList<>();
-        dateFromTo = new Pair<>(new Date(0), new Date(System.currentTimeMillis()));
+        users = null;//new ArrayList<>();
+        categories = null;//new ArrayList<>();
+        dateFromTo = null;//new Pair<>(new Date(0), new Date(System.currentTimeMillis()));
     }
 
     private void updateSelectButton(){
@@ -238,6 +239,7 @@ public class HistoryMainController implements Initializable {
         historySession.setCategoriesFilter(categories);
         historySession.setDateFromToFilter(dateFromTo);
         historySession.setUserIdToName(userIdToName);
+        historySession.setCurrentPageIndex(currentPageIndex);
         System.out.println("Filter data saved to HistorySession");
     }
 
@@ -255,6 +257,10 @@ public class HistoryMainController implements Initializable {
         }
         if(historySession.getUserIdToName() != null){
             userIdToName = historySession.getUserIdToName();
+        }
+        if(historySession.getCurrentPageIndex() != null){
+            currentPageIndex = historySession.getCurrentPageIndex();
+            ignorePageCalculation = true;
         }
         System.out.println("Filter data loaded from HistorySession");
         historySession.removeSessionData();
@@ -407,7 +413,11 @@ public class HistoryMainController implements Initializable {
     
     @FXML
     public void refreshTable(){
-        currentPageIndex = 0;
+        if(!ignorePageCalculation){
+            currentPageIndex = 0;
+        }else{
+            ignorePageCalculation = false;
+        }
         updateTableContent();
         calculatePageIndexesAndUpdate();
         updatePageButtonsDisabledStatus();
@@ -431,20 +441,32 @@ public class HistoryMainController implements Initializable {
     }
 
     public void setUserFilter(List<User> users){
+        if(this.users == null){
+            this.users = new ArrayList<>();
+        }
         this.users.clear();
         this.users.addAll(users);
     }
 
     public List<User> getUserFilter(){
+        if(users == null){
+            return null;
+        }
         return Collections.unmodifiableList(users);
     }
 
     public void setCategoryFilter(List<Category> categories){
+        if(this.categories == null){
+            this.categories = new ArrayList<>();
+        }
         this.categories.clear();
         this.categories.addAll(categories);
     }
 
     public List<Category> getCategoryFilter(){
+        if(categories == null){
+            return null;
+        }
         return Collections.unmodifiableList(categories);
     }
 }

@@ -15,6 +15,7 @@ public class HistorySession {
     private Pair<Date, Date> dateFromToFilter;
     private Map<Integer, String> userIdToName;
     private Query selectedQuery;
+    private Integer currentPageIndex;
 
 
 
@@ -34,6 +35,7 @@ public class HistorySession {
         dateFromToFilter = null;
         userIdToName = null;
         selectedQuery = null;
+        currentPageIndex = null;
     }
 
     public List<User> getUsersFilter() {
@@ -74,6 +76,13 @@ public class HistorySession {
 
     public void setSelectedQuery(Query selectedQuery) {
         this.selectedQuery = selectedQuery;
+    }
+
+    public Integer getCurrentPageIndex(){
+        return currentPageIndex;
+    }
+    public void setCurrentPageIndex(int currentPageIndex){
+        this.currentPageIndex = currentPageIndex;
     }
 
 }
