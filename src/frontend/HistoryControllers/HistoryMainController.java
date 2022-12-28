@@ -1,5 +1,6 @@
 package frontend.HistoryControllers;
 
+import backend.Entities.Category;
 import backend.Entities.Query;
 
 import backend.Entities.User;
@@ -97,6 +98,7 @@ public class HistoryMainController implements Initializable {
     private int totalItemCount;
     private int maxPagesIndex;
     private List<User> users;
+    private List<Category> categories;
     private Pair<Date, Date> dateFromTo;
     private Map<Integer, String> userIdToName;
 
@@ -173,7 +175,7 @@ public class HistoryMainController implements Initializable {
     }
 
     private void calculatePageIndexesAndUpdate(){
-        totalItemCount = HistoryManager.getTotalNumberOfQueriesWithFilters(dateFromTo, users);
+        totalItemCount = HistoryManager.getTotalNumberOfQueriesWithFilters(categories, dateFromTo, users);
         maxPagesIndex = (int) Math.ceil((double)totalItemCount/itemsPerPage);
         if(maxPagesIndex == 0){
             currentPageIndex = -1;
@@ -193,7 +195,7 @@ public class HistoryMainController implements Initializable {
         updateSelectButton();
         queries.clear();
 
-        ObservableList<Query> result = HistoryManager.getQueriesWithFilters(dateFromTo, users, itemsPerPage, currentPageIndex);
+        ObservableList<Query> result = HistoryManager.getQueriesWithFilters(categories, dateFromTo, users, itemsPerPage, currentPageIndex);
         if(result != null){
             queries.addAll(result);
         }
@@ -214,6 +216,7 @@ public class HistoryMainController implements Initializable {
 
     private void resetFilters(){
         users = new ArrayList<>();
+        categories = new ArrayList<>();
         dateFromTo = new Pair<>(new Date(0), new Date(System.currentTimeMillis()));
     }
 
