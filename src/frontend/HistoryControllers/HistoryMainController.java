@@ -4,6 +4,8 @@ import backend.Entities.Query;
 
 import backend.Entities.User;
 import backend.Managers.HistoryManager;
+import backend.Managers.UserManager;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
@@ -17,43 +19,48 @@ import javafx.util.Pair;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 //TODO: Add clear all filters button
+//TODO: Add category filter
+//TODO: add user filter
+//todo: SELECT (pre category filter)
+//todo: resize columns
+//DONE: polozky od do napis v jednom stlpci
+//DONE: pridaj tam username a nezobrazuj query id ani user id (to su len interne)
+//TODO: add test data to categories_queries table
 public class HistoryMainController implements Initializable {
 
     @FXML
     public TableView<Query> table_queries;
+    //@FXML
+    //public TableColumn<Query, Integer> col_query_id;
     @FXML
-    public TableColumn<Query, Integer> col_query_id;
+    public TableColumn<Query, String> col_username;
     @FXML
-    public TableColumn<Query, Integer> col_user_id;
+    public TableColumn<Query, String> col_rubber;
     @FXML
-    public TableColumn<Query, Integer> col_rubber;
+    public TableColumn<Query, String> col_diameter_at;
     @FXML
-    public TableColumn<Query, Double> col_diameter_at;
+    public TableColumn<Query, String> col_length_l_at;
     @FXML
-    public TableColumn<Query, Double> col_length_l_at;
+    public TableColumn<Query, String> col_diameter_it;
     @FXML
-    public TableColumn<Query, Double> col_diameter_it;
+    public TableColumn<Query, String> col_length_l_it;
     @FXML
-    public TableColumn<Query, Double> col_length_l_it;
+    public TableColumn<Query, String> col_diameter_zt;
     @FXML
-    public TableColumn<Query, Double> col_diameter_zt;
+    public TableColumn<Query, String> col_length_l_zt;
     @FXML
-    public TableColumn<Query, Double> col_length_l_zt;
+    public TableColumn<Query, String> col_cr_steg;
     @FXML
-    public TableColumn<Query, Integer> col_cr_steg;
+    public TableColumn<Query, String> col_cr_niere;
     @FXML
-    public TableColumn<Query, Integer> col_cr_niere;
+    public TableColumn<Query, String> col_ca;
     @FXML
-    public TableColumn<Query, Integer> col_ca;
+    public TableColumn<Query, String> col_ct;
     @FXML
-    public TableColumn<Query, Double> col_ct;
-    @FXML
-    public TableColumn<Query, Double> col_ck;
+    public TableColumn<Query, String> col_ck;
     @FXML
     public TableColumn<Query, Date> col_date;
 
@@ -83,6 +90,7 @@ public class HistoryMainController implements Initializable {
     private int maxPagesIndex;
     private List<User> users;
     private Pair<Date, Date> dateFromTo;
+    private Map<Integer, String> userIdToName;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -90,35 +98,22 @@ public class HistoryMainController implements Initializable {
     }
 
     private void initializeController(){
-        col_query_id.setCellValueFactory(new PropertyValueFactory<>("query_id"));
-        col_user_id.setCellValueFactory(new PropertyValueFactory<>("user_id"));
+        userIdToName = new HashMap<>();
 
-        /*col_rubber.setCellValueFactory(new PropertyValueFactory<>("rubber"));
-        col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("diameter_at"));
-        col_length_l_at.setCellValueFactory(new PropertyValueFactory<>("length_l_at"));
-        col_diameter_it.setCellValueFactory(new PropertyValueFactory<>("diameter_it"));
-        col_length_l_it.setCellValueFactory(new PropertyValueFactory<>("length_l_it"));
-        col_diameter_zt.setCellValueFactory(new PropertyValueFactory<>("diameter_zt"));
-        col_length_l_zt.setCellValueFactory(new PropertyValueFactory<>("length_l_zt"));
-        col_cr_steg.setCellValueFactory(new PropertyValueFactory<>("cr_steg"));
-        col_cr_niere.setCellValueFactory(new PropertyValueFactory<>("cr_niere"));
-        col_ca.setCellValueFactory(new PropertyValueFactory<>("ca"));
-        col_ct.setCellValueFactory(new PropertyValueFactory<>("ct"));
-        col_ck.setCellValueFactory(new PropertyValueFactory<>("ck"));
-        col_date.setCellValueFactory(new PropertyValueFactory<>("date"));*/
-
-        col_rubber.setCellValueFactory(new PropertyValueFactory<>("rubber_from"));
-        col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("diameter_AT_from"));
-        col_length_l_at.setCellValueFactory(new PropertyValueFactory<>("length_L_AT_from"));
-        col_diameter_it.setCellValueFactory(new PropertyValueFactory<>("diameter_IT_from"));
-        col_length_l_it.setCellValueFactory(new PropertyValueFactory<>("length_L_IT_from"));
-        col_diameter_zt.setCellValueFactory(new PropertyValueFactory<>("diameter_ZT_from"));
-        col_length_l_zt.setCellValueFactory(new PropertyValueFactory<>("length_L_ZT_from"));
-        col_cr_steg.setCellValueFactory(new PropertyValueFactory<>("cr_steg_from"));
-        col_cr_niere.setCellValueFactory(new PropertyValueFactory<>("cr_niere_from"));
-        col_ca.setCellValueFactory(new PropertyValueFactory<>("ca_from"));
-        col_ct.setCellValueFactory(new PropertyValueFactory<>("ct_from"));
-        col_ck.setCellValueFactory(new PropertyValueFactory<>("ck_from"));
+        //col_query_id.setCellValueFactory(new PropertyValueFactory<>("query_id"));
+        col_username.setCellValueFactory(feature -> createUsernameWrapperFromUserID(feature.getValue().getUser_id()));
+        col_rubber.setCellValueFactory( featrue -> createFromToWrapper(featrue.getValue().getRubber_from(), featrue.getValue().getRubber_to()));
+        col_diameter_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_AT_from(), featrue.getValue().getDiameter_AT_to()));
+        col_length_l_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_AT_from(), featrue.getValue().getLength_L_AT_to()));
+        col_diameter_it.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_IT_from(), featrue.getValue().getDiameter_IT_to()));
+        col_length_l_it.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_IT_from(), featrue.getValue().getLength_L_IT_to()));
+        col_diameter_zt.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_ZT_from(), featrue.getValue().getDiameter_ZT_to()));
+        col_length_l_zt.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_ZT_from(), featrue.getValue().getLength_L_ZT_to()));
+        col_cr_steg.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCr_steg_from(), featrue.getValue().getCr_steg_to()));
+        col_cr_niere.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCr_niere_from(), featrue.getValue().getCr_niere_to()));
+        col_ca.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCa_from(), featrue.getValue().getCa_to()));
+        col_ct.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCt_from(), featrue.getValue().getCt_to()));
+        col_ck.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCk_from(), featrue.getValue().getCk_to()));
         col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         queries = FXCollections.observableArrayList();
@@ -155,6 +150,25 @@ public class HistoryMainController implements Initializable {
         });
     }
 
+    private ReadOnlyStringWrapper createUsernameWrapperFromUserID(int userId){
+        if(!userIdToName.containsKey(userId)){
+            User user = UserManager.getUserById(userId);
+            if(user == null){
+                return new ReadOnlyStringWrapper("not existing user");
+            }
+            userIdToName.put(userId, user.getUser_name());
+        }
+
+        return new ReadOnlyStringWrapper(userIdToName.get(userId));
+    }
+
+    private <K, V>ReadOnlyStringWrapper createFromToWrapper(K first, V second){
+        if(first == null || second == null){
+            return new ReadOnlyStringWrapper("null in arguments");
+        }
+        return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
+    }
+
     private void calculatePageIndexes(){
         totalItemCount = HistoryManager.getTotalNumberOfQueriesWithFilters(dateFromTo, users);
         maxPagesIndex = (int) Math.ceil((double)totalItemCount/itemsPerPage);
@@ -174,7 +188,12 @@ public class HistoryMainController implements Initializable {
     private void updateTableContent(){
         currentSelectedIndex = -1;
         queries.clear();
-        queries.addAll(HistoryManager.getQueriesWithFilters(dateFromTo, users, itemsPerPage, currentPageIndex));
+
+        ObservableList<Query> result = HistoryManager.getQueriesWithFilters(dateFromTo, users, itemsPerPage, currentPageIndex);
+        if(result != null){
+            queries.addAll(result);
+        }
+
         table_queries.setItems(queries);
         updatePageTextLabel();
 
@@ -203,7 +222,7 @@ public class HistoryMainController implements Initializable {
             date_picker_to.setValue(LocalDate.now());
             dateFromTo = new Pair<>(Date.valueOf(date_picker_from.getValue()), Date.valueOf(date_picker_to.getValue()));
         }else if(date_picker_to.getValue() != null && date_picker_from.getValue() == null){
-            date_picker_from.setValue(LocalDate.of(1970,1,1));
+            date_picker_from.setValue(LocalDate.of(2022,1,1));
             dateFromTo = new Pair<>(Date.valueOf(date_picker_from.getValue()), Date.valueOf(date_picker_to.getValue()));
         }else{
             dateFromTo = null;
