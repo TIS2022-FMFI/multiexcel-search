@@ -3,7 +3,6 @@ src/backend/export.pdf
 src/backend/export.xlsx
 
 /out/
-/.idea/
 
 *.class
 

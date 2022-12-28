@@ -27,8 +27,8 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class Export {
-    final static short COLUMN_SIZE = 10000;
-    final static short BIAS = 100;
+    private final static short COLUMN_SIZE = 10000;
+    private final static short BIAS = 100;
     private final static String TEMPLATE_PATH = "./src/backend/XLSImportExport/template.xlsx";
     private final static String PDF_CONVERT_SCRIPT_PATH = "./src/backend/XLSImportExport/xl2pdf.vbs";
 
@@ -62,6 +62,12 @@ public class Export {
         sheet.getPrintSetup().setLandscape(true);
     }
 
+    /**
+     * Exports list of parts into xls file and saves file at input path
+     * @param parts - list of parts to export
+     * @param path - path to save xls file to
+     * @return true, if export ran without errors
+     */
     public static boolean exportPartsToXLS(List<Part> parts, String path) {
         try {
             File tempalateXLS = new File(TEMPLATE_PATH);
@@ -221,7 +227,12 @@ public class Export {
         }
     }
 
-    public static void exportXLSToPdf(String inputPath, String outputPath) {
+    /**
+     * Converts xls file located at inputPath to pdf and save pdf at outputPath
+     * @param inputPath - path to xls file to convert
+     * @param outputPath - path to pdf file
+     */
+    public static void convertXLSToPdf(String inputPath, String outputPath) {
         try {
             Path tempScript = Files.createTempFile("script", ".vbs");
             List<String> script = Files.readAllLines(Paths.get(PDF_CONVERT_SCRIPT_PATH));
@@ -273,7 +284,7 @@ public class Export {
             Part part7 = PartManager.getPartByPartNumber("714.221.148.739");
 
             System.out.println(exportPartsToXLS(Arrays.asList(part, part1, part2, part3, part4, part5, part6, part7), "./src/backend/export.xlsx"));
-            exportXLSToPdf("./src/backend/export.xlsx", "./src/backend/export.pdf");
+            convertXLSToPdf("./src/backend/export.xlsx", "./src/backend/export.pdf");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
