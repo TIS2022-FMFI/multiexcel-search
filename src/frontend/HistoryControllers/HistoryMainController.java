@@ -10,8 +10,10 @@ import backend.Managers.UserManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
@@ -28,13 +30,13 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
+//todo: remove history query
+//todo: resize columns
 //DONE: add user filter button/window
 //DONE: SELECT (pre category filter)
 //DONE: Add category filter button/window
-
 //DONE: add refresh button
 //DONE: Add clear all filters button
-//todo: resize columns
 //DONE: polozky od do napis v jednom stlpci
 //DONE: pridaj tam username a nezobrazuj query id ani user id (to su len interne)
 public class HistoryMainController implements Initializable {
@@ -132,7 +134,9 @@ public class HistoryMainController implements Initializable {
 
         queries = FXCollections.observableArrayList();
         resetFilters();
-        
+
+        loadFiltersAndSelectedQuery();
+
         refreshTable();
 
         System.out.println("Current page index: " + currentPageIndex + ". Max page index: " + maxPagesIndex);
@@ -246,11 +250,14 @@ public class HistoryMainController implements Initializable {
         }
         if(historySession.getDateFromToFilter() != null){
             dateFromTo = historySession.getDateFromToFilter();
+            date_picker_from.setValue(dateFromTo.getKey().toLocalDate());
+            date_picker_to.setValue(dateFromTo.getValue().toLocalDate());
         }
         if(historySession.getUserIdToName() != null){
             userIdToName = historySession.getUserIdToName();
         }
         System.out.println("Filter data loaded from HistorySession");
+        historySession.removeSessionData();
     }
 
     @FXML
@@ -285,6 +292,23 @@ public class HistoryMainController implements Initializable {
             if(button_previous_page.isDisabled()){
                 button_previous_page.setDisable(false);
             }
+        }
+    }
+    private void openHistoryDetailFXML(ActionEvent actionEvent){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            String fxmlDocPath = "./src/frontend/BasicFXML/HistoryDetails.fxml";
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+
+            Scene scene = new Scene(root);
+
+            Stage stage =  (Stage)  ((Node)actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -400,9 +424,10 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void openSelectedQuery(){
+    public void openSelectedQuery(ActionEvent actionEvent){
         System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery_id());
         saveCurrentFiltersAndSelectedQuery();
+        openHistoryDetailFXML(actionEvent);
     }
 
     public void setUserFilter(List<User> users){

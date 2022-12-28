@@ -28,7 +28,7 @@ public class HistorySession {
     private HistorySession(){
     }
 
-    private void removeSessionData(){
+    public void removeSessionData(){
         usersFilter = null;
         categoriesFilter = null;
         dateFromToFilter = null;
