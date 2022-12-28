@@ -1,6 +1,7 @@
 package frontend.HistoryControllers;
 
 import backend.Entities.Category;
+import backend.Entities.HistorySession;
 import backend.Entities.Query;
 
 import backend.Entities.User;
@@ -102,8 +103,11 @@ public class HistoryMainController implements Initializable {
     private Pair<Date, Date> dateFromTo;
     private Map<Integer, String> userIdToName;
 
+    private HistorySession historySession;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        historySession = HistorySession.getInstance();
         initializeController();
     }
 
@@ -222,6 +226,31 @@ public class HistoryMainController implements Initializable {
 
     private void updateSelectButton(){
         button_open_selected.setDisable(!(currentSelectedIndex >= 0 && currentSelectedIndex < queries.size()));
+    }
+
+    private void saveCurrentFiltersAndSelectedQuery(){
+        historySession.setSelectedQuery(queries.get(currentSelectedIndex));
+        historySession.setUsersFilter(users);
+        historySession.setCategoriesFilter(categories);
+        historySession.setDateFromToFilter(dateFromTo);
+        historySession.setUserIdToName(userIdToName);
+        System.out.println("Filter data saved to HistorySession");
+    }
+
+    private void loadFiltersAndSelectedQuery(){
+        if(historySession.getUsersFilter() != null){
+            users = historySession.getUsersFilter();
+        }
+        if(historySession.getCategoriesFilter() != null){
+            categories = historySession.getCategoriesFilter();
+        }
+        if(historySession.getDateFromToFilter() != null){
+            dateFromTo = historySession.getDateFromToFilter();
+        }
+        if(historySession.getUserIdToName() != null){
+            userIdToName = historySession.getUserIdToName();
+        }
+        System.out.println("Filter data loaded from HistorySession");
     }
 
     @FXML
@@ -373,6 +402,7 @@ public class HistoryMainController implements Initializable {
     @FXML
     public void openSelectedQuery(){
         System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery_id());
+        saveCurrentFiltersAndSelectedQuery();
     }
 
     public void setUserFilter(List<User> users){
