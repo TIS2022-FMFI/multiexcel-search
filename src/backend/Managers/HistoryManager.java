@@ -86,7 +86,7 @@ public class HistoryManager {
         boolean isFirst = true;
         if(queryCategories){
             if(countOnly){
-                prefix = "SELECT COUNT(query_id) as query_total_count FROM multiexcel.categories_queries JOIN multiexcel.queries q on q.query_id = categories_queries.query_id ";
+                prefix = "SELECT COUNT(date) as query_total_count FROM multiexcel.categories_queries JOIN multiexcel.queries q on q.query_id = categories_queries.query_id ";
             }else{
                 prefix = "SELECT * FROM multiexcel.categories_queries JOIN multiexcel.queries q on q.query_id = categories_queries.query_id ";
             }
@@ -107,7 +107,7 @@ public class HistoryManager {
             queryString.append(") ");
         }else{
             if(countOnly){
-                prefix = "SELECT COUNT(query_id) as query_total_count FROM multiexcel.queries ";
+                prefix = "SELECT COUNT(date) as query_total_count FROM multiexcel.queries ";
             }else{
                 prefix = "SELECT * FROM multiexcel.queries ";
             }

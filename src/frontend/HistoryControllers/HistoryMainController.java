@@ -28,8 +28,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 //DONE: add user filter button/window
-//todo: SELECT (pre category filter)
-//TODO: Add category filter button/window
+//DONE: SELECT (pre category filter)
+//DONE: Add category filter button/window
 
 //DONE: add refresh button
 //DONE: Add clear all filters button
@@ -310,6 +310,27 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
+    public void onClickCategoryFilterButton(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            String fxmlDocPath = "./src/frontend/BasicFXML/CategoryFilter.fxml";
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+            CategoryFilterController categoryFilterController = loader.getController();
+            categoryFilterController.setHistoryMainController(this);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setTitle("Filter by users");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
     public void onClickUserFilterButton(){
         try{
             FXMLLoader loader = new FXMLLoader();
@@ -361,5 +382,14 @@ public class HistoryMainController implements Initializable {
 
     public List<User> getUserFilter(){
         return Collections.unmodifiableList(users);
+    }
+
+    public void setCategoryFilter(List<Category> categories){
+        this.categories.clear();
+        this.categories.addAll(categories);
+    }
+
+    public List<Category> getCategoryFilter(){
+        return Collections.unmodifiableList(categories);
     }
 }
