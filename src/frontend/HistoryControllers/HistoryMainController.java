@@ -8,27 +8,33 @@ import backend.Managers.UserManager;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
-//TODO: Add clear all filters button
-//TODO: Add category filter
-//TODO: add user filter
+//DONE: add user filter button/window
 //todo: SELECT (pre category filter)
+//TODO: Add category filter button/window
+
+//todo: add refresh button
+//TODO: Add clear all filters button
 //todo: resize columns
 //DONE: polozky od do napis v jednom stlpci
 //DONE: pridaj tam username a nezobrazuj query id ani user id (to su len interne)
-//TODO: add test data to categories_queries table
 public class HistoryMainController implements Initializable {
 
     @FXML
@@ -118,13 +124,8 @@ public class HistoryMainController implements Initializable {
 
         queries = FXCollections.observableArrayList();
         resetFilters();
-        updateTableContent();
-        calculatePageIndexes();
-
-        currentSelectedIndex = -1;
-        updatePageButtonsDisabledStatus();
-
-        updatePageTextLabel();
+        
+        refreshTable();
 
         System.out.println("Current page index: " + currentPageIndex + ". Max page index: " + maxPagesIndex);
 
@@ -144,7 +145,7 @@ public class HistoryMainController implements Initializable {
             currentPageIndex = 0;
             updateQueryFilter();
             updateTableContent();
-            calculatePageIndexes();
+            calculatePageIndexesAndUpdate();
             updatePageButtonsDisabledStatus();
             System.out.println("Updated filters, page buttons and table");
         });
@@ -169,7 +170,7 @@ public class HistoryMainController implements Initializable {
         return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
     }
 
-    private void calculatePageIndexes(){
+    private void calculatePageIndexesAndUpdate(){
         totalItemCount = HistoryManager.getTotalNumberOfQueriesWithFilters(dateFromTo, users);
         maxPagesIndex = (int) Math.ceil((double)totalItemCount/itemsPerPage);
         if(maxPagesIndex == 0){
@@ -195,7 +196,6 @@ public class HistoryMainController implements Initializable {
         }
 
         table_queries.setItems(queries);
-        updatePageTextLabel();
 
         System.out.printf("Updated table content. Total rows: %d. Current Page: %d. Max page index: %d.%n", totalItemCount, currentPageIndex, maxPagesIndex);
     }
@@ -229,7 +229,6 @@ public class HistoryMainController implements Initializable {
             date_picker_from.setValue(null);
             date_picker_to.setValue(null);
         }
-        //todo update user filter
     }
 
     private void updatePageButtonsDisabledStatus(){
@@ -251,7 +250,7 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void getSelected(MouseEvent event){
+    public void getSelected(){
         int selectedIndex = table_queries.getSelectionModel().getSelectedIndex();
         if(selectedIndex < 0 || selectedIndex >= queries.size()){
             currentSelectedIndex = -1;
@@ -262,7 +261,7 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void onNextPageButtonClick(MouseEvent event){
+    public void onNextPageButtonClick(){
         if(isNextValidIndexForward()){
             currentPageIndex++;
             System.out.printf("Moved from page %d to page %d.%n", currentPageIndex-1 ,currentPageIndex);
@@ -275,7 +274,7 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void onPreviousPageButtonClick(MouseEvent event){
+    public void onPreviousPageButtonClick(){
         if(isNextValidIndexBackward()){
             currentPageIndex--;
             System.out.printf("Moved from page %d to page %d.%n", currentPageIndex+1 ,currentPageIndex);
@@ -288,14 +287,53 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void onClearDateFromClick(MouseEvent event){
+    public void onClearDateFromClick(){
         dateFromTo = null;
         date_picker_from.setValue(null);
     }
 
     @FXML
-    public void onClearDateToClick(MouseEvent event){
+    public void onClearDateToClick(){
         dateFromTo = null;
         date_picker_to.setValue(null);
+    }
+
+    @FXML
+    public void onClickUserFilterButton(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            String fxmlDocPath = "./src/frontend/BasicFXML/UserFilter.fxml";
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+            UserFilterController userFilterController = loader.getController();
+            userFilterController.setHistoryMainController(this);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setTitle("Filter by users");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @FXML
+    public void refreshTable(){
+        currentPageIndex = 0;
+        updateTableContent();
+        calculatePageIndexesAndUpdate();
+        updatePageButtonsDisabledStatus();
+    }
+
+    public void setUserFilter(List<User> users){
+        this.users.clear();
+        this.users.addAll(users);
+    }
+
+    public List<User> getUserFilter(){
+        return Collections.unmodifiableList(users);
     }
 }

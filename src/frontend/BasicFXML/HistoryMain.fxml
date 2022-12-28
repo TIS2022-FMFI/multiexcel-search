@@ -23,12 +23,13 @@
           <TableColumn fx:id="col_date" editable="false" prefWidth="75.0" sortable="false" text="Date" />
       </columns>
     </TableView>
-    <Button fx:id="button_previous_page" layoutX="123.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#onPreviousPageButtonClick" text="previous page" />
-    <Button fx:id="button_next_page" layoutX="1069.0" layoutY="580.0" mnemonicParsing="false" onMouseClicked="#onNextPageButtonClick" text="next page" />
+    <Button fx:id="button_previous_page" layoutX="123.0" layoutY="580.0" mnemonicParsing="false" onAction="#onPreviousPageButtonClick" text="previous page" />
+    <Button fx:id="button_next_page" layoutX="1069.0" layoutY="580.0" mnemonicParsing="false" onAction="#onNextPageButtonClick" text="next page" />
     <Label fx:id="label_page_index" contentDisplay="CENTER" layoutX="595.0" layoutY="584.0" text="Page 0 / 100" textAlignment="CENTER" textOverrun="CLIP" />
     <DatePicker fx:id="date_picker_to" layoutX="826.0" layoutY="81.0" promptText="to" />
     <DatePicker fx:id="date_picker_from" layoutX="616.0" layoutY="81.0" promptText="from" />
     <Button fx:id="button_filter" layoutX="1112.0" layoutY="107.0" mnemonicParsing="false" text="Filter" />
-    <Button fx:id="button_date_from_clear" layoutX="747.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#onClearDateFromClick" text="Clear" />
-    <Button fx:id="button_date_to_clear" layoutX="957.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#onClearDateToClick" text="Clear" />
+    <Button fx:id="button_date_from_clear" layoutX="747.0" layoutY="107.0" mnemonicParsing="false" onAction="#onClearDateFromClick" text="Clear" />
+    <Button fx:id="button_date_to_clear" layoutX="957.0" layoutY="107.0" mnemonicParsing="false" onAction="#onClearDateToClick" text="Clear" />
+   <Button onAction="#onClickUserFilterButton" layoutX="481.0" layoutY="81.0" mnemonicParsing="false" text="Filter by users" />
 </AnchorPane>
