@@ -14,5 +14,5 @@
     <Button layoutX="100.0" layoutY="45.0" mnemonicParsing="false" onAction="#onSelectAllAction" text="Select all" />
     <Button layoutX="104.0" layoutY="345.0" mnemonicParsing="false" onAction="#onCancelAction" text="cancel" />
     <Button layoutX="449.0" layoutY="345.0" mnemonicParsing="false" onAction="#onConfirmAction" text="confirm" />
-   <Label layoutX="100.0" layoutY="287.0" text="Note: no selection equals all selected" />
+   <Label layoutX="100.0" layoutY="287.0" text="Note: confirming no selection equals all selected" />
 </AnchorPane>
