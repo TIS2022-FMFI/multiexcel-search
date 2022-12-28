@@ -86,6 +86,8 @@ public class HistoryMainController implements Initializable {
     public Button button_date_from_clear;
     @FXML
     public Button button_date_to_clear;
+    @FXML
+    public Button button_open_selected;
 
 
     private ObservableList<Query> queries;
@@ -188,6 +190,7 @@ public class HistoryMainController implements Initializable {
 
     private void updateTableContent(){
         currentSelectedIndex = -1;
+        updateSelectButton();
         queries.clear();
 
         ObservableList<Query> result = HistoryManager.getQueriesWithFilters(dateFromTo, users, itemsPerPage, currentPageIndex);
@@ -212,6 +215,10 @@ public class HistoryMainController implements Initializable {
     private void resetFilters(){
         users = new ArrayList<>();
         dateFromTo = new Pair<>(new Date(0), new Date(System.currentTimeMillis()));
+    }
+
+    private void updateSelectButton(){
+        button_open_selected.setDisable(!(currentSelectedIndex >= 0 && currentSelectedIndex < queries.size()));
     }
 
     @FXML
@@ -257,6 +264,7 @@ public class HistoryMainController implements Initializable {
             return;
         }
         currentSelectedIndex = selectedIndex;
+        updateSelectButton();
         System.out.printf("Selceted index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery_id());
     }
 
@@ -336,6 +344,11 @@ public class HistoryMainController implements Initializable {
         date_picker_to.setValue(null);
         System.out.println("Filters cleared!");
         refreshTable();
+    }
+
+    @FXML
+    public void openSelectedQuery(){
+        System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery_id());
     }
 
     public void setUserFilter(List<User> users){
