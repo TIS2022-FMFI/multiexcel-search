@@ -4,21 +4,33 @@ import backend.DBS;
 import backend.Entities.Part;
 
 import java.math.BigInteger;
-import java.sql.*;
-import java.util.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class PartManager {
-    private static Double check(Double d){
+    private static Double check(Double d) {
         return d == 0 ? null : d;
     }
-    private static Short check(Short s){
+
+    private static Short check(Short s) {
         return s == 0 ? null : s;
     }
+
     private static Integer check(Integer i) {
         return i == 0 ? null : i;
     }
-    public static Part getPartByPartNumber(String partNumber) throws SQLException {
+
+    /**
+     * Returns part associated with input part number or null if part number doesn't exist in database
+     *
+     * @param partNumber - input part number
+     * @return part from database
+     */
+    public static Part getPartByPartNumber(String partNumber) {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM parts WHERE part_number = ?")) {
             s.setString(1, partNumber);
 
@@ -59,34 +71,32 @@ public class PartManager {
         }
     }
 
-    public static boolean AddCategoryToParts(List<Part> parts, BigInteger categoryId){
-        try{
-            for(Part part : parts) {
+    public static boolean AddCategoryToParts(List<Part> parts, BigInteger categoryId) {
+        try {
+            for (Part part : parts) {
                 part.setCategory_id(categoryId);
                 part.update();
             }
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
 
-    public static boolean IncreaseRating(List<Part> parts){
-        try{
+    public static boolean IncreaseRating(List<Part> parts) {
+        try {
             PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET rating = rating + 1 WHERE FIND_IN_SET( part_number, ? ) > 0");
             String arrString = parts.stream().map(Part::getPart_number).collect(Collectors.joining(","));
             s.setString(1, arrString);
             s.executeUpdate();
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             return false;
         }
     }
 
-    public static List<Part> GetPartsByQueryId(Integer queryId){
-        try{
+    public static List<Part> GetPartsByQueryId(Integer queryId) {
+        try {
             PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM parts p JOIN parts_queries pq ON p.part_number = pq.part_number WHERE pq.query_id = ?");
             s.setInt(1, queryId);
             ResultSet r = s.executeQuery();
@@ -122,8 +132,27 @@ public class PartManager {
                 parts.add(part);
             }
             return parts;
+        } catch (SQLException e) {
+            return null;
         }
-        catch (SQLException e) {
+    }
+
+    /**
+     * Returns id of drawing associated with part number from database
+     *
+     * @param partNumber - part number
+     * @return id of drawing or null if part doesn't have an associated drawing
+     */
+    public static BigInteger getDrawingIdFromPartNumber(String partNumber) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT drawing_id FROM parts WHERE part_number = ?")) {
+            s.setString(1, partNumber);
+
+            ResultSet rs = s.executeQuery();
+            if (rs.next())
+                return BigInteger.valueOf(rs.getInt("drawing_id"));
+
+            return null;
+        } catch (SQLException ignored) {
             return null;
         }
     }

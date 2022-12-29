@@ -91,7 +91,7 @@ public class Import {
         } else if (image.contains("same as")) {
             String otherPartNumber = image.split(" ")[2];
 
-            BigInteger drawId = DrawingManager.getDrawingIdFromPartName(otherPartNumber);
+            BigInteger drawId = PartManager.getDrawingIdFromPartNumber(otherPartNumber);
             if (drawId != null && !drawId.equals(BigInteger.ZERO)) {
                 return drawId;
             }
@@ -99,7 +99,12 @@ public class Import {
         return null;
     }
 
-    private static void uploadXLStoDBS(XSSFWorkbook XLSFile) throws SQLException {
+    /**
+     * Upserts every part from XLSFile into database
+     * @param XLSFile - xls file of parts to upsert into database
+     * @return true, if all parts were inserted correctly
+     */
+    private static boolean uploadXLStoDBS(XSSFWorkbook XLSFile) {
         XSSFSheet sheet = XLSFile.getSheetAt(0);
         DataFormatter dataFormatter = new DataFormatter();
         XSSFDrawing dp = sheet.createDrawingPatriarch();
@@ -108,124 +113,130 @@ public class Import {
         Iterator<Row> rowIterator = sheet.rowIterator();
         rowIterator.next();
         int index = 0;
-        while (rowIterator.hasNext()) {
-            Row row = rowIterator.next();
-            index++;
-            Part part = new Part();
 
-            Iterator<Cell> cellIterator = row.cellIterator();
+        try {
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                index++;
+                Part part = new Part();
 
-            String image = nextString(dataFormatter, cellIterator);
-            part.setDrawing_id(getDrawingId(image, index, pics));
+                Iterator<Cell> cellIterator = row.cellIterator();
 
-            part.setPart_number(nextString(dataFormatter, cellIterator));
-            Part partInDatabse = PartManager.getPartByPartNumber(part.getPart_number());
-            if (partInDatabse != null)
-                part = partInDatabse;
+                String image = nextString(dataFormatter, cellIterator);
+                part.setDrawing_id(getDrawingId(image, index, pics));
 
-            part.setPart_name_id(PartNameManager.getPartNameId(nextString(dataFormatter, cellIterator)));
+                part.setPart_number(nextString(dataFormatter, cellIterator));
+                Part partInDatabse = PartManager.getPartByPartNumber(part.getPart_number());
+                if (partInDatabse != null)
+                    part = partInDatabse;
 
-            part.setCategory_id(CategoryManager.getCategoryId(nextString(dataFormatter, cellIterator)));
+                part.setPart_name_id(PartNameManager.getPartNameId(nextString(dataFormatter, cellIterator)));
 
-            part.setCustomer_id(CustomerManager.getCustomerId(nextString(dataFormatter, cellIterator)));
+                part.setCategory_id(CategoryManager.getCategoryId(nextString(dataFormatter, cellIterator)));
 
-            String s;
+                part.setCustomer_id(CustomerManager.getCustomerId(nextString(dataFormatter, cellIterator)));
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                part.setRubber(Short.valueOf(s.split(" ")[0]));
+                String s;
 
-            s = nextString(dataFormatter, cellIterator);
-            part.setDiameter_AT(getDouble(s));
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    part.setRubber(Short.valueOf(s.split(" ")[0]));
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                part.setDiameter_AT_tol(s);
+                s = nextString(dataFormatter, cellIterator);
+                part.setDiameter_AT(getDouble(s));
 
-            s = nextString(dataFormatter, cellIterator);
-            part.setLength_L_AT(getDouble(s));
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    part.setDiameter_AT_tol(s);
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                part.setLength_L_AT_tol(s);
+                s = nextString(dataFormatter, cellIterator);
+                part.setLength_L_AT(getDouble(s));
 
-            s = nextString(dataFormatter, cellIterator);
-            part.setDiameter_IT(getDouble(s));
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    part.setLength_L_AT_tol(s);
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                part.setDiameter_IT_tol(s);
+                s = nextString(dataFormatter, cellIterator);
+                part.setDiameter_IT(getDouble(s));
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setLength_L_IT(Double.valueOf(s.replace(",", ".")));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    part.setDiameter_IT_tol(s);
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                part.setLength_L_IT_tol(s);
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setLength_L_IT(Double.valueOf(s.replace(",", ".")));
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setDiameter_ZT(Double.valueOf(s));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    part.setLength_L_IT_tol(s);
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                part.setDiameter_ZT_tol(s);
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setDiameter_ZT(Double.valueOf(s));
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setLength_L_ZT(Double.valueOf(s));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    part.setDiameter_ZT_tol(s);
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                part.setLength_L_ZT_tol(s);
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setLength_L_ZT(Double.valueOf(s));
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setCr_steg(Integer.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    part.setLength_L_ZT_tol(s);
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setCr_niere(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setCr_steg(Integer.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setCa(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setCr_niere(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setCt(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setCa(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            s = nextString(dataFormatter, cellIterator);
-            if (s != null)
-                try {
-                    part.setCk(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
-                } catch (NumberFormatException ignored) {
-                }
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setCt(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
+                    } catch (NumberFormatException ignored) {
+                    }
 
-            part.upsert();
+                s = nextString(dataFormatter, cellIterator);
+                if (s != null)
+                    try {
+                        part.setCk(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
+                    } catch (NumberFormatException ignored) {
+                    }
+
+                part.upsert();
+            }
+        } catch (SQLException ignored) {
+            return false;
         }
+        return true;
     }
 
     public static void main(String[] args) {
