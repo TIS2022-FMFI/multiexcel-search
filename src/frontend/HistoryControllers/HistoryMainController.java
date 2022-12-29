@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -98,6 +99,7 @@ public class HistoryMainController implements Initializable {
     private int currentPageIndex = 0;
     private int itemsPerPage = 10;
     private int currentSelectedIndex = -1;
+    private List<Integer> currentSelectedIndexes = new ArrayList<>();
     private int totalItemCount;
     private int maxPagesIndex;
     private List<User> users;
@@ -132,7 +134,7 @@ public class HistoryMainController implements Initializable {
         col_ct.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCt_from(), featrue.getValue().getCt_to()));
         col_ck.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCk_from(), featrue.getValue().getCk_to()));
         col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
-
+        table_queries.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         queries = FXCollections.observableArrayList();
         resetFilters();
 
@@ -201,6 +203,7 @@ public class HistoryMainController implements Initializable {
 
     private void updateTableContent(){
         currentSelectedIndex = -1;
+        currentSelectedIndexes.clear();
         updateSelectButton();
         queries.clear();
 
@@ -320,14 +323,18 @@ public class HistoryMainController implements Initializable {
 
     @FXML
     public void getSelected(){
-        int selectedIndex = table_queries.getSelectionModel().getSelectedIndex();
-        if(selectedIndex < 0 || selectedIndex >= queries.size()){
+        currentSelectedIndexes.clear();
+        ObservableList<Integer> selectedIndexes = table_queries.getSelectionModel().getSelectedIndices();
+        if(selectedIndexes.size() == 1){
+            currentSelectedIndex = selectedIndexes.get(0);
+            updateSelectButton();
+            System.out.printf("Selected index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery_id());
+        }else{
             currentSelectedIndex = -1;
-            return;
+            updateSelectButton();
         }
-        currentSelectedIndex = selectedIndex;
-        updateSelectButton();
-        System.out.printf("Selceted index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery_id());
+        currentSelectedIndexes.addAll(selectedIndexes);
+        System.out.printf("Selected indexes size %d. Selected indexes: %s%n",selectedIndexes.size(),selectedIndexes);
     }
 
     @FXML
@@ -438,6 +445,38 @@ public class HistoryMainController implements Initializable {
         System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery_id());
         saveCurrentFiltersAndSelectedQuery();
         openHistoryDetailFXML(actionEvent);
+    }
+
+    @FXML
+    public void deleteSelectedQueries(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            String fxmlDocPath = "./src/frontend/BasicFXML/HistoryDelete.fxml";
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+            HistoryDeleteController historyDeleteController = loader.getController();
+            historyDeleteController.setHistoryMainController(this);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setTitle("Delete selection");
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteSelectionConfirmed(){
+        try{
+            for (int i = 0; i < currentSelectedIndexes.size(); i++) {
+                queries.get(i).delete();
+            }
+        }catch (SQLException sqlException){
+            System.err.printf("Error occured during selection removeal in HistoryMainController::deleteSelectionConfirmed()%n.Tried deleting items from: %s", queries);
+        }
     }
 
     public void setUserFilter(List<User> users){

@@ -93,13 +93,17 @@ public class HistoryDetailsController implements Initializable {
     @FXML
     private TableColumn<Part, String> col_ck;
 
+    private final String CUSTOMER_NAME_NOT_FOUND = "<unknown_customer>";
+    private final String CATEGORY_NAME_NOT_FOUND = "<unknown_category>";
+    private final String PART_NAME_NOT_FOUND = "<unknown_part>";
+
     /*@FXML
     private TableColumn<Part, Boolean> col_checkbox;*/
 
     //TODO: how to add pictures?
     //TODO: do we show rating?
-    //TODO: export to pdf/excel and hook it to buttons
-    //TODO: vymysliet chekboxy
+    //TODO: export to pdf/excel and hook it to buttons, how to export
+    //DONE: vymysliet chekboxy -> mutliselect in table, hold ctrl
     //DONE: get part name from id
     //DONE: get customer name from id
     //DONE: get category name from id
@@ -182,7 +186,7 @@ public class HistoryDetailsController implements Initializable {
         if(!idToCustomerName.containsKey(customerId)){
             Customer customer = CustomerManager.getCustomer(customerId);
             if(customer == null){
-                return new ReadOnlyStringWrapper("not existing customer");
+                return new ReadOnlyStringWrapper(CUSTOMER_NAME_NOT_FOUND);
             }
             idToCustomerName.put(customerId, customer.getCustomer_name());
         }
@@ -194,7 +198,7 @@ public class HistoryDetailsController implements Initializable {
         if(!idToCategoryName.containsKey(categoryId)){
             Category category = CategoryManager.getCategory(categoryId);
             if(category == null){
-                return new ReadOnlyStringWrapper("not existing category");
+                return new ReadOnlyStringWrapper(CATEGORY_NAME_NOT_FOUND);
             }
             idToCategoryName.put(categoryId, category.getCategory_name());
         }
@@ -206,7 +210,7 @@ public class HistoryDetailsController implements Initializable {
         if(!idToPartName.containsKey(partId)){
             Part_name partName = PartNameManager.getPartName(partId);
             if(partName == null){
-                return new ReadOnlyStringWrapper("not existing part_name (Part_name::getPartName())");
+                return new ReadOnlyStringWrapper(PART_NAME_NOT_FOUND);
             }
             idToPartName.put(partId, partName.getPart_name());
         }

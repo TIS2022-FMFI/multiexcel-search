@@ -36,7 +36,5 @@
     </TableView>
     <Button layoutX="853.0" layoutY="616.0" mnemonicParsing="false" text="Export selection to excel" />
     <Button layoutX="856.0" layoutY="585.0" mnemonicParsing="false" text="Export selection to PDF" />
-   <Button layoutX="1673.0" layoutY="70.0" mnemonicParsing="false" text="Select all" />
-   <Button layoutX="1677.0" layoutY="35.0" mnemonicParsing="false" text="Clear all" />
    <Button layoutX="22.0" layoutY="35.0" onAction="#openHistoryFXML" mnemonicParsing="false" text="Back" />
 </AnchorPane>
