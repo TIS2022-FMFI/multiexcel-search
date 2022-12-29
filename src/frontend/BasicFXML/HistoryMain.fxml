@@ -40,5 +40,5 @@
    <Button layoutX="1079.0" layoutY="69.0" mnemonicParsing="false" onAction="#clearAllFiltersAndRefreshTable" text="Clear filters" />
    <Button fx:id="button_open_selected" disable="true" layoutX="1187.0" layoutY="339.0" mnemonicParsing="false" onAction="#openSelectedQuery" text="Open" />
    <Button layoutX="345.0" layoutY="82.0" mnemonicParsing="false" onAction="#onClickCategoryFilterButton" text="Filter by category" />
-   <Button layoutX="1162.0" layoutY="397.0" mnemonicParsing="false" onAction="#deleteSelectedQueries" text="Delete selected" />
+   <Button fx:id="button_delte_selected" layoutX="1162.0" layoutY="397.0" mnemonicParsing="false" onAction="#deleteSelectedQueries" text="Delete selected" />
 </AnchorPane>

@@ -93,6 +93,8 @@ public class HistoryMainController implements Initializable {
     public Button button_date_to_clear;
     @FXML
     public Button button_open_selected;
+    @FXML
+    public Button button_delte_selected;
 
 
     private ObservableList<Query> queries;
@@ -204,6 +206,7 @@ public class HistoryMainController implements Initializable {
     private void updateTableContent(){
         currentSelectedIndex = -1;
         currentSelectedIndexes.clear();
+        updateDeleteButton();
         updateSelectButton();
         queries.clear();
 
@@ -321,6 +324,14 @@ public class HistoryMainController implements Initializable {
         }
     }
 
+    private void updateDeleteButton(){
+        if(currentSelectedIndexes.size() > 0){
+            button_delte_selected.setDisable(false);
+        }else{
+            button_delte_selected.setDisable(true);
+        }
+    }
+
     @FXML
     public void getSelected(){
         currentSelectedIndexes.clear();
@@ -334,6 +345,7 @@ public class HistoryMainController implements Initializable {
             updateSelectButton();
         }
         currentSelectedIndexes.addAll(selectedIndexes);
+        updateDeleteButton();
         System.out.printf("Selected indexes size %d. Selected indexes: %s%n",selectedIndexes.size(),selectedIndexes);
     }
 
@@ -390,7 +402,7 @@ public class HistoryMainController implements Initializable {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setScene(scene);
-            stage.setTitle("Filter by users");
+            stage.setTitle("Filter by category");
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
