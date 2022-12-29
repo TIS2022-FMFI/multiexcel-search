@@ -1,10 +1,8 @@
 package frontend.AdminControllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
@@ -12,10 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AdminMainController implements Initializable {
     @FXML
@@ -33,7 +30,7 @@ public class AdminMainController implements Initializable {
     }
 
     @FXML
-    public void importButton(){
+    public void importButton() {
         try {
 
             FXMLLoader loader = new FXMLLoader();
@@ -43,6 +40,7 @@ public class AdminMainController implements Initializable {
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+            stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

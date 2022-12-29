@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 
 public class Part {
 
@@ -269,15 +270,17 @@ public class Part {
         }
     }
 
-    public void upsert() throws SQLException {
+    public boolean upsert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT part_number from parts WHERE part_number = ?", Statement.RETURN_GENERATED_KEYS)) {
             s.setString(1, part_number);
 
             ResultSet rs = s.executeQuery();
             if (rs.next()) {
                 update();
+                return true;
             } else {
                 insert();
+                return false;
             }
         }
     }
@@ -288,5 +291,13 @@ public class Part {
 
             s.executeUpdate();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Part part = (Part) o;
+        return Objects.equals(part_number, part.part_number) && Objects.equals(customer_id, part.customer_id) && Objects.equals(part_name_id, part.part_name_id) && Objects.equals(category_id, part.category_id) && Objects.equals(drawing_id, part.drawing_id) && Objects.equals(rubber, part.rubber) && Objects.equals(diameter_AT, part.diameter_AT) && Objects.equals(diameter_AT_tol, part.diameter_AT_tol) && Objects.equals(length_L_AT, part.length_L_AT) && Objects.equals(length_L_AT_tol, part.length_L_AT_tol) && Objects.equals(diameter_IT, part.diameter_IT) && Objects.equals(diameter_IT_tol, part.diameter_IT_tol) && Objects.equals(length_L_IT, part.length_L_IT) && Objects.equals(length_L_IT_tol, part.length_L_IT_tol) && Objects.equals(diameter_ZT, part.diameter_ZT) && Objects.equals(diameter_ZT_tol, part.diameter_ZT_tol) && Objects.equals(length_L_ZT, part.length_L_ZT) && Objects.equals(length_L_ZT_tol, part.length_L_ZT_tol) && Objects.equals(cr_steg, part.cr_steg) && Objects.equals(cr_niere, part.cr_niere) && Objects.equals(ca, part.ca) && Objects.equals(ct, part.ct) && Objects.equals(ck, part.ck);
     }
 }
