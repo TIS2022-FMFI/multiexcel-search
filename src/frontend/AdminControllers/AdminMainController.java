@@ -20,6 +20,8 @@ public class AdminMainController implements Initializable {
     @FXML
     public Tab categoryTab;
     @FXML
+    public Tab userTab;
+    @FXML
     private Button importButton;
     @FXML
     private Button logoffButton;
@@ -38,6 +40,12 @@ public class AdminMainController implements Initializable {
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             Parent root = loader.load(fxmlStream);
             categoryTab.setContent(root);
+
+            loader = new FXMLLoader();
+            fxmlDocPath = "./src/frontend/AdminFXML/UserMain.fxml";
+            fxmlStream = new FileInputStream(fxmlDocPath);
+            root = loader.load(fxmlStream);
+            userTab.setContent(root);
         }
         catch(IOException e)
         {

@@ -3,10 +3,10 @@ package backend.Managers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import backend.Entities.User;
 import backend.DBS;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class UserManager {
 
@@ -74,12 +74,12 @@ public class UserManager {
      *
      * @return List if succeeded otherwise returns NULL
      */
-    public static List<User> getUsers(boolean onlyActive){
+    public static ObservableList<User> getUsers(boolean onlyActive){
         try(
-                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users");
+                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users ORDER BY user_name");
                 ResultSet r = s.executeQuery()
         ){
-            List<User> allUsers = new ArrayList<>();
+            ObservableList<User> allUsers = FXCollections.observableArrayList();
             while (r.next()){
                 User c = new User();
                 c.setUser_id(r.getInt("user_id"));

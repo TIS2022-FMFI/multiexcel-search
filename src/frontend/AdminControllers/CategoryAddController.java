@@ -18,6 +18,7 @@ public class CategoryAddController implements Initializable {
 
     public TextField categoryNameField;
     public Button addButton;
+    public Button closeButton;
 
     private CategoryMainController mainController;
 
@@ -82,7 +83,7 @@ public class CategoryAddController implements Initializable {
      */
     @FXML
     public void Close() {
-        Stage stage = (Stage) addButton.getScene().getWindow();
+        Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
 }
