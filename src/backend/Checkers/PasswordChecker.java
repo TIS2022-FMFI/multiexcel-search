@@ -1,7 +1,7 @@
 package backend.Checkers;
 
-import backend.DBS;
-import backend.SESSION;
+import backend.Sessions.DBS;
+import backend.Sessions.SESSION;
 
 import backend.Entities.User;
 

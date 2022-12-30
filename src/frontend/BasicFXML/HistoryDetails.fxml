@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.HistoryControllers.HistoryDetailsController">
+    <TableView fx:id="table_parts" editable="true" layoutX="14.0" layoutY="104.0" prefHeight="469.0" prefWidth="1783.0">
+      <columns>
+          <TableColumn fx:id="col_customer_name" editable="false" prefWidth="69.99996948242188" sortable="false" text="Customer" />
+          <TableColumn fx:id="col_part_name" editable="false" prefWidth="56.999969482421875" sortable="false" text="Part" />
+          <TableColumn fx:id="col_category_name" editable="false" prefWidth="70.0" sortable="false" text="Category" />
+          <TableColumn fx:id="col_drawing" editable="false" prefWidth="60.0" sortable="false" text="Drawing" />
+          <TableColumn fx:id="col_rubber" editable="false" prefWidth="64.0" sortable="false" text="Rubber" />
+          <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="87.0" sortable="false" text="Diameter AT" />
+          <TableColumn fx:id="col_diameter_at_tol" editable="false" prefWidth="109.0" sortable="false" text="Diameter AT TOL" />
+          <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="89.0" sortable="false" text="Length L AT" />
+          <TableColumn fx:id="col_length_l_at_tol" editable="false" prefWidth="108.0" sortable="false" text="Length L AT TOL" />
+          <TableColumn fx:id="col_diameter_it" editable="false" prefWidth="79.0" sortable="false" text="Diameter IT" />
+          <TableColumn fx:id="col_diameter_it_tol" editable="false" prefWidth="102.0" sortable="false" text="Diameter IT TOL" />
+          <TableColumn fx:id="col_length_l_it" editable="false" prefWidth="72.0" sortable="false" text="Length L IT" />
+          <TableColumn fx:id="col_length_l_it_tol" editable="false" prefWidth="110.0" sortable="false" text="Length L IT TOL" />
+          <TableColumn fx:id="col_diameter_zt" editable="false" sortable="false" text="Diameter ZT" />
+          <TableColumn fx:id="col_diameter_zt_tol" editable="false" prefWidth="115.0" sortable="false" text="Diameter ZT TOL" />
+          <TableColumn fx:id="col_length_l_zt" editable="false" prefWidth="83.0" sortable="false" text="Length L ZT" />
+          <TableColumn fx:id="col_length_l_zt_tol" editable="false" prefWidth="110.0" sortable="false" text="Length L ZT TOL" />
+          <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="63.0" sortable="false" text="Cr steg" />
+          <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="69.0" sortable="false" text="Cr niere" />
+          <TableColumn fx:id="col_ca" editable="false" prefWidth="46.0" sortable="false" text="Ca" />
+          <TableColumn fx:id="col_ct" editable="false" prefWidth="45.0" sortable="false" text="Ct" />
+          <TableColumn fx:id="col_ck" editable="false" prefWidth="49.0" sortable="false" text="Ck" />
+          <!--<TableColumn fx:id="col_checkbox" editable="true" minWidth="5.0" prefWidth="44.0" sortable="false" text="selected" /-->
+          <!--TableColumn fx:id="col_rating" editable="false" prefWidth="75.0" sortable="false" text="Rating" /-->
+      </columns>
+    </TableView>
+    <Button layoutX="853.0" layoutY="616.0" mnemonicParsing="false" text="Export selection to excel" />
+    <Button layoutX="856.0" layoutY="585.0" mnemonicParsing="false" text="Export selection to PDF" />
+   <Button layoutX="22.0" layoutY="35.0" onAction="#openHistoryFXML" mnemonicParsing="false" text="Back" />
+</AnchorPane>

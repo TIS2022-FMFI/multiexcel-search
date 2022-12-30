@@ -3,9 +3,11 @@ package frontend.BasicControllers;
 
 
 import backend.Checkers.PasswordChecker;
-import backend.SESSION;
+import backend.Sessions.SESSION;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,14 +35,14 @@ public class LoginController {
         // Initialize components and add event listeners
         loginButton.setOnAction(event -> {
             try {
-                login();
+                login(event);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
-    private void login() throws SQLException {
+    private void login(ActionEvent event) throws SQLException {
         // Get the username and password from the fields
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -48,7 +50,7 @@ public class LoginController {
         // Validate the login credentials
         if (validateCredentials(username, password)) {
             // Login successful, go to the next screen
-            goToNextScreen();
+            goToNextScreen(event);
 
         } else {
             // Login failed, show an error message
@@ -65,7 +67,7 @@ public class LoginController {
         return passwordChacker.correctPassword();
     }
 
-    private void goToNextScreen() {
+    private void goToNextScreen(ActionEvent event) {
         try {
 
             FXMLLoader loader = new FXMLLoader();
@@ -79,7 +81,7 @@ public class LoginController {
             AnchorPane root = loader.load(fxmlStream);
 
             Scene scene = new Scene(root);
-            Stage stage = new Stage();
+            Stage stage =  (Stage)  ((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
