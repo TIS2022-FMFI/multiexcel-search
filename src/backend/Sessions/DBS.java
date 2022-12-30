@@ -1,4 +1,4 @@
-package backend;
+package backend.Sessions;
 
 import java.sql.Connection;
 import java.sql.SQLException;

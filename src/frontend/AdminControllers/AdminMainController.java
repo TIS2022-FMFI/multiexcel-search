@@ -1,10 +1,13 @@
 package frontend.AdminControllers;
 
+import backend.Sessions.SESSION;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -23,10 +26,26 @@ public class AdminMainController implements Initializable {
     private Button settingsButton;
     @FXML
     private TabPane tabPane;
+    @FXML
+    private Tab historyTab;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader();
+            String fxmlDocPath = "./src/frontend/BasicFXML/HistoryMain.fxml";
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            Parent root = loader.load(fxmlStream);
+            historyTab.setContent(root);
+            SESSION.setHistoryTab(historyTab);
+
+        }
+        catch(IOException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

@@ -7,13 +7,13 @@ import backend.Managers.HistoryManager;
 import backend.Managers.PartManager;
 import backend.Managers.UserManager;
 import backend.Sessions.HistorySession;
+import backend.Sessions.SESSION;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
@@ -31,7 +31,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HistoryMainController implements Initializable {
 
@@ -86,8 +85,11 @@ public class HistoryMainController implements Initializable {
     public Button button_open_selected;
     @FXML
     public Button button_delte_selected;
+    @FXML
+    public Button button_user_filter;
 
 
+    private boolean isAdmin;
     private ObservableList<Query> queries;
     private int currentPageIndex = 0;
     private int itemsPerPage = 10;
@@ -106,6 +108,11 @@ public class HistoryMainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        isAdmin = SESSION.getSession().getUser_name().equals("admin");
+        if(!isAdmin){
+            col_username.setVisible(false);
+            button_user_filter.setVisible(false);
+        }
         historySession = HistorySession.getInstance();
         initializeController();
     }
@@ -247,9 +254,19 @@ public class HistoryMainController implements Initializable {
     }
 
     private void resetFilters(){
-        users = null;
         categories = null;
         dateFromTo = null;
+
+        if(!isAdmin){
+            if(users == null){
+                users = new ArrayList<>();
+            }
+            if(users.size() == 0){
+                users.add(SESSION.getSession());
+            }
+        }else{
+            users = null;
+        }
     }
 
     private void updateSelectButton(){
@@ -343,12 +360,13 @@ public class HistoryMainController implements Initializable {
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             AnchorPane root = loader.load(fxmlStream);
 
+            SESSION.getHistoryTab().setContent(root);
 
-            Scene scene = new Scene(root);
+            /*Scene scene = new Scene(root);
 
             Stage stage =  (Stage)  ((Node)actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
-            stage.show();
+            stage.show();*/
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

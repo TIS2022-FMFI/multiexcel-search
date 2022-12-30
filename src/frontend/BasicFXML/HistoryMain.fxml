@@ -34,7 +34,7 @@
     <DatePicker fx:id="date_picker_from" layoutX="616.0" layoutY="81.0" promptText="from" />
     <Button fx:id="button_date_from_clear" layoutX="747.0" layoutY="107.0" mnemonicParsing="false" onAction="#onClearDateFromClick" text="Clear" />
     <Button fx:id="button_date_to_clear" layoutX="957.0" layoutY="107.0" mnemonicParsing="false" onAction="#onClearDateToClick" text="Clear" />
-   <Button layoutX="481.0" layoutY="81.0" mnemonicParsing="false" onAction="#onClickUserFilterButton" text="Filter by users" />
+   <Button fx:id="button_user_filter" layoutX="481.0" layoutY="81.0" mnemonicParsing="false" onAction="#onClickUserFilterButton" text="Filter by users" />
    <Button layoutX="101.0" layoutY="34.0" mnemonicParsing="false" onAction="#refreshTable" text="Refresh" />
    <Button layoutX="1079.0" layoutY="69.0" mnemonicParsing="false" onAction="#clearAllFiltersAndRefreshTable" text="Clear filters" />
    <Button fx:id="button_open_selected" disable="true" layoutX="1187.0" layoutY="339.0" mnemonicParsing="false" onAction="#openSelectedQuery" text="Open" />

@@ -3,7 +3,7 @@ package backend.Managers;
 import backend.Entities.Category;
 import backend.Entities.Query;
 import backend.Entities.User;
-import backend.DBS;
+import backend.Sessions.DBS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;

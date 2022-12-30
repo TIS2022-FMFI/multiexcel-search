@@ -1,7 +1,7 @@
 package backend.XLSImportExport;
 
 
-import backend.DBS;
+import backend.Sessions.DBS;
 import backend.Entities.Category;
 import backend.Entities.Customer;
 import backend.Entities.Part;

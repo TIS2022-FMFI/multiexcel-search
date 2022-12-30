@@ -3,20 +3,18 @@ package frontend.HistoryControllers;
 import backend.Entities.*;
 import backend.Managers.*;
 import backend.Sessions.HistorySession;
+import backend.Sessions.SESSION;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -131,12 +129,7 @@ public class HistoryDetailsController implements Initializable {
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             AnchorPane root = loader.load(fxmlStream);
 
-
-            Scene scene = new Scene(root);
-
-            Stage stage =  (Stage)  ((Node)actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            SESSION.getHistoryTab().setContent(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
