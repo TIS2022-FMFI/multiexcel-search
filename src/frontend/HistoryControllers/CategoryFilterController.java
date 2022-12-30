@@ -59,7 +59,7 @@ public class CategoryFilterController implements Initializable {
     @FXML void onConfirmAction(ActionEvent event){
         if(historyMainController != null){
             historyMainController.setCategoryFilter(collectCheckedCategories());
-            //historyMainController.refreshTable(); need to click filter instead
+            historyMainController.refreshTable();
         }else{
             System.err.println("historyMainController == null");
         }

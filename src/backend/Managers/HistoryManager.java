@@ -52,7 +52,7 @@ public class HistoryManager {
 
     private static String createQueryString(List<Category> categories, Pair<Date, Date> dateFromTo, List<User> users){
 
-        if(dateFromTo == null && users == null){
+        if(dateFromTo == null && users == null && categories == null){
             if(countOnly){
                 return "SELECT COUNT(date) as query_total_count FROM multiexcel.queries ";
             }else{

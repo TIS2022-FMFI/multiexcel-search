@@ -97,16 +97,7 @@ public class HistoryDetailsController implements Initializable {
     private final String CATEGORY_NAME_NOT_FOUND = "<unknown_category>";
     private final String PART_NAME_NOT_FOUND = "<unknown_part>";
 
-    /*@FXML
-    private TableColumn<Part, Boolean> col_checkbox;*/
-
-    //TODO: how to add pictures?
-    //TODO: do we show rating?
     //TODO: export to pdf/excel and hook it to buttons, how to export
-    //DONE: vymysliet chekboxy -> mutliselect in table, hold ctrl
-    //DONE: get part name from id
-    //DONE: get customer name from id
-    //DONE: get category name from id
 
     private List<Part> parts;
 
@@ -171,13 +162,10 @@ public class HistoryDetailsController implements Initializable {
         col_ca.setCellValueFactory(new PropertyValueFactory<>("ca"));
         col_ct.setCellValueFactory(new PropertyValueFactory<>("ct"));
         col_ck.setCellValueFactory(new PropertyValueFactory<>("ck"));
-        //col_checkbox.setCellValueFactory( new PropertyValueFactory<>( "isSelected" ));
-        //col_checkbox.setCellFactory( CheckBoxTableCell.forTableColumn(col_checkbox));
-
     }
 
     private void populateTable(){
-        initializeParts(); //remove, only for testing
+        initializeParts();
         table_parts.setItems(FXCollections.observableArrayList(parts));
         System.out.println("Populated table!");
     }

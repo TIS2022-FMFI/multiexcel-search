@@ -10,7 +10,6 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.HistoryControllers.HistoryMainController">
     <TableView fx:id="table_queries" layoutX="101.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="411.0" prefWidth="1054.0">
       <columns>
-          <!--TableColumn fx:id="col_query_id" editable="false" prefWidth="75.0" sortable="false" text="Query ID"/>-->
           <TableColumn fx:id="col_username" editable="false" prefWidth="75.0" sortable="false" text="User" />
           <TableColumn fx:id="col_rubber" editable="false" prefWidth="75.0" sortable="false" text="Rubber" />
           <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="75.0" sortable="false" text="Diameter AT" />
@@ -32,7 +31,6 @@
     <Label fx:id="label_page_index" contentDisplay="CENTER" layoutX="595.0" layoutY="584.0" text="Page 0 / 100" textAlignment="CENTER" textOverrun="CLIP" />
     <DatePicker fx:id="date_picker_to" layoutX="826.0" layoutY="81.0" promptText="to" />
     <DatePicker fx:id="date_picker_from" layoutX="616.0" layoutY="81.0" promptText="from" />
-    <Button fx:id="button_filter" layoutX="1112.0" layoutY="107.0" mnemonicParsing="false" text="Filter" />
     <Button fx:id="button_date_from_clear" layoutX="747.0" layoutY="107.0" mnemonicParsing="false" onAction="#onClearDateFromClick" text="Clear" />
     <Button fx:id="button_date_to_clear" layoutX="957.0" layoutY="107.0" mnemonicParsing="false" onAction="#onClearDateToClick" text="Clear" />
    <Button layoutX="481.0" layoutY="81.0" mnemonicParsing="false" onAction="#onClickUserFilterButton" text="Filter by users" />

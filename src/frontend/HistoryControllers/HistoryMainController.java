@@ -31,21 +31,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-//todo: remove history query
-//todo: resize columns
-//DONE: add user filter button/window
-//DONE: SELECT (pre category filter)
-//DONE: Add category filter button/window
-//DONE: add refresh button
-//DONE: Add clear all filters button
-//DONE: polozky od do napis v jednom stlpci
-//DONE: pridaj tam username a nezobrazuj query id ani user id (to su len interne)
 public class HistoryMainController implements Initializable {
 
     @FXML
     public TableView<Query> table_queries;
-    //@FXML
-    //public TableColumn<Query, Integer> col_query_id;
     @FXML
     public TableColumn<Query, String> col_username;
     @FXML
@@ -86,8 +75,6 @@ public class HistoryMainController implements Initializable {
     @FXML
     public DatePicker date_picker_from;
     @FXML
-    public Button button_filter;
-    @FXML
     public Button button_date_from_clear;
     @FXML
     public Button button_date_to_clear;
@@ -121,7 +108,6 @@ public class HistoryMainController implements Initializable {
     private void initializeController(){
         userIdToName = new HashMap<>();
 
-        //col_query_id.setCellValueFactory(new PropertyValueFactory<>("query_id"));
         col_username.setCellValueFactory(feature -> createUsernameWrapperFromUserID(feature.getValue().getUser_id()));
         col_rubber.setCellValueFactory( featrue -> createFromToWrapper(featrue.getValue().getRubber_from(), featrue.getValue().getRubber_to()));
         col_diameter_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_AT_from(), featrue.getValue().getDiameter_AT_to()));
@@ -149,23 +135,17 @@ public class HistoryMainController implements Initializable {
         date_picker_from.setOnAction(event -> {
             if(date_picker_from.getValue() != null){
                 System.out.printf("Selected from date: %s%n",Date.valueOf(date_picker_from.getValue()));
+                filter();
             }
         });
 
         date_picker_to.setOnAction(event -> {
             if(date_picker_to.getValue() != null){
                 System.out.printf("Selected TO date: %s%n",Date.valueOf(date_picker_to.getValue()));
+                filter();
             }
         });
 
-        button_filter.setOnAction(event -> {
-            currentPageIndex = 0;
-            updateQueryFilter();
-            updateTableContent();
-            calculatePageIndexesAndUpdate();
-            updatePageButtonsDisabledStatus();
-            System.out.println("Updated filters, page buttons and table");
-        });
     }
 
     private ReadOnlyStringWrapper createUsernameWrapperFromUserID(int userId){
@@ -230,9 +210,9 @@ public class HistoryMainController implements Initializable {
     }
 
     private void resetFilters(){
-        users = null;//new ArrayList<>();
-        categories = null;//new ArrayList<>();
-        dateFromTo = null;//new Pair<>(new Date(0), new Date(System.currentTimeMillis()));
+        users = null;
+        categories = null;
+        dateFromTo = null;
     }
 
     private void updateSelectButton(){
@@ -271,9 +251,18 @@ public class HistoryMainController implements Initializable {
         System.out.println("Filter data loaded from HistorySession");
         historySession.removeSessionData();
     }
+    
+    private void filter(){
+        currentPageIndex = 0;
+        updateDateFilter();
+        updateTableContent();
+        calculatePageIndexesAndUpdate();
+        updatePageButtonsDisabledStatus();
+        System.out.println("Updated filters, page buttons and table");
+    }
 
     @FXML
-    public void updateQueryFilter(){
+    public void updateDateFilter(){
         if(date_picker_to.getValue() != null && date_picker_from.getValue() != null){
             dateFromTo = new Pair<>(Date.valueOf(date_picker_from.getValue()), Date.valueOf(date_picker_to.getValue()));
         }else if(date_picker_to.getValue() == null && date_picker_from.getValue() != null){
@@ -379,12 +368,14 @@ public class HistoryMainController implements Initializable {
     public void onClearDateFromClick(){
         dateFromTo = null;
         date_picker_from.setValue(null);
+        refreshTable();
     }
 
     @FXML
     public void onClearDateToClick(){
         dateFromTo = null;
         date_picker_to.setValue(null);
+        refreshTable();
     }
 
     @FXML
