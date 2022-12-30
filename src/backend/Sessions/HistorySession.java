@@ -1,7 +1,11 @@
-package backend.Entities;
+package backend.Sessions;
 
+import backend.Entities.Category;
+import backend.Entities.Query;
+import backend.Entities.User;
 import javafx.util.Pair;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +18,7 @@ public class HistorySession {
     private List<Category> categoriesFilter;
     private Pair<Date, Date> dateFromToFilter;
     private Map<Integer, String> userIdToName;
+    private Map<BigInteger, String> categoryIdToName;
     private Query selectedQuery;
     private Integer currentPageIndex;
 
@@ -36,6 +41,7 @@ public class HistorySession {
         userIdToName = null;
         selectedQuery = null;
         currentPageIndex = null;
+        categoryIdToName = null;
     }
 
     public List<User> getUsersFilter() {
@@ -83,6 +89,15 @@ public class HistorySession {
     }
     public void setCurrentPageIndex(int currentPageIndex){
         this.currentPageIndex = currentPageIndex;
+    }
+
+    public void setCategoryIdToName(Map<BigInteger, String> categoryIdToName)
+    {
+        this.categoryIdToName = categoryIdToName;
+    }
+
+    public Map<BigInteger, String> getCategoryIdToName(){
+        return categoryIdToName;
     }
 
 }

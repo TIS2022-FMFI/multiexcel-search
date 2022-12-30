@@ -1,12 +1,12 @@
 package frontend.HistoryControllers;
 
-import backend.Entities.Category;
-import backend.Entities.HistorySession;
-import backend.Entities.Query;
+import backend.Entities.*;
 
-import backend.Entities.User;
+import backend.Managers.CategoryManager;
 import backend.Managers.HistoryManager;
+import backend.Managers.PartManager;
 import backend.Managers.UserManager;
+import backend.Sessions.HistorySession;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,11 +25,13 @@ import javafx.util.Pair;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HistoryMainController implements Initializable {
 
@@ -37,6 +39,8 @@ public class HistoryMainController implements Initializable {
     public TableView<Query> table_queries;
     @FXML
     public TableColumn<Query, String> col_username;
+    @FXML
+    public TableColumn<Query, String> col_categories;
     @FXML
     public TableColumn<Query, String> col_rubber;
     @FXML
@@ -95,6 +99,7 @@ public class HistoryMainController implements Initializable {
     private List<Category> categories;
     private Pair<Date, Date> dateFromTo;
     private Map<Integer, String> userIdToName;
+    private Map<BigInteger, String> categoryIdToName;
 
     private HistorySession historySession;
     private boolean ignorePageCalculation = false;
@@ -107,8 +112,10 @@ public class HistoryMainController implements Initializable {
 
     private void initializeController(){
         userIdToName = new HashMap<>();
+        categoryIdToName = new HashMap<>();
 
         col_username.setCellValueFactory(feature -> createUsernameWrapperFromUserID(feature.getValue().getUser_id()));
+        col_categories.setCellValueFactory(feature -> createCategoriesWrapper(feature.getValue().getQuery_id()));
         col_rubber.setCellValueFactory( featrue -> createFromToWrapper(featrue.getValue().getRubber_from(), featrue.getValue().getRubber_to()));
         col_diameter_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_AT_from(), featrue.getValue().getDiameter_AT_to()));
         col_length_l_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_AT_from(), featrue.getValue().getLength_L_AT_to()));
@@ -146,6 +153,36 @@ public class HistoryMainController implements Initializable {
             }
         });
 
+    }
+
+    private ReadOnlyStringWrapper createCategoriesWrapper(int queryId){
+        List<Part> parts = PartManager.GetPartsByQueryId(queryId);
+
+        if(parts == null){
+            return new ReadOnlyStringWrapper("<none>");
+        }
+
+        /*if(parts.size() == 0){
+            return new ReadOnlyStringWrapper("<none>");
+        }*/
+
+        HashSet<BigInteger> categoryIds = new HashSet<>();
+        for (Part p : parts) {
+            categoryIds.add(p.getCategory_id());
+        }
+        List<String> displayedCategories = new ArrayList<>();
+
+        for (BigInteger b: categoryIds) {
+            if(!categoryIdToName.containsKey(b)){
+                Category category = CategoryManager.getCategory(b);
+                if(category == null){
+                    continue;
+                }
+                categoryIdToName.put(b, category.getCategory_name());
+            }
+            displayedCategories.add(categoryIdToName.get(b));
+        }
+        return new ReadOnlyStringWrapper(String.join(", ", displayedCategories));
     }
 
     private ReadOnlyStringWrapper createUsernameWrapperFromUserID(int userId){
@@ -226,6 +263,7 @@ public class HistoryMainController implements Initializable {
         historySession.setDateFromToFilter(dateFromTo);
         historySession.setUserIdToName(userIdToName);
         historySession.setCurrentPageIndex(currentPageIndex);
+        historySession.setCategoryIdToName(categoryIdToName);
         System.out.println("Filter data saved to HistorySession");
     }
 
@@ -247,6 +285,9 @@ public class HistoryMainController implements Initializable {
         if(historySession.getCurrentPageIndex() != null){
             currentPageIndex = historySession.getCurrentPageIndex();
             ignorePageCalculation = true;
+        }
+        if(historySession.getCategoryIdToName() != null){
+            categoryIdToName = historySession.getCategoryIdToName();
         }
         System.out.println("Filter data loaded from HistorySession");
         historySession.removeSessionData();

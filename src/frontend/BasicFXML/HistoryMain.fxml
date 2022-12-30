@@ -11,6 +11,7 @@
     <TableView fx:id="table_queries" layoutX="101.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="411.0" prefWidth="1054.0">
       <columns>
           <TableColumn fx:id="col_username" editable="false" prefWidth="75.0" sortable="false" text="User" />
+          <TableColumn fx:id="col_categories" editable="false" prefWidth="75.0" sortable="false" text="Categories" />
           <TableColumn fx:id="col_rubber" editable="false" prefWidth="75.0" sortable="false" text="Rubber" />
           <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="75.0" sortable="false" text="Diameter AT" />
           <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="75.0" sortable="false" text="Length L AT" />

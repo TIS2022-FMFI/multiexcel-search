@@ -2,6 +2,7 @@ package frontend.HistoryControllers;
 
 import backend.Entities.*;
 import backend.Managers.*;
+import backend.Sessions.HistorySession;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -114,6 +115,9 @@ public class HistoryDetailsController implements Initializable {
         idToPartName = new HashMap<>();
         idToCategoryName = new HashMap<>();
         idToCustomerName = new HashMap<>();
+        if(historySession.getCategoryIdToName() != null){
+            idToCategoryName.putAll(historySession.getCategoryIdToName());
+        }
         table_parts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         initializeController();
         populateTable();
