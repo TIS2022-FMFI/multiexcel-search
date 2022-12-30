@@ -1,4 +1,4 @@
-package frontend.HistoryControllers;
+package frontend.AdminControllers;
 
 import backend.Entities.*;
 
@@ -445,8 +445,8 @@ public class HistoryMainController implements Initializable {
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             AnchorPane root = loader.load(fxmlStream);
 
-            CategoryFilterController categoryFilterController = loader.getController();
-            categoryFilterController.setHistoryMainController(this);
+            HistoryCategoryFilterController historyCategoryFilterController = loader.getController();
+            historyCategoryFilterController.setHistoryMainController(this);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -466,8 +466,8 @@ public class HistoryMainController implements Initializable {
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             AnchorPane root = loader.load(fxmlStream);
 
-            UserFilterController userFilterController = loader.getController();
-            userFilterController.setHistoryMainController(this);
+            HistoryUserFilterController historyUserFilterController = loader.getController();
+            historyUserFilterController.setHistoryMainController(this);
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();

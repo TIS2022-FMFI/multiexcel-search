@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.HistoryControllers.HistoryMainController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminControllers.HistoryMainController">
     <TableView fx:id="table_queries" layoutX="101.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="411.0" prefWidth="1054.0">
       <columns>
           <TableColumn fx:id="col_username" editable="false" prefWidth="75.0" sortable="false" text="User" />

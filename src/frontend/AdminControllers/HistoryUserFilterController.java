@@ -1,4 +1,4 @@
-package frontend.HistoryControllers;
+package frontend.AdminControllers;
 
 import backend.Entities.User;
 import backend.Managers.UserManager;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.*;
 
-public class UserFilterController implements Initializable {
+public class HistoryUserFilterController implements Initializable {
 
     @FXML
     public VBox scrollUserFilter;
