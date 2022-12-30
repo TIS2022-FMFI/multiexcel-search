@@ -1,10 +1,13 @@
 package frontend.BasicControllers;
 
+import backend.Entities.User;
 import backend.Managers.UserManager;
+import backend.Sessions.SESSION;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.paint.Color;
 
 import java.sql.SQLException;
 
@@ -33,27 +36,34 @@ public class ChangePasswordController {
     }
 
     private void changePassword() throws SQLException {
+        if (validateChange()) {
+            if (UserManager.changeUserPassword(SESSION.getSession(), newPasswordFieldOne.getText())) {
+                errorLabel.setTextFill(Color.color(0, 1, 0));
+                errorLabel.setText("Password was changed");
+            }
+        }
+    }
+
+    private boolean validateChange() {
 
         String password = passwordField.getText();
         String newPasswordOne = newPasswordFieldOne.getText();
         String newPasswordTwo = newPasswordFieldTwo.getText();
 
+        if (!SESSION.getSession().getPassword().equals(password)) {
+            errorLabel.setText("Invalid password for User: " + SESSION.getSession().getUser_name());
+            return false;
+        }
+
         if (!newPasswordOne.equals(newPasswordTwo)) {
-            errorLabel.setText("New passwords are not same");
+            errorLabel.setText("Invalid input: New passwords don't match");
+            return false;
         }
 
-        if (validateChange(password, newPasswordOne)) {
-            // Password change successful, go to the next screen
-            goToNextScreen();
-        } else {
-            // Password change failed, show an error message
-            errorLabel.setText("Invalid username or password");
+        if (newPasswordOne.equals(SESSION.getSession().getPassword())) {
+            errorLabel.setText("Invalid input: New password is same as old one");
+            return false;
         }
-    }
-
-    private boolean validateChange(String password, String newPassword) throws SQLException {
-
-        UserManager userManager = new UserManager();
 
         return true;
     }
