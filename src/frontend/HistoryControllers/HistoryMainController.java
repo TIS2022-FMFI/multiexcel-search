@@ -22,7 +22,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import sun.nio.cs.ext.SimpleEUCEncoder;
 
 import java.io.FileInputStream;
 import java.io.IOException;
