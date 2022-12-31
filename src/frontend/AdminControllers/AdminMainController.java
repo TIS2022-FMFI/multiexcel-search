@@ -6,15 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -56,21 +52,21 @@ public class AdminMainController implements Initializable {
 
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/AdminFXML/Import.fxml";
-            setScene(loader, fxmlDocPath);
+            setScene(loader, fxmlDocPath, "Import");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void setScene(FXMLLoader loader, String fxmlDocPath) throws IOException {
-        BasicController.setScene(loader, fxmlDocPath);
+    private void setScene(FXMLLoader loader, String fxmlDocPath, String stageTitle) throws IOException {
+        BasicController.setScene(loader, fxmlDocPath, stageTitle);
     }
 
     public void changePassword() {
         try {
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/BasicFXML/ChangePasswordScreen.fxml";
-            setScene(loader, fxmlDocPath);
+            setScene(loader, fxmlDocPath, "Change password");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
