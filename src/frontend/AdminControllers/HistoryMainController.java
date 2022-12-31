@@ -8,19 +8,18 @@ import backend.Managers.PartManager;
 import backend.Managers.UserManager;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
+import frontend.BasicControllers.BasicController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.FileInputStream;
@@ -360,14 +359,8 @@ public class HistoryMainController implements Initializable {
             String fxmlDocPath = "./src/frontend/BasicFXML/HistoryDetails.fxml";
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
             AnchorPane root = loader.load(fxmlStream);
-
             SESSION.getHistoryTab().setContent(root);
 
-            /*Scene scene = new Scene(root);
-
-            Stage stage =  (Stage)  ((Node)actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();*/
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -443,18 +436,10 @@ public class HistoryMainController implements Initializable {
         try{
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/BasicFXML/CategoryFilter.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+            BasicController.setScene(loader, fxmlDocPath, "Filter by category");
 
             HistoryCategoryFilterController historyCategoryFilterController = loader.getController();
             historyCategoryFilterController.setHistoryMainController(this);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle("Filter by category");
-            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -464,18 +449,11 @@ public class HistoryMainController implements Initializable {
         try{
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/BasicFXML/UserFilter.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+            BasicController.setScene(loader, fxmlDocPath, "Filter by users");
 
             HistoryUserFilterController historyUserFilterController = loader.getController();
             historyUserFilterController.setHistoryMainController(this);
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle("Filter by users");
-            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -515,18 +493,11 @@ public class HistoryMainController implements Initializable {
         try{
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/BasicFXML/HistoryDelete.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+            BasicController.setScene(loader, fxmlDocPath, "Delete selection");
 
             HistoryDeleteController historyDeleteController = loader.getController();
             historyDeleteController.setHistoryMainController(this);
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle("Delete selection");
-            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
