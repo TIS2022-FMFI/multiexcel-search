@@ -109,6 +109,7 @@ public class HistoryMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         isAdmin = SESSION.getSession().getUser_name().equals("admin");
+
         if(!isAdmin){
             col_username.setVisible(false);
             button_user_filter.setVisible(false);
