@@ -1,6 +1,7 @@
 package frontend.AdminControllers;
 
 import backend.Sessions.SESSION;
+import frontend.BasicControllers.BasicController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -54,14 +56,22 @@ public class AdminMainController implements Initializable {
 
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/AdminFXML/Import.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+            setScene(loader, fxmlDocPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
+    private void setScene(FXMLLoader loader, String fxmlDocPath) throws IOException {
+        BasicController.setScene(loader, fxmlDocPath);
+    }
+
+    public void changePassword() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            String fxmlDocPath = "./src/frontend/BasicFXML/ChangePasswordScreen.fxml";
+            setScene(loader, fxmlDocPath);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
