@@ -4,9 +4,9 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="681.0" prefWidth="1122.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminControllers.AdminMainController">
+
+<AnchorPane prefHeight="681.0" prefWidth="1122.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminControllers.AdminMainController">
    <children>
       <TabPane prefHeight="401.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -15,7 +15,7 @@
                 <fx:include source="Search.fxml" />
             </content>
           </Tab>
-          <Tab text="History">
+          <Tab fx:id="historyTab" text="History">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
@@ -32,12 +32,8 @@
             </Tab>
         </tabs>
       </TabPane>
-      <HBox prefHeight="27.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#importButton" text="Import" />
-            <Button mnemonicParsing="false" text="Log off" />
-            <Button mnemonicParsing="false" text="Settings" />
-         </children>
-      </HBox>
+      <Button mnemonicParsing="false" text="Import" AnchorPane.rightAnchor="159.0" AnchorPane.topAnchor="3.0" onAction="#importButton"/>
+      <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Log off" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0" />
+      <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Change Password" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="3.0"  onAction="#changePassword"/>
    </children>
 </AnchorPane>

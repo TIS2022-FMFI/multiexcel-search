@@ -1,0 +1,43 @@
+package backend.Sessions;
+
+import backend.Entities.User;
+import javafx.scene.control.Tab;
+
+public class SESSION {
+
+    private static User user;
+
+    private static Tab historyTab;
+
+    //add other Tabs also here
+
+    public static User getSession() {
+        if (user == null) {
+            throw new IllegalStateException("User must be set before calling this method");
+        }
+        return user;
+    }
+
+    public static void setSession(User user) {
+        if (user == null) {
+            throw new NullPointerException("User cannot be null");
+        }
+        SESSION.user = user;
+    }
+
+    public static void clear() {
+        user = null;
+    }
+
+    public static Tab getHistoryTab(){
+        if(historyTab == null){
+            throw new IllegalStateException("historyTab == null");
+        }
+        return historyTab;
+    }
+
+    public static void setHistoryTab(Tab historyTab){
+        SESSION.historyTab = historyTab;
+    }
+
+}

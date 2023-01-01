@@ -1,10 +1,12 @@
-package backend;
+package backend.Managers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import backend.Sessions.DBS;
 import backend.Entities.User;
 
 public class UserManager {
@@ -115,6 +117,33 @@ public class UserManager {
             return  false;
         }
         return true;
+    }
+
+    /**
+     * Get user by id
+     *
+     * @param userId user id
+     *
+     * @return User if succeeded, NULL if not found, NULL if failed
+     */
+    public static User getUserById(int userId){
+        String sqlQuery = String.format("SELECT * FROM multiexcel.users WHERE user_id = %d", userId);
+        try(
+                PreparedStatement s = DBS.getConnection().prepareStatement(sqlQuery);
+                ResultSet r = s.executeQuery()
+        ){
+            if (r.next()){
+                User user = new User();
+                user.setUser_id(r.getInt("user_id"));
+                user.setUser_name(r.getString("user_name"));
+                user.setPassword(r.getString("password"));
+                user.setSuspended(r.getBoolean("suspended"));
+                return user;
+            }
+            return null;
+        }catch (SQLException e){
+            return null;
+        }
     }
 }
 
