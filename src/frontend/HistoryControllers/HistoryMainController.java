@@ -1,6 +1,9 @@
 package frontend.HistoryControllers;
 
-import backend.Entities.*;
+import backend.Entities.Category;
+import backend.Entities.Part;
+import backend.Entities.Query;
+import backend.Entities.User;
 import backend.Managers.CategoryManager;
 import backend.Managers.HistoryManager;
 import backend.Managers.PartManager;
@@ -8,9 +11,9 @@ import backend.Managers.UserManager;
 import backend.Models.Filterable;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
-import frontend.BasicControllers.BasicController;
 import frontend.BasicControllers.AbstractControllers.FilterController;
 import frontend.BasicControllers.AbstractControllers.FilterMasterController;
+import frontend.BasicControllers.BasicController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -88,9 +91,9 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     private boolean isAdmin;
     private ObservableList<Query> queries;
     private int currentPageIndex = 0;
-    private int itemsPerPage = 10;
+    private final int itemsPerPage = 10;
     private int currentSelectedIndex = -1;
-    private List<Integer> currentSelectedIndexes = new ArrayList<>();
+    private final List<Integer> currentSelectedIndexes = new ArrayList<>();
     private int totalItemCount;
     private int maxPagesIndex;
     private List<User> users;
@@ -357,11 +360,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     private void updateDeleteButton() {
-        if (currentSelectedIndexes.size() > 0) {
-            button_delte_selected.setDisable(false);
-        } else {
-            button_delte_selected.setDisable(true);
-        }
+        button_delte_selected.setDisable(currentSelectedIndexes.size() <= 0);
     }
 
     @FXML

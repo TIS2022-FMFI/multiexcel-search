@@ -33,6 +33,37 @@ public class BasicController implements Initializable {
         stage.show();
     }
 
+    public static <T> T loadNewFXML(String fxmlDocPath, String windowName) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.setTitle(windowName);
+            stage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void switchTab(String fxmlDocPath, Tab tab) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+            tab.setContent(root);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void setTab(String path, Tab tab) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         FileInputStream fxmlStream = new FileInputStream(path);
@@ -59,37 +90,6 @@ public class BasicController implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/BasicFXML/ChangePasswordScreen.fxml";
             setScene(loader, fxmlDocPath);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static <T> T loadNewFXML(String fxmlDocPath, String windowName) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle(windowName);
-            stage.show();
-            return loader.getController();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void switchTab(String fxmlDocPath, Tab tab){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
-
-            tab.setContent(root);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
