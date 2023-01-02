@@ -1,7 +1,7 @@
 package backend.Managers;
 
-import backend.Sessions.DBS;
 import backend.Entities.Category;
+import backend.Sessions.DBS;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;

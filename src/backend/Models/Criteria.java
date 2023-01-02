@@ -1,10 +1,15 @@
 package backend.Models;
 
+import backend.Entities.Customer;
+import backend.Entities.Part_name;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Criteria {
 
-    private List<String> partsName;
+    private List<Part_name> partNames;
+    private List<Customer> customers;
     private Triple<Short, Short, Integer> rubber = null;
     private Triple<Double, Double, Integer> diameter_AT = null;
     private Triple<Double, Double, Integer> length_L_AT = null;
@@ -18,12 +23,34 @@ public class Criteria {
     private Triple<Double, Double, Integer> ct = null;
     private Triple<Double, Double, Integer> ck = null;
 
-    public List<String> getPartsName() {
-        return partsName;
+    public List<String> getCustomersStrings() {
+        if (customers == null)
+            return null;
+        return customers.stream().map(Customer::getCustomer_name).collect(Collectors.toList());
     }
 
-    public void setPartsName(List<String> partsName) {
-        this.partsName = partsName;
+    public List<Part_name> getPartNames() {
+        return partNames;
+    }
+
+    public void setPartNames(List<Part_name> partNames) {
+        this.partNames = partNames;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
+    }
+
+    public List<String> getPartsNameStrings() {
+
+        if (partNames == null)
+            return null;
+        return partNames.stream().map(Part_name::getPart_name).collect(Collectors.toList());
+
     }
 
     public Triple<Short, Short, Integer> getRubber() {

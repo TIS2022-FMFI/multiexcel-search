@@ -1,10 +1,10 @@
 package backend.XLSImportExport;
 
 
-import backend.Sessions.DBS;
 import backend.Entities.Part;
 import backend.Managers.*;
 import backend.Models.MutablePair;
+import backend.Sessions.DBS;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -246,7 +246,7 @@ public class Import {
                 } catch (SQLException ignored) {
                     DBS.getConnection().rollback();
                     throw new RuntimeException("Database error at line: " + index);
-                } catch (Exception ignored){
+                } catch (Exception ignored) {
                     throw new RuntimeException("Error at line: " + index);
                 }
             }

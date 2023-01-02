@@ -23,18 +23,17 @@ public class HistorySession {
     private Integer currentPageIndex;
 
 
+    private HistorySession() {
+    }
 
-    public static HistorySession getInstance(){
-        if (instance == null){
+    public static HistorySession getInstance() {
+        if (instance == null) {
             instance = new HistorySession();
         }
         return instance;
     }
 
-    private HistorySession(){
-    }
-
-    public void removeSessionData(){
+    public void removeSessionData() {
         usersFilter = null;
         categoriesFilter = null;
         dateFromToFilter = null;
@@ -84,20 +83,20 @@ public class HistorySession {
         this.selectedQuery = selectedQuery;
     }
 
-    public Integer getCurrentPageIndex(){
+    public Integer getCurrentPageIndex() {
         return currentPageIndex;
     }
-    public void setCurrentPageIndex(int currentPageIndex){
+
+    public void setCurrentPageIndex(int currentPageIndex) {
         this.currentPageIndex = currentPageIndex;
     }
 
-    public void setCategoryIdToName(Map<BigInteger, String> categoryIdToName)
-    {
-        this.categoryIdToName = categoryIdToName;
+    public Map<BigInteger, String> getCategoryIdToName() {
+        return categoryIdToName;
     }
 
-    public Map<BigInteger, String> getCategoryIdToName(){
-        return categoryIdToName;
+    public void setCategoryIdToName(Map<BigInteger, String> categoryIdToName) {
+        this.categoryIdToName = categoryIdToName;
     }
 
 }

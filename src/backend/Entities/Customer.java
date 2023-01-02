@@ -1,5 +1,6 @@
 package backend.Entities;
 
+import backend.Models.Filterable;
 import backend.Sessions.DBS;
 
 import java.sql.PreparedStatement;
@@ -7,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Customer {
+public class Customer implements Filterable {
 
     private Integer customer_id;
     private String customer_name;
@@ -55,6 +56,16 @@ public class Customer {
 
             s.executeUpdate();
         }
+    }
+
+    @Override
+    public Integer getId() {
+        return getCustomer_id();
+    }
+
+    @Override
+    public String getName() {
+        return getCustomer_name();
     }
 }
 
