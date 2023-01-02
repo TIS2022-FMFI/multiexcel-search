@@ -1,7 +1,8 @@
-package frontend.BasicControllers;
+package frontend.BasicControllers.SearchControllers;
 
 import backend.Entities.Part_name;
 import backend.Managers.PartNameManager;
+import frontend.BasicControllers.AbstractControllers.FilterController;
 
 import java.net.URL;
 import java.util.List;

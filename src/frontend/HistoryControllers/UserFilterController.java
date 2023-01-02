@@ -2,7 +2,7 @@ package frontend.HistoryControllers;
 
 import backend.Entities.User;
 import backend.Managers.UserManager;
-import frontend.BasicControllers.FilterController;
+import frontend.BasicControllers.AbstractControllers.FilterController;
 
 import java.net.URL;
 import java.util.List;

@@ -1,7 +1,8 @@
-package frontend.BasicControllers;
+package frontend.BasicControllers.SearchControllers;
 
 import backend.Entities.Customer;
 import backend.Managers.CustomerManager;
+import frontend.BasicControllers.AbstractControllers.FilterController;
 
 import java.net.URL;
 import java.util.List;

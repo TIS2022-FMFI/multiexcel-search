@@ -43,10 +43,10 @@ public class BasicController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            setTab("./src/frontend/BasicFXML/HistoryMain.fxml", historyTab);
+            setTab("./src/frontend/BasicFXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
-            setTab("./src/frontend/BasicFXML/FirstSearch.fxml", searchTab);
+            setTab("./src/frontend/BasicFXML/SearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
 
         } catch (IOException e) {

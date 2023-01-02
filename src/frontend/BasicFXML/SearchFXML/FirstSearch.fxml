@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="814.0" prefWidth="1208.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.BasicControllers.FirstSearchController">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="814.0" prefWidth="1208.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.BasicControllers.SearchControllers.FirstSearchController">
     <children>
         <VBox layoutX="353.0" layoutY="564.0" prefHeight="70.0" prefWidth="145.0" AnchorPane.leftAnchor="250.0">
             <children>
@@ -224,9 +224,9 @@
                 </HBox>
             </children>
         </VBox>
-        <Button layoutX="420.0" layoutY="637.0" mnemonicParsing="false" onAction="#onClickPartNameFilterButton" text="Part Name" />
-        <Button layoutX="733.0" layoutY="637.0" mnemonicParsing="false" onAction="#onClickCustomerFilterButton" text="Customer" />
+        <Button fx:id="partNameFilter" layoutX="420.0" layoutY="637.0" mnemonicParsing="false" onAction="#onClickPartNameFilterButton" text="Part Name" />
+        <Button fx:id="customerFilter" layoutX="733.0" layoutY="637.0" mnemonicParsing="false" onAction="#onClickCustomerFilterButton" text="Customer" />
       <Text fx:id="errorMessage" fill="RED" layoutX="598.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
-      <Button layoutX="987.0" layoutY="68.0" mnemonicParsing="false" text="Clear All" onAction="#onClearButton"/>
+      <Button layoutX="987.0" layoutY="68.0" mnemonicParsing="false" onAction="#onClearButton" text="Clear All" />
     </children>
 </AnchorPane>

@@ -9,12 +9,11 @@ import backend.Models.Filterable;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
 import frontend.BasicControllers.BasicController;
-import frontend.BasicControllers.FilterController;
-import frontend.BasicControllers.FilterMasterController;
+import frontend.BasicControllers.AbstractControllers.FilterController;
+import frontend.BasicControllers.AbstractControllers.FilterMasterController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -354,7 +353,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     private void openHistoryDetailFXML() {
-        BasicController.switchTab("./src/frontend/BasicFXML/HistoryDetails.fxml", SESSION.getHistoryTab());
+        BasicController.switchTab("./src/frontend/BasicFXML/HistoryFXML/HistoryDetails.fxml", SESSION.getHistoryTab());
     }
 
     private void updateDeleteButton() {
@@ -424,14 +423,14 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void onClickCategoryFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/BasicFXML/CategoryFilter.fxml",
+        FilterController.onClickFilterButton("./src/frontend/BasicFXML/HistoryFXML/CategoryFilter.fxml",
                 this,
                 "Filter by category");
     }
 
     @FXML
     public void onClickUserFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/BasicFXML/UserFilter.fxml",
+        FilterController.onClickFilterButton("./src/frontend/BasicFXML/HistoryFXML/UserFilter.fxml",
                 this,
                 "Filter by users");
     }
@@ -467,7 +466,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void deleteSelectedQueries() {
-        HistoryDeleteController historyDeleteController = BasicController.loadNewFXML("./src/frontend/BasicFXML/HistoryDelete.fxml", "Delete selection");
+        HistoryDeleteController historyDeleteController = BasicController.loadNewFXML("./src/frontend/BasicFXML/HistoryFXML/HistoryDelete.fxml", "Delete selection");
         historyDeleteController.setHistoryMainController(this);
     }
 
@@ -512,10 +511,12 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     @Override
-    public void setParameters(List<? extends Filterable> parameters) {
-        if (getClassOfList(parameters).equals(User.class))
+    public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
+        if (parameters == null)
+            return;
+        if (type.equals(User.class))
             users = parameters.stream().map(x -> (User) x).collect(Collectors.toList());
-        else if (getClassOfList(parameters).equals(Category.class))
+        else if (type.equals(Category.class))
             categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
     }
 
@@ -523,7 +524,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public List<? extends Filterable> getParameters(Class<?> type) {
         if (type.equals(User.class))
             return users;
-        if (type.equals(Customer.class))
+        if (type.equals(Category.class))
             return categories;
         return null;
     }

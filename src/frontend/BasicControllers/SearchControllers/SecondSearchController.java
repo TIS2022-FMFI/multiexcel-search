@@ -1,6 +1,7 @@
-package frontend.BasicControllers;
+package frontend.BasicControllers.SearchControllers;
 
 import backend.Sessions.SESSION;
+import frontend.BasicControllers.BasicController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -15,6 +16,6 @@ public class SecondSearchController implements Initializable {
 
     @FXML
     public void onClickBackButton() {
-        BasicController.switchTab("./src/frontend/BasicFXML/FirstSearch.fxml", SESSION.getSearchTab());
+        BasicController.switchTab("./src/frontend/BasicFXML/SearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
     }
 }

@@ -1,4 +1,4 @@
-package frontend.BasicControllers;
+package frontend.BasicControllers.SearchControllers;
 
 import backend.Entities.Customer;
 import backend.Entities.Part_name;
@@ -6,9 +6,13 @@ import backend.Models.Criteria;
 import backend.Models.Filterable;
 import backend.Models.Triple;
 import backend.Sessions.SESSION;
+import frontend.BasicControllers.AbstractControllers.FilterController;
+import frontend.BasicControllers.AbstractControllers.FilterMasterController;
+import frontend.BasicControllers.BasicController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -29,6 +33,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     public AnchorPane mainPane;
     @FXML
     public Text errorMessage;
+    public Button partNameFilter;
+    public Button customerFilter;
     List<Part_name> partNames = new ArrayList<>();
     List<Customer> customers = new ArrayList<>();
 
@@ -287,14 +293,14 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
     @FXML
     public void onClickPartNameFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/BasicFXML/PartNameFilter.fxml",
+        FilterController.onClickFilterButton("./src/frontend/BasicFXML/SearchFXML/PartNameFilter.fxml",
                 this,
                 "Part Name");
     }
 
     @FXML
     public void onClickCustomerFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/BasicFXML/CustomerFilter.fxml",
+        FilterController.onClickFilterButton("./src/frontend/BasicFXML/SearchFXML/CustomerFilter.fxml",
                 this,
                 "Customer");
     }
@@ -365,7 +371,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
         criteria.setCk(getDoubleTriple(ckFrom, ckTo, ckPriority));
         criteria.setCt(getDoubleTriple(ctFrom, ctTo, ctPriority));
 
-        BasicController.switchTab("./src/frontend/BasicFXML/SecondSearch.fxml", SESSION.getSearchTab());
+        BasicController.switchTab("./src/frontend/BasicFXML/SearchFXML/SecondSearch.fxml", SESSION.getSearchTab());
     }
 
     @FXML
@@ -379,13 +385,17 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     }
 
     @Override
-    public void setParameters(List<? extends Filterable> parameters) {
-        if (getClassOfList(parameters).equals(Part_name.class))
+    public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
+        if (parameters == null)
+            return;
+        if (type.equals(Part_name.class)) {
+            setStyleBasedOnParameters(parameters, partNameFilter);
             partNames = parameters.stream().map(x -> (Part_name) x).collect(Collectors.toList());
-        else if (getClassOfList(parameters).equals(Customer.class))
+        } else if (type.equals(Customer.class)) {
+            setStyleBasedOnParameters(parameters, customerFilter);
             customers = parameters.stream().map(x -> (Customer) x).collect(Collectors.toList());
+        }
     }
-
 
     @Override
     public List<? extends Filterable> getParameters(Class<?> type) {

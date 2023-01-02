@@ -1,19 +1,15 @@
-package frontend.BasicControllers;
+package frontend.BasicControllers.AbstractControllers;
 
 import backend.Models.Filterable;
+import frontend.BasicControllers.BasicController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -68,7 +64,7 @@ public abstract class FilterController<T extends Filterable> implements Initiali
     @FXML
     void onConfirmAction(ActionEvent event) {
         if (masterController != null) {
-            masterController.setParameters(collectCheckedParameters());
+            masterController.setParameters(collectCheckedParameters(), type);
         } else {
             System.err.println("historyMainController == null");
         }
