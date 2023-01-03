@@ -283,6 +283,12 @@ public class FirstSearchController implements Initializable, FilterMasterControl
         setDoubleTriple(criteria.getCt(), ctFrom, ctTo, ctPriority);
     }
 
+    private void setErrorMessage(String message){
+        if (errorMessage.getText().isEmpty())
+            errorMessage.setText(message);
+        else
+            errorMessage.setText("Multiple values are incorrect");
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupHandlers();
@@ -316,19 +322,23 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     }
 
     private <T extends Comparable<T>> Triple<T, T, Integer> getTriple(TextField fromText, TextField toText, ChoiceBox<String> priority, Function<String, T> stringConverter, T minValue, T maxValue) {
-        if (isNotEmpty(fromText) && isNotEmpty(toText)) {
-            T from = stringConverter.apply(fromText.getText());
-            T to = stringConverter.apply(toText.getText());
-            if (from.compareTo(to) > 0)
-                errorMessage.setText("From value must be less than or equal to the To value");
-            else
-                return new Triple<>(from, to, getPriority(priority));
-        } else if (isNotEmpty(toText)) {
-            T to = stringConverter.apply(toText.getText());
-            return new Triple<>(minValue, to, getPriority(priority));
-        } else if (isNotEmpty(fromText)) {
-            T from = stringConverter.apply(fromText.getText());
-            return new Triple<>(from, maxValue, getPriority(priority));
+        try {
+            if (isNotEmpty(fromText) && isNotEmpty(toText)) {
+                T from = stringConverter.apply(fromText.getText());
+                T to = stringConverter.apply(toText.getText());
+                if (from.compareTo(to) > 0)
+                    setErrorMessage("From value must be less than or equal to the To value");
+                else
+                    return new Triple<>(from, to, getPriority(priority));
+            } else if (isNotEmpty(toText)) {
+                T to = stringConverter.apply(toText.getText());
+                return new Triple<>(minValue, to, getPriority(priority));
+            } else if (isNotEmpty(fromText)) {
+                T from = stringConverter.apply(fromText.getText());
+                return new Triple<>(from, maxValue, getPriority(priority));
+            }
+        } catch (NumberFormatException ignored){
+            setErrorMessage("Value too large");
         }
         return null;
     }
