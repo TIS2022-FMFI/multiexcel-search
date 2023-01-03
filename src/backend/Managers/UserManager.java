@@ -3,12 +3,9 @@ package backend.Managers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import backend.Sessions.DBS;
 import backend.Entities.User;
-import backend.DBS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -144,6 +141,31 @@ public class UserManager {
                 return user;
             }
             return null;
+        }catch (SQLException e){
+            return null;
+        }
+    }
+
+    /**
+     * Get list of all or only suspended users
+     *
+     * @return List if succeeded otherwise returns NULL
+     */
+    public static ObservableList<User> getSuspendedUsers(){
+        try(
+                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users WHERE suspended = 1 ORDER BY user_name");
+                ResultSet r = s.executeQuery()
+        ){
+            ObservableList<User> users = FXCollections.observableArrayList();
+            while (r.next()){
+                User c = new User();
+                c.setUser_id(r.getInt("user_id"));
+                c.setUser_name(r.getString("user_name"));
+                c.setPassword(r.getString("password"));
+                c.setSuspended(r.getBoolean("suspended"));
+                users.add(c);
+            }
+            return users;
         }catch (SQLException e){
             return null;
         }
