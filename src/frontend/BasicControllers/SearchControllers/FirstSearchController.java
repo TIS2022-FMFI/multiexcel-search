@@ -286,8 +286,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupHandlers();
-
         setupValues();
+        setFilterStyle();
     }
 
 
@@ -349,6 +349,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     @FXML
     public void onClickSearchButton() {
         Criteria criteria = SESSION.getCriteria();
+        errorMessage.setText("");
 
         criteria.setCustomers(customers);
         criteria.setPartNames(partNames);
@@ -371,7 +372,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
         criteria.setCk(getDoubleTriple(ckFrom, ckTo, ckPriority));
         criteria.setCt(getDoubleTriple(ctFrom, ctTo, ctPriority));
 
-        BasicController.switchTab("./src/frontend/BasicFXML/SearchFXML/SecondSearch.fxml", SESSION.getSearchTab());
+        if (errorMessage.getText().isEmpty())
+            BasicController.switchTab("./src/frontend/BasicFXML/SearchFXML/SecondSearch.fxml", SESSION.getSearchTab());
     }
 
     @FXML
@@ -382,6 +384,13 @@ public class FirstSearchController implements Initializable, FilterMasterControl
                 .forEach(x -> ((ChoiceBox<?>) x).getSelectionModel().selectFirst());
         customers = new ArrayList<>();
         partNames = new ArrayList<>();
+        setFilterStyle();
+    }
+
+
+    private void setFilterStyle(){
+        setStyleBasedOnParameters(partNames, partNameFilter);
+        setStyleBasedOnParameters(customers, customerFilter);
     }
 
     @Override

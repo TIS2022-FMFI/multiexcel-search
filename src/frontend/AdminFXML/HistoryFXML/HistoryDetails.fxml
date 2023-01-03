@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0" prefWidth="1800.0"
             xmlns="http://javafx.com/javafx/8.0.161"
-            fx:controller="frontend.HistoryControllers.HistoryDetailsController">
+            fx:controller="frontend.AdminControllers.HistoryControllers.HistoryDetailsController">
     <TableView fx:id="table_parts" editable="true" layoutX="14.0" layoutY="104.0" prefHeight="469.0" prefWidth="1783.0">
         <columns>
             <TableColumn fx:id="col_customer_name" editable="false" prefWidth="69.99996948242188" sortable="false"

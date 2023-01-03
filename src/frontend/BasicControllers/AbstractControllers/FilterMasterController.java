@@ -12,7 +12,7 @@ public interface FilterMasterController {
     List<? extends Filterable> getParameters(Class<?> type);
 
     default void setStyleBasedOnParameters(List<?> parameters, Button button) {
-        if (parameters.isEmpty())
+        if (parameters == null || parameters.isEmpty())
             button.setStyle("");
         else
             button.setStyle("-fx-background-color: #8a8f96");

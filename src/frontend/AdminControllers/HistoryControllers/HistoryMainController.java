@@ -1,4 +1,4 @@
-package frontend.AdminControllers;
+package frontend.AdminControllers.HistoryControllers;
 
 import backend.Entities.Category;
 import backend.Entities.Part;
@@ -22,8 +22,6 @@ import frontend.BasicControllers.AbstractControllers.FilterController;
 import frontend.BasicControllers.AbstractControllers.FilterMasterController;
 import frontend.BasicControllers.BasicController;
 
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.math.BigInteger;
@@ -89,6 +87,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public Button button_delte_selected;
     @FXML
     public Button button_user_filter;
+    public Button button_category_filter;
 
 
     private boolean isAdmin;
@@ -118,6 +117,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         }
         historySession = HistorySession.getInstance();
         initializeController();
+        setFilterStyle();
     }
 
     private void initializeController() {
@@ -271,6 +271,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         } else {
             users = null;
         }
+        setFilterStyle();
     }
 
     private void updateSelectButton() {
@@ -359,7 +360,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     private void openHistoryDetailFXML() {
-        BasicController.switchTab("./src/frontend/BasicFXML/HistoryFXML/HistoryDetails.fxml", SESSION.getHistoryTab());
+        BasicController.switchTab("./src/frontend/AdminFXML/HistoryFXML/HistoryDetails.fxml", SESSION.getHistoryTab());
     }
 
     private void updateDeleteButton() {
@@ -425,14 +426,14 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void onClickCategoryFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/BasicFXML/HistoryFXML/CategoryFilter.fxml",
+        FilterController.onClickFilterButton("./src/frontend/AdminFXML/HistoryFXML/CategoryFilter.fxml",
                 this,
                 "Filter by category");
     }
 
     @FXML
     public void onClickUserFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/BasicFXML/HistoryFXML/UserFilter.fxml",
+        FilterController.onClickFilterButton("./src/frontend/AdminFXML/HistoryFXML/UserFilter.fxml",
                 this,
                 "Filter by users");
     }
@@ -468,7 +469,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void deleteSelectedQueries() {
-        HistoryDeleteController historyDeleteController = BasicController.loadNewFXML("./src/frontend/BasicFXML/HistoryFXML/HistoryDelete.fxml", "Delete selection");
+        HistoryDeleteController historyDeleteController = BasicController.loadNewFXML("./src/frontend/AdminFXML/HistoryFXML/HistoryDelete.fxml", "Delete selection");
         historyDeleteController.setHistoryMainController(this);
     }
 
@@ -482,44 +483,24 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         }
     }
 
-    public List<User> getUserFilter() {
-        if (users == null) {
-            return null;
-        }
-        return Collections.unmodifiableList(users);
-    }
-
-    public void setUserFilter(List<User> users) {
-        if (this.users == null) {
-            this.users = new ArrayList<>();
-        }
-        this.users.clear();
-        this.users.addAll(users);
-    }
-
-    public List<Category> getCategoryFilter() {
-        if (categories == null) {
-            return null;
-        }
-        return Collections.unmodifiableList(categories);
-    }
-
-    public void setCategoryFilter(List<Category> categories) {
-        if (this.categories == null) {
-            this.categories = new ArrayList<>();
-        }
-        this.categories.clear();
-        this.categories.addAll(categories);
+    private void setFilterStyle(){
+        setStyleBasedOnParameters(users, button_user_filter);
+        setStyleBasedOnParameters(categories, button_category_filter);
     }
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
         if (parameters == null)
             return;
-        if (type.equals(User.class))
+        if (type.equals(User.class)) {
             users = parameters.stream().map(x -> (User) x).collect(Collectors.toList());
-        else if (type.equals(Category.class))
+            setStyleBasedOnParameters(parameters, button_user_filter);
+        }
+        else if (type.equals(Category.class)){
             categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
+            setStyleBasedOnParameters(parameters, button_category_filter);
+        }
+        refreshTable();
     }
 
     @Override

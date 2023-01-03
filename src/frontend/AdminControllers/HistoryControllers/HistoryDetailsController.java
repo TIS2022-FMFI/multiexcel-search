@@ -1,4 +1,4 @@
-package frontend.AdminControllers;
+package frontend.AdminControllers.HistoryControllers;
 
 import backend.Entities.Category;
 import backend.Entities.Customer;
@@ -102,7 +102,7 @@ public class HistoryDetailsController implements Initializable {
 
     @FXML
     private void openHistoryFXML() {
-        BasicController.switchTab("./src/frontend/BasicFXML/HistoryFXML/HistoryMain.fxml", SESSION.getHistoryTab());
+        BasicController.switchTab("./src/frontend/AdminFXML/HistoryFXML/HistoryMain.fxml", SESSION.getHistoryTab());
     }
 
     private void initializeController() {

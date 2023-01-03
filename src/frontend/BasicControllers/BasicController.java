@@ -22,29 +22,10 @@ public class BasicController implements Initializable {
     @FXML
     public Tab searchTab;
 
-    public static void setScene(FXMLLoader loader, String fxmlDocPath) throws IOException {
-        FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-        AnchorPane root = loader.load(fxmlStream);
-
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     public static <T> T loadNewFXML(String fxmlDocPath, String windowName) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle(windowName);
-            stage.show();
+            setScene(loader, fxmlDocPath, windowName);
             return loader.getController();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -74,7 +55,7 @@ public class BasicController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            setTab("./src/frontend/BasicFXML/HistoryFXML/HistoryMain.fxml", historyTab);
+            setTab("./src/frontend/AdminFXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
             setTab("./src/frontend/BasicFXML/SearchFXML/FirstSearch.fxml", searchTab);

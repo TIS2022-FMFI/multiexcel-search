@@ -1,4 +1,4 @@
-package frontend.AdminControllers;
+package frontend.AdminControllers.HistoryControllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

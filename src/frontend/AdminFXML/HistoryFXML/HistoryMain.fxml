@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0" prefWidth="1280.0"
-            xmlns="http://javafx.com/javafx/8.0.161" fx:controller="frontend.HistoryControllers.HistoryMainController">
+            xmlns="http://javafx.com/javafx/8.0.161" fx:controller="frontend.AdminControllers.HistoryControllers.HistoryMainController">
     <TableView fx:id="table_queries" layoutX="101.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="411.0"
                prefWidth="1054.0">
         <columns>
@@ -43,7 +43,7 @@
             text="Clear filters"/>
     <Button fx:id="button_open_selected" disable="true" layoutX="1187.0" layoutY="339.0" mnemonicParsing="false"
             onAction="#openSelectedQuery" text="Open"/>
-    <Button layoutX="345.0" layoutY="82.0" mnemonicParsing="false" onAction="#onClickCategoryFilterButton"
+    <Button fx:id="button_category_filter" layoutX="345.0" layoutY="82.0" mnemonicParsing="false" onAction="#onClickCategoryFilterButton"
             text="Filter by category"/>
     <Button fx:id="button_delte_selected" layoutX="1162.0" layoutY="397.0" mnemonicParsing="false"
             onAction="#deleteSelectedQueries" text="Delete selected"/>
