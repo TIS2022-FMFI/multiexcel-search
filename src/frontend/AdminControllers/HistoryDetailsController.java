@@ -1,4 +1,4 @@
-package frontend.HistoryControllers;
+package frontend.AdminControllers;
 
 import backend.Entities.*;
 import backend.Managers.*;

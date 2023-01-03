@@ -1,4 +1,4 @@
-package frontend.HistoryControllers;
+package frontend.AdminControllers;
 
 import backend.Entities.Category;
 import backend.Managers.CategoryManager;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.*;
 
-public class CategoryFilterController implements Initializable {
+public class HistoryCategoryFilterController implements Initializable {
     @FXML
     public VBox scrollCategoryFilter;
 
