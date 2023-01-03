@@ -1,6 +1,6 @@
 package backend.Managers;
 
-import backend.DBS;
+import backend.Sessions.DBS;
 import backend.Entities.Part_name;
 
 import java.math.BigInteger;

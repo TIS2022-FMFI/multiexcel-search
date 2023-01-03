@@ -1,8 +1,9 @@
 package backend.Managers;
 
+import backend.Entities.Category;
 import backend.Entities.Query;
 import backend.Entities.User;
-import backend.DBS;
+import backend.Sessions.DBS;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
@@ -11,10 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryManager {
+
+    private static boolean countOnly = false;
 
     /**
      * remove query from database
@@ -48,13 +50,25 @@ public class HistoryManager {
         return true;
     }
 
-    private String CreateQueryString(Pair<Date, Date> dateFromTo, List<User> users){
-        if(dateFromTo == null && users == null){
-            return "";
+    private static String createQueryString(List<Category> categories, Pair<Date, Date> dateFromTo, List<User> users){
+
+        if(dateFromTo == null && users == null && categories == null){
+            if(countOnly){
+                return "SELECT COUNT(date) as query_total_count FROM multiexcel.queries ";
+            }else{
+                return "SELECT * FROM multiexcel.queries ";
+            }
         }
 
         boolean queryUsers = false;
         boolean queryDate = false;
+        boolean queryCategories = false;
+
+        if(categories != null){
+            if(!categories.isEmpty()){
+                queryCategories = true;
+            }
+        }
 
         if (users != null){
             if (!users.isEmpty()){
@@ -70,8 +84,39 @@ public class HistoryManager {
 
         StringBuilder queryString = new StringBuilder();
         String columnUserId = "user_id=";
+        String columnCategoryId = "category_id=";
+        String prefix = "";
 
         boolean isFirst = true;
+        if(queryCategories){
+            if(countOnly){
+                prefix = "SELECT COUNT(date) as query_total_count FROM multiexcel.categories_queries JOIN multiexcel.queries q on q.query_id = categories_queries.query_id ";
+            }else{
+                prefix = "SELECT * FROM multiexcel.categories_queries JOIN multiexcel.queries q on q.query_id = categories_queries.query_id ";
+            }
+            if (queryString.length() == 0){
+                queryString.append("WHERE ");
+            }else{
+                queryString.append("AND ");
+            }
+            for (Category c : categories) {
+                if(isFirst){
+                    queryString.append("(");
+                    queryString.append(columnCategoryId).append(c.getCategory_id());
+                    isFirst = false;
+                }else{
+                    queryString.append(" OR ").append(columnCategoryId).append(c.getCategory_id());
+                }
+            }
+            queryString.append(") ");
+        }else{
+            if(countOnly){
+                prefix = "SELECT COUNT(date) as query_total_count FROM multiexcel.queries ";
+            }else{
+                prefix = "SELECT * FROM multiexcel.queries ";
+            }
+        }
+
         if(queryDate){
             if (queryString.length() == 0){
                 queryString.append("WHERE ");
@@ -99,8 +144,7 @@ public class HistoryManager {
             }
             queryString.append(") ");
         }
-
-        return queryString.toString();
+        return prefix + queryString;
     }
 
     /**
@@ -113,16 +157,16 @@ public class HistoryManager {
      *
      * @return List of queries if succeeded otherwise returns null
      */
-    public static ObservableList<Query> getQueriesWithFilters(Pair<Date, Date> dateFromTo, List<User> users, int queriesPerPage, int pageIndex){
-
+    public static ObservableList<Query> getQueriesWithFilters(List<Category> categories,Pair<Date, Date> dateFromTo, List<User> users, int queriesPerPage, int pageIndex){
+        countOnly = false;
         int itemsPerPage;
         int pageNumber;
         itemsPerPage = Math.max(queriesPerPage, 0);
         pageNumber = Math.max(pageIndex, 0);
         
         
-        String sqlString = "SELECT * FROM multiexcel.queries ";
-        sqlString += (new HistoryManager()).CreateQueryString(dateFromTo, users);
+        String sqlString = "";
+        sqlString += createQueryString(categories, dateFromTo, users);
 
         sqlString += String.format("ORDER BY date DESC LIMIT %d, %d",pageNumber * itemsPerPage, itemsPerPage);
         //sqlString+= "ORDER BY date ASC LIMIT " + pageNumber * itemsPerPage + ", " + itemsPerPage;
@@ -178,9 +222,10 @@ public class HistoryManager {
      *
      * @return Integer if successful otherwise -1
      * */
-    public static int getTotalNumberOfQueriesWithFilters(Pair<Date, Date> dateFromTo, List<User> users){
-        String sqlString = "SELECT COUNT(query_id) as query_total_count FROM multiexcel.queries ";
-        sqlString += (new HistoryManager()).CreateQueryString(dateFromTo, users);
+    public static int getTotalNumberOfQueriesWithFilters(List<Category> categories, Pair<Date, Date> dateFromTo, List<User> users){
+        countOnly = true;
+        String sqlString = "";
+        sqlString += createQueryString(categories, dateFromTo, users);
 
         System.out.println("Filtered Count Query: " + sqlString);
         try(

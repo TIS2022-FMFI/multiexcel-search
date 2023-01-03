@@ -1,4 +1,4 @@
-import backend.DBS;
+import backend.Sessions.DBS;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -36,14 +36,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        String fxmlDocPath = "./src/frontend/AdminFXML/AdminMain.fxml";
+        String fxmlDocPath = "./src/frontend/BasicFXML/LoginScreen.fxml";
         FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
         AnchorPane root = loader.load(fxmlStream);
 
         Scene scene = new Scene(root);
-        stage.setMaximized(true);
+        //stage.setMaximized(true);
         stage.setScene(scene);
-        stage.setOnCloseRequest(event -> Platform.exit());
+        //stage.setOnCloseRequest(event -> Platform.exit());
         stage.setTitle("Intelligent Search");
         stage.show();
     }
