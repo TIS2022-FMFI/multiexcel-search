@@ -8,6 +8,7 @@ import backend.Models.PartBasic;
 import frontend.CellClasses.CategoryCell;
 import frontend.CellClasses.PartCell;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +27,11 @@ public class CategoryMainController implements Initializable {
     @FXML
     public ListView<Category> categoryList;
     public ListView<PartBasic> partList;
+    public Button prevPageButton;
+    public Button nextPageButton;
+
+    private int currentPage = 0;
+    private int itemsPerPage = 10;
 
     /**
      * Default Fxml initialization
@@ -34,7 +40,7 @@ public class CategoryMainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         categoryList.setOnMouseClicked(x -> {
             ObservableList<PartBasic> parts = PartManager.getPartsBasicByCatogoryId(
-                    categoryList.getSelectionModel().getSelectedItem().getCategory_id());
+                    categoryList.getSelectionModel().getSelectedItem().getCategory_id(), itemsPerPage, currentPage + 1);
             partList.setItems(parts);
             partList.setCellFactory(y -> new PartCell(this));
         });
@@ -75,5 +81,13 @@ public class CategoryMainController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    public void prevPage(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void nextPage(ActionEvent actionEvent) {
     }
 }

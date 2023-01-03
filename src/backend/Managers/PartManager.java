@@ -160,25 +160,66 @@ public class PartManager {
         }
     }
 
-    public static ObservableList<PartBasic> getPartsBasicByCatogoryId(Integer categoryId){
+    public static ObservableList<PartBasic> getPartsBasicByCatogoryId(Integer categoryId, Integer limit, Integer offset){
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name FROM parts p " +
                 "JOIN part_names pn ON p.part_name_id = pn.part_name_id " +
-                "WHERE p.category_id = ? ORDER BY part_name, part_number " +
+                "WHERE p.category_id = ? ORDER BY p.rating " +
                 "LIMIT ? OFFSET ?")) {
             s.setInt(1, categoryId);
+            s.setInt(2, limit);
+            s.setInt(3, offset);
 
             ObservableList<PartBasic> result = FXCollections.observableArrayList();
-            ResultSet r = s.executeQuery();
-            while (r.next()){
+            ResultSet rs = s.executeQuery();
+            while (rs.next()){
                 PartBasic partBasic = new PartBasic();
-                partBasic.setPartNumber(r.getString("part_number"));
-                partBasic.setPartName(r.getString("part_name"));
+                partBasic.setPartNumber(rs.getString("part_number"));
+                partBasic.setPartName(rs.getString("part_name"));
 
                 result.add(partBasic);
             }
             return result;
         } catch (SQLException ignored) {
             return null;
+        }
+    }
+
+    public static boolean SwapRatings(String partNumber1, String partNumber2){
+        try{
+            DBS.getConnection().setAutoCommit(false);
+            PreparedStatement s = DBS.getConnection().prepareStatement("SELECT rating from parts WHERE part_number = ?");
+            s.setString(1, partNumber1);
+            ResultSet rs = s.executeQuery();
+            int rating1;
+            if (rs.next())
+                rating1 = rs.getInt("rating");
+            else
+                return false;
+
+            s = DBS.getConnection().prepareStatement("SELECT rating from parts WHERE part_number = ?");
+            s.setString(1, partNumber2);
+            rs = s.executeQuery();
+            int rating2;
+            if (rs.next())
+                rating2 = rs.getInt("rating");
+            else
+                return false;
+
+            s = DBS.getConnection().prepareStatement("UPDATE parts SET rating = ? WHERE part_number = ?");
+            s.setInt(1, rating2);
+            s.setString(2, partNumber1);
+            s.executeUpdate();
+
+            s = DBS.getConnection().prepareStatement("UPDATE parts SET rating = ? WHERE part_number = ?");
+            s.setInt(1, rating1);
+            s.setString(2, partNumber2);
+            s.executeUpdate();
+
+            DBS.getConnection().setAutoCommit(true);
+            return true;
+        }
+        catch (SQLException ignored) {
+            return false;
         }
     }
 }
