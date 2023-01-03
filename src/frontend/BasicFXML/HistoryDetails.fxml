@@ -5,36 +5,63 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import javafx.scene.control.CheckBox?>
 <AnchorPane prefHeight="720.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.HistoryControllers.HistoryDetailsController">
+
+    <CheckBox fx:id="col_customer_name_column" text="Customer" layoutX="50" layoutY="800" onAction="#setVisibleCustomer" visible="false"></CheckBox>
+    <CheckBox fx:id="col_part_name_column" text="Part" layoutX="150" layoutY="800" onAction="#setVisiblePart" visible="false"></CheckBox>
+    <CheckBox fx:id="col_category_name_column" text="Category" layoutX="250" layoutY="800" onAction="#setVisibleCategory" visible="false"></CheckBox>
+    <CheckBox fx:id="col_drawing_column" text="Drawing" layoutX="350" layoutY="800" onAction="#setVisibleDrawing" visible="false"></CheckBox>
+    <CheckBox fx:id="col_rubber_column" text="Rubber" layoutX="450" layoutY="800" onAction="#setVisibleRubber" visible="false"></CheckBox>
+    <CheckBox fx:id="col_diameter_at_column" text="Diameter AT" layoutX="550" layoutY="800" onAction="#setVisibleDiameterAT" visible="false"></CheckBox>
+    <CheckBox fx:id="col_diameter_at_tol_column" text="Diameter AT TOL" layoutX="650" layoutY="800" onAction="#setVisibleDiameterATTOL" visible="false"></CheckBox>
+    <CheckBox fx:id="col_length_l_at_column" text="Length L AT" layoutX="750" layoutY="800" onAction="#setVisibleLengthLAT" visible="false"></CheckBox>
+    <CheckBox fx:id="col_length_l_at_tol_column" text="Length L AT TOL" layoutX="850" layoutY="800" onAction="#setVisibleLengthLATTOL" visible="false"></CheckBox>
+    <CheckBox fx:id="col_diameter_it_column" text="Diameter IT" layoutX="950" layoutY="800" onAction="#setVisibleDiameterIT" visible="false"></CheckBox>
+    <CheckBox fx:id="col_diameter_it_tol_column" text="Diameter IT TOL" layoutX="1050" layoutY="800" onAction="#setVisibleDiameterITTOL" visible="false"></CheckBox>
+
+    <CheckBox fx:id="col_length_l_it_column" text="Length L IT" layoutX="50" layoutY="850" onAction="#setVisibleLengthLIT" visible="false"></CheckBox>
+    <CheckBox fx:id="col_length_l_it_tol_column" text="Length L IT TOL" layoutX="150" layoutY="850" onAction="#setVisibleLengthLITTOL" visible="false"></CheckBox>
+    <CheckBox fx:id="col_diameter_zt_column" text="Diameter ZT" layoutX="250" layoutY="850" onAction="#setVisibleDiameterZT" visible="false"></CheckBox>
+    <CheckBox fx:id="col_diameter_zt_tol_column" text="Diameter ZT TOL" layoutX="350" layoutY="850" onAction="#setVisibleDiameterZTTOL" visible="false"></CheckBox>
+    <CheckBox fx:id="col_length_l_zt_column" text="Length L ZT" layoutX="450" layoutY="850" onAction="#setVisibleLengthLZT" visible="false"></CheckBox>
+    <CheckBox fx:id="col_length_l_zt_tol_column" text="Length L ZT TOL" layoutX="550" layoutY="850" onAction="#setVisibleLengthLZTTOL" visible="false"></CheckBox>
+    <CheckBox fx:id="col_cr_steg_column" text="Cr steg" layoutX="650" layoutY="850" onAction="#setVisibleCrSteg" visible="false"></CheckBox>
+    <CheckBox fx:id="col_cr_niere_column" text="Cr niere" layoutX="750" layoutY="850" onAction="#setVisibleCrNiere" visible="false"></CheckBox>
+    <CheckBox fx:id="col_ca_column" text="Ca" layoutX="850" layoutY="850" onAction="#setVisibleCa" visible="false"></CheckBox>
+    <CheckBox fx:id="col_ct_column" text="Ct" layoutX="950" layoutY="850" onAction="#setVisibleCt" visible="false"></CheckBox>
+    <CheckBox fx:id="col_ck_column" text="Ck" layoutX="1050" layoutY="850" onAction="#setVisibleCk" visible="false"></CheckBox>
+
     <TableView fx:id="table_parts" editable="true" layoutX="14.0" layoutY="104.0" prefHeight="469.0" prefWidth="1783.0">
       <columns>
-          <TableColumn fx:id="col_customer_name" editable="false" prefWidth="69.99996948242188" sortable="false" text="Customer" />
-          <TableColumn fx:id="col_part_name" editable="false" prefWidth="56.999969482421875" sortable="false" text="Part" />
-          <TableColumn fx:id="col_category_name" editable="false" prefWidth="70.0" sortable="false" text="Category" />
-          <TableColumn fx:id="col_drawing" editable="false" prefWidth="60.0" sortable="false" text="Drawing" />
-          <TableColumn fx:id="col_rubber" editable="false" prefWidth="64.0" sortable="false" text="Rubber" />
-          <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="87.0" sortable="false" text="Diameter AT" />
-          <TableColumn fx:id="col_diameter_at_tol" editable="false" prefWidth="109.0" sortable="false" text="Diameter AT TOL" />
-          <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="89.0" sortable="false" text="Length L AT" />
-          <TableColumn fx:id="col_length_l_at_tol" editable="false" prefWidth="108.0" sortable="false" text="Length L AT TOL" />
-          <TableColumn fx:id="col_diameter_it" editable="false" prefWidth="79.0" sortable="false" text="Diameter IT" />
-          <TableColumn fx:id="col_diameter_it_tol" editable="false" prefWidth="102.0" sortable="false" text="Diameter IT TOL" />
-          <TableColumn fx:id="col_length_l_it" editable="false" prefWidth="72.0" sortable="false" text="Length L IT" />
-          <TableColumn fx:id="col_length_l_it_tol" editable="false" prefWidth="110.0" sortable="false" text="Length L IT TOL" />
-          <TableColumn fx:id="col_diameter_zt" editable="false" sortable="false" text="Diameter ZT" />
-          <TableColumn fx:id="col_diameter_zt_tol" editable="false" prefWidth="115.0" sortable="false" text="Diameter ZT TOL" />
-          <TableColumn fx:id="col_length_l_zt" editable="false" prefWidth="83.0" sortable="false" text="Length L ZT" />
-          <TableColumn fx:id="col_length_l_zt_tol" editable="false" prefWidth="110.0" sortable="false" text="Length L ZT TOL" />
-          <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="63.0" sortable="false" text="Cr steg" />
-          <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="69.0" sortable="false" text="Cr niere" />
-          <TableColumn fx:id="col_ca" editable="false" prefWidth="46.0" sortable="false" text="Ca" />
-          <TableColumn fx:id="col_ct" editable="false" prefWidth="45.0" sortable="false" text="Ct" />
-          <TableColumn fx:id="col_ck" editable="false" prefWidth="49.0" sortable="false" text="Ck" />
+          <TableColumn fx:id="col_customer_name" editable="false" prefWidth="69.99996948242188" sortable="false" text="Customer" visible="true"/>
+          <TableColumn fx:id="col_part_name" editable="false" prefWidth="56.999969482421875" sortable="false" text="Part" visible="true"/>
+          <TableColumn fx:id="col_category_name" editable="false" prefWidth="70.0" sortable="false" text="Category" visible="true"/>
+          <TableColumn fx:id="col_drawing" editable="false" prefWidth="60.0" sortable="false" text="Drawing" visible="true"/>
+          <TableColumn fx:id="col_rubber" editable="false" prefWidth="64.0" sortable="false" text="Rubber" visible="true"/>
+          <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="87.0" sortable="false" text="Diameter AT" visible="true"/>
+          <TableColumn fx:id="col_diameter_at_tol" editable="false" prefWidth="109.0" sortable="false" text="Diameter AT TOL" visible="true"/>
+          <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="89.0" sortable="false" text="Length L AT" visible="true"/>
+          <TableColumn fx:id="col_length_l_at_tol" editable="false" prefWidth="108.0" sortable="false" text="Length L AT TOL" visible="true"/>
+          <TableColumn fx:id="col_diameter_it" editable="false" prefWidth="79.0" sortable="false" text="Diameter IT" visible="true"/>
+          <TableColumn fx:id="col_diameter_it_tol" editable="false" prefWidth="102.0" sortable="false" text="Diameter IT TOL" visible="true"/>
+          <TableColumn fx:id="col_length_l_it" editable="false" prefWidth="72.0" sortable="false" text="Length L IT" visible="true"/>
+          <TableColumn fx:id="col_length_l_it_tol" editable="false" prefWidth="110.0" sortable="false" text="Length L IT TOL" visible="true"/>
+          <TableColumn fx:id="col_diameter_zt" editable="false" sortable="false" text="Diameter ZT" visible="true"/>
+          <TableColumn fx:id="col_diameter_zt_tol" editable="false" prefWidth="115.0" sortable="false" text="Diameter ZT TOL" visible="true"/>
+          <TableColumn fx:id="col_length_l_zt" editable="false" prefWidth="83.0" sortable="false" text="Length L ZT" visible="true"/>
+          <TableColumn fx:id="col_length_l_zt_tol" editable="false" prefWidth="110.0" sortable="false" text="Length L ZT TOL" visible="true"/>
+          <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="63.0" sortable="false" text="Cr steg" visible="true"/>
+          <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="69.0" sortable="false" text="Cr niere" visible="true"/>
+          <TableColumn fx:id="col_ca" editable="false" prefWidth="46.0" sortable="false" text="Ca" visible="true"/>
+          <TableColumn fx:id="col_ct" editable="false" prefWidth="45.0" sortable="false" text="Ct" visible="true"/>
+          <TableColumn fx:id="col_ck" editable="false" prefWidth="49.0" sortable="false" text="Ck" visible="true"/>
           <!--<TableColumn fx:id="col_checkbox" editable="true" minWidth="5.0" prefWidth="44.0" sortable="false" text="selected" /-->
           <!--TableColumn fx:id="col_rating" editable="false" prefWidth="75.0" sortable="false" text="Rating" /-->
       </columns>
     </TableView>
     <Button layoutX="853.0" layoutY="616.0" mnemonicParsing="false" text="Export selection to excel" />
     <Button layoutX="856.0" layoutY="585.0" mnemonicParsing="false" text="Export selection to PDF" />
+    <Button layoutX="50.0" layoutY="750.0" mnemonicParsing="false" text="Settings" onAction="#showSettings" />
    <Button layoutX="22.0" layoutY="35.0" onAction="#openHistoryFXML" mnemonicParsing="false" text="Back" />
 </AnchorPane>

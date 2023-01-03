@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -105,6 +106,54 @@ public class HistoryDetailsController implements Initializable {
     private Map<BigInteger, String> idToPartName;
 
     private HistorySession historySession;
+
+
+    @FXML
+    private CheckBox col_customer_name_column;
+    @FXML
+    private CheckBox col_part_name_column;
+    @FXML
+    private CheckBox col_category_name_column;
+    @FXML
+    private CheckBox col_drawing_column;
+    @FXML
+    private CheckBox col_rubber_column;
+    @FXML
+    private CheckBox col_diameter_at_column;
+    @FXML
+    private CheckBox col_diameter_at_tol_column;
+    @FXML
+    private CheckBox col_length_l_at_column;
+    @FXML
+    private CheckBox col_length_l_at_tol_column;
+    @FXML
+    private CheckBox col_diameter_it_column;
+    @FXML
+    private CheckBox col_diameter_it_tol_column;
+    @FXML
+    private CheckBox col_length_l_it_column;
+    @FXML
+    private CheckBox col_length_l_it_tol_column;
+    @FXML
+    private CheckBox col_diameter_zt_column;
+    @FXML
+    private CheckBox col_diameter_zt_tol_column;
+    @FXML
+    private CheckBox col_length_l_zt_column;
+    @FXML
+    private CheckBox col_length_l_zt_tol_column;
+    @FXML
+    private CheckBox col_cr_steg_column;
+    @FXML
+    private CheckBox col_cr_niere_column;
+    @FXML
+    private CheckBox col_ca_column;
+    @FXML
+    private CheckBox col_ct_column;
+    @FXML
+    private CheckBox col_ck_column;
+
+    private boolean settingsWasShown = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -226,4 +275,151 @@ public class HistoryDetailsController implements Initializable {
             System.err.println("requested parts returned null");
         }
     }
+
+    @FXML
+    private void setVisibleCustomer() {
+        col_customer_name.setVisible(!col_customer_name_column.isSelected());
+    }
+    @FXML
+    private void setVisiblePart() {
+        col_part_name.setVisible(!col_part_name_column.isSelected());
+    }
+    @FXML
+    private void setVisibleCategory() {
+        col_category_name.setVisible(!col_category_name_column.isSelected());
+    }
+    @FXML
+    private void setVisibleDrawing() {
+        col_drawing.setVisible(!col_drawing_column.isSelected());
+    }
+    @FXML
+    private void setVisibleRubber() {
+        col_rubber.setVisible(!col_rubber_column.isSelected());
+    }
+    @FXML
+    private void setVisibleDiameterAT() {
+        col_diameter_at.setVisible(!col_diameter_at_column.isSelected());
+    }
+    @FXML
+    private void setVisibleDiameterATTOL() {
+        col_diameter_at_tol.setVisible(!col_diameter_at_tol_column.isSelected());
+    }
+    @FXML
+    private void setVisibleLengthLAT() {
+        col_length_l_at.setVisible(!col_length_l_at_column.isSelected());
+    }
+    @FXML
+    private void setVisibleLengthLATTOL() {
+        col_length_l_at_tol.setVisible(!col_length_l_at_tol_column.isSelected());
+    }
+    @FXML
+    private void setVisibleDiameterIT() {
+        col_diameter_it.setVisible(!col_diameter_it_column.isSelected());
+    }
+    @FXML
+    private void setVisibleDiameterITTOL() {
+        col_diameter_it_tol.setVisible(!col_diameter_it_tol_column.isSelected());
+    }
+    @FXML
+    private void setVisibleLengthLIT() {
+        col_length_l_it.setVisible(!col_length_l_it_column.isSelected());
+    }
+    @FXML
+    private void setVisibleLengthLITTOL() {
+        col_length_l_it_tol.setVisible(!col_length_l_it_tol_column.isSelected());
+    }
+
+    @FXML
+    private void setVisibleDiameterZT() {
+        col_diameter_zt.setVisible(!col_diameter_zt_column.isSelected());
+    }
+    @FXML
+    private void setVisibleDiameterZTTOL() {
+        col_diameter_zt_tol.setVisible(!col_diameter_zt_tol_column.isSelected());
+    }
+    @FXML
+    private void setVisibleLengthLZT() {
+        col_length_l_zt.setVisible(!col_length_l_zt_column.isSelected());
+    }
+    @FXML
+    private void setVisibleLengthLZTTOL() {
+        col_length_l_zt_tol.setVisible(!col_length_l_zt_tol_column.isSelected());
+    }
+    @FXML
+    private void setVisibleCrSteg() {
+        col_cr_steg.setVisible(!col_cr_steg_column.isSelected());
+    }
+    @FXML
+    private void setVisibleCrNiere() {
+        col_cr_niere.setVisible(!col_cr_niere_column.isSelected());
+    }
+    @FXML
+    private void setVisibleCa() {
+        col_ca.setVisible(!col_ca_column.isSelected());
+    }
+    @FXML
+    private void setVisibleCt() {
+        col_ct.setVisible(!col_ct_column.isSelected());
+    }
+    @FXML
+    private void setVisibleCk() {
+        col_ck.setVisible(!col_ck_column.isSelected());
+    }
+
+    public void showSettings() {
+
+        if (settingsWasShown) {
+            col_customer_name_column.setVisible(false);
+            col_part_name_column.setVisible(false);
+            col_category_name_column.setVisible(false);
+            col_drawing_column.setVisible(false);
+            col_rubber_column.setVisible(false);
+            col_diameter_at_column.setVisible(false);
+            col_diameter_at_tol_column.setVisible(false);
+            col_length_l_at_column.setVisible(false);
+            col_length_l_at_tol_column.setVisible(false);
+            col_diameter_it_column.setVisible(false);
+            col_diameter_it_tol_column.setVisible(false);
+            col_length_l_it_column.setVisible(false);
+            col_length_l_it_tol_column.setVisible(false);
+            col_diameter_zt_column.setVisible(false);
+            col_diameter_zt_tol_column.setVisible(false);
+            col_length_l_zt_column.setVisible(false);
+            col_length_l_zt_tol_column.setVisible(false);
+            col_cr_steg_column.setVisible(false);
+            col_cr_niere_column.setVisible(false);
+            col_ca_column.setVisible(false);
+            col_ct_column.setVisible(false);
+            col_ck_column.setVisible(false);
+
+            settingsWasShown = false;
+        } else {
+            col_customer_name_column.setVisible(true);
+            col_part_name_column.setVisible(true);
+            col_category_name_column.setVisible(true);
+            col_drawing_column.setVisible(true);
+            col_rubber_column.setVisible(true);
+            col_diameter_at_column.setVisible(true);
+            col_diameter_at_tol_column.setVisible(true);
+            col_length_l_at_column.setVisible(true);
+            col_length_l_at_tol_column.setVisible(true);
+            col_diameter_it_column.setVisible(true);
+            col_diameter_it_tol_column.setVisible(true);
+            col_length_l_it_column.setVisible(true);
+            col_length_l_it_tol_column.setVisible(true);
+            col_diameter_zt_column.setVisible(true);
+            col_diameter_zt_tol_column.setVisible(true);
+            col_length_l_zt_column.setVisible(true);
+            col_length_l_zt_tol_column.setVisible(true);
+            col_cr_steg_column.setVisible(true);
+            col_cr_niere_column.setVisible(true);
+            col_ca_column.setVisible(true);
+            col_ct_column.setVisible(true);
+            col_ck_column.setVisible(true);
+
+            settingsWasShown = true;
+        }
+
+    }
 }
+
