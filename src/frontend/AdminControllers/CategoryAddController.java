@@ -74,7 +74,7 @@ public class CategoryAddController implements Initializable {
         }
         Stage stage = (Stage) addButton.getScene().getWindow();
         stage.close();
-        mainController.updateList();
+        mainController.updateCategoryList();
     }
 
     /**

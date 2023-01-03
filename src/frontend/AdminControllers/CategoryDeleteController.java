@@ -51,7 +51,7 @@ public class CategoryDeleteController implements Initializable {
         }
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
-        mainController.updateList();
+        mainController.updateCategoryList();
     }
 
     /**
