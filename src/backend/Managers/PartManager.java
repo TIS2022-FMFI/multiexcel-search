@@ -2,6 +2,9 @@ package backend.Managers;
 
 import backend.DBS;
 import backend.Entities.Part;
+import backend.Models.PartBasic;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -152,6 +155,28 @@ public class PartManager {
                 return BigInteger.valueOf(rs.getInt("drawing_id"));
 
             return null;
+        } catch (SQLException ignored) {
+            return null;
+        }
+    }
+
+    public static ObservableList<PartBasic> getPartsBasicByCatogoryId(Integer categoryId){
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name FROM parts p " +
+                "JOIN part_names pn ON p.part_name_id = pn.part_name_id " +
+                "WHERE p.category_id = ? ORDER BY part_name, part_number " +
+                "LIMIT ? OFFSET ?")) {
+            s.setInt(1, categoryId);
+
+            ObservableList<PartBasic> result = FXCollections.observableArrayList();
+            ResultSet r = s.executeQuery();
+            while (r.next()){
+                PartBasic partBasic = new PartBasic();
+                partBasic.setPartNumber(r.getString("part_number"));
+                partBasic.setPartName(r.getString("part_name"));
+
+                result.add(partBasic);
+            }
+            return result;
         } catch (SQLException ignored) {
             return null;
         }
