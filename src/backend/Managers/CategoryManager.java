@@ -1,7 +1,8 @@
 package backend.Managers;
 
-import backend.Entities.Category;
+import backend.Entities.Category_query;
 import backend.Sessions.DBS;
+import backend.Entities.Category;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -55,6 +56,33 @@ public class CategoryManager {
                     categories.add(category);
                 }
                 return categories;
+            } catch (SQLException e) {
+                return null;
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+    }
+    /**
+     * Returns all categories with query id from database
+     *
+     * @return List of all Categories by query id
+     */
+    public static List<Category_query> getAllCategoriesByQueryId(int queryId) {
+        try (
+                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories_queries WHERE query_id=?")
+        ) {
+            s.setInt(1, queryId);
+            try (ResultSet r = s.executeQuery()){
+                List<Category_query> category_queries = new ArrayList<>();
+                while (r.next()) {
+                    Category_query category_query = new Category_query();
+                    category_query.setCategory_id(BigInteger.valueOf(r.getInt("category_id")));
+                    category_query.setQuery_id(BigInteger.valueOf(r.getInt("query_id")));
+
+                    category_queries.add(category_query);
+                }
+                return category_queries;
             } catch (SQLException e) {
                 return null;
             }

@@ -1,12 +1,8 @@
 package frontend.AdminControllers.HistoryControllers;
 
-import backend.Entities.Category;
-import backend.Entities.Part;
-import backend.Entities.Query;
-import backend.Entities.User;
+import backend.Entities.*;
 import backend.Managers.CategoryManager;
 import backend.Managers.HistoryManager;
-import backend.Managers.PartManager;
 import backend.Managers.UserManager;
 import backend.Models.Filterable;
 import backend.Sessions.HistorySession;
@@ -165,32 +161,28 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     }
 
-    private ReadOnlyStringWrapper createCategoriesWrapper(int queryId) {
-        List<Part> parts = PartManager.GetPartsByQueryId(queryId);
+    private ReadOnlyStringWrapper createCategoriesWrapper(int queryId){
+        List<Category_query> category_queries = CategoryManager.getAllCategoriesByQueryId(queryId);
 
-        if (parts == null) {
+        if(category_queries == null){
             return new ReadOnlyStringWrapper("<none>");
         }
 
-        /*if(parts.size() == 0){
+        if(category_queries.size() == 0){
             return new ReadOnlyStringWrapper("<none>");
-        }*/
-
-        HashSet<BigInteger> categoryIds = new HashSet<>();
-        for (Part p : parts) {
-            categoryIds.add(p.getCategory_id());
         }
+
         List<String> displayedCategories = new ArrayList<>();
 
-        for (BigInteger b : categoryIds) {
-            if (!categoryIdToName.containsKey(b)) {
-                Category category = CategoryManager.getCategory(b);
-                if (category == null) {
+        for (Category_query cq: category_queries) {
+            if(!categoryIdToName.containsKey(cq.getCategory_id())){
+                Category category = CategoryManager.getCategory(cq.getCategory_id());
+                if(category == null){
                     continue;
                 }
-                categoryIdToName.put(b, category.getCategory_name());
+                categoryIdToName.put(cq.getCategory_id(), category.getCategory_name());
             }
-            displayedCategories.add(categoryIdToName.get(b));
+            displayedCategories.add(categoryIdToName.get(cq.getCategory_id()));
         }
         return new ReadOnlyStringWrapper(String.join(", ", displayedCategories));
     }
