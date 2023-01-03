@@ -1,4 +1,4 @@
-package frontend.HistoryControllers;
+package frontend.AdminControllers;
 
 import backend.Entities.Category;
 import backend.Entities.Part;
@@ -11,9 +11,6 @@ import backend.Managers.UserManager;
 import backend.Models.Filterable;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
-import frontend.BasicControllers.AbstractControllers.FilterController;
-import frontend.BasicControllers.AbstractControllers.FilterMasterController;
-import frontend.BasicControllers.BasicController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +18,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import frontend.BasicControllers.AbstractControllers.FilterController;
+import frontend.BasicControllers.AbstractControllers.FilterMasterController;
+import frontend.BasicControllers.BasicController;
+
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.math.BigInteger;

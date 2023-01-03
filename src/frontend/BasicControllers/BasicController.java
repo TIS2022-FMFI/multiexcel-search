@@ -89,10 +89,23 @@ public class BasicController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/BasicFXML/ChangePasswordScreen.fxml";
-            setScene(loader, fxmlDocPath);
+            setScene(loader, fxmlDocPath, "Change password");
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public static void setScene(FXMLLoader loader, String fxmlDocPath, String stageTitle) throws IOException {
+        FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+        AnchorPane root = loader.load(fxmlStream);
+
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        stage.setTitle(stageTitle);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
