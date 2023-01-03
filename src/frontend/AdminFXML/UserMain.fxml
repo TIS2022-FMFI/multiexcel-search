@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Button?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.AdminControllers.UserMainController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
 
-    <ListView fx:id="userList" layoutX="91.0" layoutY="21.0" prefHeight="900.0" prefWidth="800.0">
+<AnchorPane prefHeight="900.0" prefWidth="1122.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminControllers.UserMainController">
 
-    </ListView>
-    <Button layoutX="1028.0" layoutY="433.0" mnemonicParsing="false" onAction="#addUser" prefHeight="54.0" prefWidth="149.0" text="Add user" />
+    <Text layoutX="360.0" layoutY="61.0">Enabled:</Text>
+    <ListView fx:id="enabledUserList" layoutX="82.0" layoutY="72.0" prefHeight="850.0" prefWidth="600.0" />
+    <Button layoutX="753.0" layoutY="25.0" mnemonicParsing="false" onAction="#addUser" prefHeight="44.0" prefWidth="120.0" text="Add user" />
+    <Text layoutX="1213.0" layoutY="60.0">Suspended:</Text>
+    <ListView fx:id="suspendedUserList" layoutX="936.0" layoutY="72.0" prefHeight="850.0" prefWidth="600.0" />
 
 </AnchorPane>

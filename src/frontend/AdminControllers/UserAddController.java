@@ -5,10 +5,7 @@ import backend.Managers.UserManager;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -21,6 +18,7 @@ public class UserAddController implements Initializable {
     public PasswordField passwordField;
     public Button addButton;
     public Button closeButton;
+    public Label errorLabel;
 
     private UserMainController mainController;
 
@@ -51,38 +49,26 @@ public class UserAddController implements Initializable {
         ObservableList<User> allUsers = UserManager.getUsers(false);
 
         if(Objects.equals(userName, "")){
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Failure");
-            errorAlert.setContentText("Please enter user name");
-            errorAlert.showAndWait();
+            errorLabel.setText("Please enter user name");
             return;
         }
 
         if(Objects.equals(password, "")){
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Failure");
-            errorAlert.setContentText("Please enter password");
-            errorAlert.showAndWait();
+            errorLabel.setText("Please enter password");
             return;
         }
 
         if(allUsers != null){
             for(User user : allUsers){
                 if(Objects.equals(user.getUser_name(), userName)){
-                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setHeaderText("Failure");
-                    errorAlert.setContentText("User with this name already exists");
-                    errorAlert.showAndWait();
+                    errorLabel.setText("User with this name already exists");
                     return;
                 }
             }
         }
 
         if(!UserManager.addUser(userName, password, false)){
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Failure");
-            errorAlert.setContentText("Adding user has failed");
-            errorAlert.showAndWait();
+            errorLabel.setText("Adding user has failed");
             return;
         }
         Stage stage = (Stage) addButton.getScene().getWindow();
