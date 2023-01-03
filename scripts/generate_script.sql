@@ -190,3 +190,124 @@ values(1, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59
 
 insert into multiexcel.queries(user_id, rubber_from, rubber_to, diameter_AT_from, diameter_AT_to, length_L_AT_from, length_L_AT_to, diameter_IT_from, diameter_IT_to, length_L_IT_from, length_L_IT_to, diameter_ZT_from, diameter_ZT_to, length_L_ZT_from, length_L_ZT_to, cr_steg_from, cr_steg_to, cr_niere_from, cr_niere_to, ca_from, ca_to, ct_from, ct_to, ck_from, ck_to, date)
 values(2, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, 60, date('2022-10-28'));
+
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (1, 7);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (2, 8);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (3, 9);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (4, 10);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (5, 11);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (6, 12);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (7, 13);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (8, 14);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (9, 15);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (1, 16);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (2, 17);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (3, 18);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (4, 19);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (5, 20);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (6, 21);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (7, 22);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (8, 23);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (9, 24);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (1, 25);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (2, 26);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (3, 27);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (4, 28);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (5, 29);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (6, 30);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (7, 31);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (8, 32);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (9, 33);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (1, 34);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (2, 35);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (3, 36);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (4, 37);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (5, 38);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (6, 39);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (7, 40);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (8, 41);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (9, 42);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (1, 43);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (2, 44);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (3, 45);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (4, 46);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (5, 47);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (6, 48);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (7, 49);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (8, 50);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (9, 51);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (1, 52);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (2, 53);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (3, 54);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (4, 55);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (5, 56);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (6, 57);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (7, 58);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (8, 59);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (9, 60);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (1, 61);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (2, 62);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (3, 63);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (4, 64);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (5, 65);
+INSERT INTO multiexcel.categories_queries(category_id, query_id)
+values (6, 66);

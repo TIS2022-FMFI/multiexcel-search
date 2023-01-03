@@ -5,8 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import backend.Sessions.DBS;
 import backend.Entities.User;
-import backend.DBS;
 
 public class UserManager {
 

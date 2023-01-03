@@ -1,11 +1,10 @@
 package backend.XLSImportExport;
 
 
-import backend.DBS;
+import backend.Sessions.DBS;
 import backend.Entities.Part;
 import backend.Managers.*;
 import backend.Models.MutablePair;
-import javafx.util.Pair;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -27,7 +26,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -110,7 +108,7 @@ public class Import {
      * @return number of Parts that were inserted and updated
      * @throws RuntimeException - throws exception with line on which the reading of the document failed
      */
-    public static MutablePair uploadXLStoDBS(XSSFWorkbook XLSFile) throws RuntimeException{
+    public static MutablePair uploadXLStoDBS(XSSFWorkbook XLSFile) throws RuntimeException {
         XSSFSheet sheet = XLSFile.getSheetAt(0);
         DataFormatter dataFormatter = new DataFormatter();
         XSSFDrawing dp = sheet.createDrawingPatriarch();
@@ -120,134 +118,143 @@ public class Import {
         rowIterator.next();
         int index = 0;
         MutablePair insertUpdate = new MutablePair(0, 0);
+        try {
+            DBS.getConnection().setAutoCommit(false);
+            while (rowIterator.hasNext()) {
+                try {
+                    Row row = rowIterator.next();
+                    index++;
+                    Part part = new Part();
 
-        while (rowIterator.hasNext()) {
-            try {
-                Row row = rowIterator.next();
-                index++;
-                Part part = new Part();
+                    Iterator<Cell> cellIterator = row.cellIterator();
 
-                Iterator<Cell> cellIterator = row.cellIterator();
+                    String image = nextString(dataFormatter, cellIterator);
+                    part.setDrawing_id(getDrawingId(image, index, pics));
 
-                String image = nextString(dataFormatter, cellIterator);
-                part.setDrawing_id(getDrawingId(image, index, pics));
+                    part.setPart_number(nextString(dataFormatter, cellIterator));
+                    Part partInDatabse = PartManager.getPartByPartNumber(part.getPart_number());
+                    if (partInDatabse != null)
+                        part = partInDatabse;
 
-                part.setPart_number(nextString(dataFormatter, cellIterator));
-                Part partInDatabse = PartManager.getPartByPartNumber(part.getPart_number());
-                if (partInDatabse != null)
-                    part = partInDatabse;
+                    part.setPart_name_id(PartNameManager.getPartNameId(nextString(dataFormatter, cellIterator)));
 
-                part.setPart_name_id(PartNameManager.getPartNameId(nextString(dataFormatter, cellIterator)));
+                    part.setCategory_id(CategoryManager.getCategoryId(nextString(dataFormatter, cellIterator)));
 
-                part.setCategory_id(CategoryManager.getCategoryId(nextString(dataFormatter, cellIterator)));
+                    part.setCustomer_id(CustomerManager.getCustomerId(nextString(dataFormatter, cellIterator)));
 
-                part.setCustomer_id(CustomerManager.getCustomerId(nextString(dataFormatter, cellIterator)));
+                    String s;
 
-                String s;
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        part.setRubber(Short.valueOf(s.split(" ")[0]));
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    part.setRubber(Short.valueOf(s.split(" ")[0]));
+                    s = nextString(dataFormatter, cellIterator);
+                    part.setDiameter_AT(getDouble(s));
 
-                s = nextString(dataFormatter, cellIterator);
-                part.setDiameter_AT(getDouble(s));
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        part.setDiameter_AT_tol(s);
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    part.setDiameter_AT_tol(s);
+                    s = nextString(dataFormatter, cellIterator);
+                    part.setLength_L_AT(getDouble(s));
 
-                s = nextString(dataFormatter, cellIterator);
-                part.setLength_L_AT(getDouble(s));
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        part.setLength_L_AT_tol(s);
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    part.setLength_L_AT_tol(s);
+                    s = nextString(dataFormatter, cellIterator);
+                    part.setDiameter_IT(getDouble(s));
 
-                s = nextString(dataFormatter, cellIterator);
-                part.setDiameter_IT(getDouble(s));
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        part.setDiameter_IT_tol(s);
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    part.setDiameter_IT_tol(s);
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setLength_L_IT(Double.valueOf(s.replace(",", ".")));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setLength_L_IT(Double.valueOf(s.replace(",", ".")));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        part.setLength_L_IT_tol(s);
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    part.setLength_L_IT_tol(s);
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setDiameter_ZT(Double.valueOf(s));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setDiameter_ZT(Double.valueOf(s));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        part.setDiameter_ZT_tol(s);
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    part.setDiameter_ZT_tol(s);
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setLength_L_ZT(Double.valueOf(s));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setLength_L_ZT(Double.valueOf(s));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        part.setLength_L_ZT_tol(s);
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    part.setLength_L_ZT_tol(s);
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setCr_steg(Integer.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setCr_steg(Integer.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setCr_niere(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setCr_niere(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setCa(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setCa(Short.valueOf(s.split("\\[")[0].replaceAll("[\\u00A0 ]", "")));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setCt(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setCt(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
-                    } catch (NumberFormatException ignored) {
-                    }
+                    s = nextString(dataFormatter, cellIterator);
+                    if (s != null)
+                        try {
+                            part.setCk(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
+                        } catch (NumberFormatException ignored) {
+                        }
 
-                s = nextString(dataFormatter, cellIterator);
-                if (s != null)
-                    try {
-                        part.setCk(Double.valueOf(s.split("\\[")[0].replace(",", ".")));
-                    } catch (NumberFormatException ignored) {
-                    }
-
-                if (partInDatabse == null || !PartManager.getPartByPartNumber(part.getPart_number()).equals(part))
-                     if (part.upsert()){
-                         insertUpdate.second++;
-                    } else {
-                        insertUpdate.first++;
-                    }
-            } catch (Exception ignored) {
-                throw new RuntimeException("Error at line: " + index);
+                    if (partInDatabse == null || !PartManager.getPartByPartNumber(part.getPart_number()).equals(part))
+                        if (part.upsert()) {
+                            insertUpdate.second++;
+                        } else {
+                            insertUpdate.first++;
+                        }
+                } catch (SQLException ignored) {
+                    DBS.getConnection().rollback();
+                    throw new RuntimeException("Database error at line: " + index);
+                } catch (Exception ignored){
+                    throw new RuntimeException("Error at line: " + index);
+                }
             }
+            DBS.getConnection().setAutoCommit(false);
+        } catch (SQLException ignored) {
+            throw new RuntimeException("Error connecting to DBS");
         }
+
         return insertUpdate;
     }
 
