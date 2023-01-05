@@ -2,6 +2,7 @@ package frontend.AdminControllers;
 
 import backend.Entities.User;
 import backend.Managers.UserManager;
+import frontend.CellClasses.UserCell;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,15 +10,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class UserMainController implements Initializable {
@@ -25,73 +22,6 @@ public class UserMainController implements Initializable {
     @FXML
     public ListView<User> enabledUserList;
     public ListView<User> suspendedUserList;
-
-    /**
-     * Inner class used as Cell in ListView consists of  username and button to suspend or enable user
-     */
-    class Cell extends ListCell<User> {
-        HBox hbox = new HBox();
-        Button button = new Button();
-        Label label = new Label();
-        Pane pane = new Pane();
-
-        /**
-         * constructor
-         */
-        public Cell(){
-            super();
-
-            hbox.getChildren().addAll(label, pane, button);
-            HBox.setHgrow(pane, Priority.ALWAYS);
-        }
-
-        /**
-         * This method is override and called on update of cell.
-         * @param user - list item.
-         * @param empty - empty.
-         */
-        @Override
-        public void updateItem(User user, boolean empty){
-            super.updateItem(user, empty);
-            setText(null);
-            setGraphic(null);
-
-            if(user != null && !empty){
-                label.setText(user.getUser_name());
-                setGraphic(hbox);
-                if(Objects.equals(user.getUser_name(), "admin")){
-                    button.setVisible(false);
-                    return;
-                }
-                if(user.getSuspended()){
-                    button.setText("Enable");
-                    button.setOnAction(x -> {
-                        if(!UserManager.enableAccount(user)){
-                            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                            errorAlert.setHeaderText("Failure");
-                            errorAlert.setContentText("Enabling user has failed");
-                            errorAlert.showAndWait();
-                            return;
-                        }
-                        updateList();
-                    });
-                }
-                else{
-                    button.setText("Suspend");
-                    button.setOnAction(x -> {
-                        if(!UserManager.suspendAccount(user)){
-                            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                            errorAlert.setHeaderText("Failure");
-                            errorAlert.setContentText("Suspending user has failed");
-                            errorAlert.showAndWait();
-                            return;
-                        }
-                        updateList();
-                    });
-                }
-            }
-        }
-    }
 
     /**
      * Default Fxml initialization
@@ -110,11 +40,11 @@ public class UserMainController implements Initializable {
 
         if(enabledUsers != null){
             enabledUserList.setItems(enabledUsers);
-            enabledUserList.setCellFactory(x -> new Cell());
+            enabledUserList.setCellFactory(x -> new UserCell(this));
         }
         if(suspendedUsers != null){
          suspendedUserList.setItems(suspendedUsers);
-         suspendedUserList.setCellFactory(x -> new Cell());
+         suspendedUserList.setCellFactory(x -> new UserCell(this));
         }
     }
 
