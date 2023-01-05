@@ -18,15 +18,23 @@ public class PartCell extends ListCell<PartBasic> {
     Button buttonDown = new Button();
     Label label = new Label();
     Pane pane = new Pane();
+
     CategoryMainController categoryMainController;
+    Boolean firstPage;
+    Boolean lastPage;
+    Integer listSize;
 
     /**
      * constructor
      */
-    public PartCell(CategoryMainController categoryMainController){
+    public PartCell(CategoryMainController categoryMainController, Boolean firstPage, Boolean lastPage, Integer listSize){
         super();
 
         this.categoryMainController = categoryMainController;
+        this.firstPage = firstPage;
+        this.lastPage = lastPage;
+        this.listSize = listSize;
+
         hbox.getChildren().addAll(label, pane, buttonUp, buttonDown);
         HBox.setHgrow(pane, Priority.ALWAYS);
     }
@@ -43,16 +51,19 @@ public class PartCell extends ListCell<PartBasic> {
         setGraphic(null);
 
         if(part != null && !empty){
+            int index = getIndex();
             label.setText(part.getPartName() + ' ' + part.getPartNumber());
             setGraphic(hbox);
+
+            if(firstPage && index == 0)
+                buttonUp.setVisible(false);
             buttonUp.setText("up");
-            buttonUp.setOnAction(x -> {
+            buttonUp.setOnAction(x -> categoryMainController.onIncerasePartRating(part));
 
-            });
+            if(lastPage && index == listSize - 1)
+                buttonDown.setVisible(false);
             buttonDown.setText("down");
-            buttonDown.setOnAction(x -> {
-
-            });
+            buttonDown.setOnAction(x -> categoryMainController.onDecreasePartRating(part));
         }
     }
 }

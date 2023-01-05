@@ -161,9 +161,9 @@ public class PartManager {
     }
 
     public static ObservableList<PartBasic> getPartsBasicByCatogoryId(Integer categoryId, Integer limit, Integer offset){
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name FROM parts p " +
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name, p.rating FROM parts p " +
                 "JOIN part_names pn ON p.part_name_id = pn.part_name_id " +
-                "WHERE p.category_id = ? ORDER BY p.rating " +
+                "WHERE p.category_id = ? ORDER BY p.rating DESC " +
                 "LIMIT ? OFFSET ?")) {
             s.setInt(1, categoryId);
             s.setInt(2, limit);
@@ -175,6 +175,7 @@ public class PartManager {
                 PartBasic partBasic = new PartBasic();
                 partBasic.setPartNumber(rs.getString("part_number"));
                 partBasic.setPartName(rs.getString("part_name"));
+                partBasic.setRating(rs.getInt("rating"));
 
                 result.add(partBasic);
             }
@@ -184,36 +185,34 @@ public class PartManager {
         }
     }
 
+    public static Integer getPartCountForCategoryId(Integer categoryId){
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT count(*) count FROM parts WHERE category_id = ?")) {
+            s.setInt(1, categoryId);
+
+            ResultSet rs = s.executeQuery();
+            if (rs.next()){
+                return rs.getInt("count");
+            }
+            return 0;
+        } catch (SQLException ignored) {
+            return 0;
+        }
+    }
+
     public static boolean SwapRatings(String partNumber1, String partNumber2){
         try{
             DBS.getConnection().setAutoCommit(false);
-            PreparedStatement s = DBS.getConnection().prepareStatement("SELECT rating from parts WHERE part_number = ?");
-            s.setString(1, partNumber1);
-            ResultSet rs = s.executeQuery();
-            int rating1;
-            if (rs.next())
-                rating1 = rs.getInt("rating");
-            else
+            Part part1 = getPartByPartNumber(partNumber1);
+            Part part2 = getPartByPartNumber(partNumber2);
+            if(part1 == null || part2 == null)
                 return false;
 
-            s = DBS.getConnection().prepareStatement("SELECT rating from parts WHERE part_number = ?");
-            s.setString(1, partNumber2);
-            rs = s.executeQuery();
-            int rating2;
-            if (rs.next())
-                rating2 = rs.getInt("rating");
-            else
-                return false;
+            Integer part1Rating = part1.getRating();
+            part1.setRating(part2.getRating());
+            part2.setRating(part1Rating);
 
-            s = DBS.getConnection().prepareStatement("UPDATE parts SET rating = ? WHERE part_number = ?");
-            s.setInt(1, rating2);
-            s.setString(2, partNumber1);
-            s.executeUpdate();
-
-            s = DBS.getConnection().prepareStatement("UPDATE parts SET rating = ? WHERE part_number = ?");
-            s.setInt(1, rating1);
-            s.setString(2, partNumber2);
-            s.executeUpdate();
+            part1.update();
+            part2.update();
 
             DBS.getConnection().setAutoCommit(true);
             return true;

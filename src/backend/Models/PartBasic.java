@@ -3,6 +3,7 @@ package backend.Models;
 public class PartBasic {
     private String partNumber;
     private String partName;
+    private Integer rating;
 
     public String getPartNumber() {
         return partNumber;
@@ -18,5 +19,13 @@ public class PartBasic {
 
     public void setPartName(String partName) {
         this.partName = partName;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 }
