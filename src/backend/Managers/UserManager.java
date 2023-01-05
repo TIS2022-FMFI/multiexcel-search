@@ -1,7 +1,9 @@
 package backend.Managers;
 
-import backend.Entities.User;
 import backend.Sessions.DBS;
+import backend.Entities.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,12 +73,12 @@ public class UserManager {
      * @param onlyActive set to True if you want only active accounts. False if all
      * @return List if succeeded otherwise returns NULL
      */
-    public static List<User> getUsers(boolean onlyActive) {
+    public static ObservableList<User> getUsers(boolean onlyActive) {
         try (
                 PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users");
                 ResultSet r = s.executeQuery()
         ) {
-            List<User> allUsers = new ArrayList<>();
+            ObservableList<User> allUsers = FXCollections.observableArrayList();
             while (r.next()) {
                 User c = new User();
                 c.setUser_id(r.getInt("user_id"));
@@ -136,6 +138,31 @@ public class UserManager {
             }
             return null;
         } catch (SQLException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get list of all or only suspended users
+     *
+     * @return List if succeeded otherwise returns NULL
+     */
+    public static ObservableList<User> getSuspendedUsers(){
+        try(
+                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users WHERE suspended = 1 ORDER BY user_name");
+                ResultSet r = s.executeQuery()
+        ){
+            ObservableList<User> users = FXCollections.observableArrayList();
+            while (r.next()){
+                User c = new User();
+                c.setUser_id(r.getInt("user_id"));
+                c.setUser_name(r.getString("user_name"));
+                c.setPassword(r.getString("password"));
+                c.setSuspended(r.getBoolean("suspended"));
+                users.add(c);
+            }
+            return users;
+        }catch (SQLException e){
             return null;
         }
     }

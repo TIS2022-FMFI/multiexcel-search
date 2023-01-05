@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <?import javafx.scene.text.Text?>
-<AnchorPane prefHeight="300.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="300.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="frontend.AdminControllers.CategoryDeleteController">
     <Text fx:id="deleteTextArea" layoutX="40.0" layoutY="87.0"
           text="Deleting a category will clear your search history. Do you wish to continue?"/>

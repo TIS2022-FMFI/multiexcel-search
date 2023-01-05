@@ -19,6 +19,8 @@ public class AdminMainController implements Initializable {
     @FXML
     public Tab categoryTab;
     @FXML
+    public Tab userTab;
+    @FXML
     private Button importButton;
     @FXML
     private Button logoffButton;
@@ -49,13 +51,18 @@ public class AdminMainController implements Initializable {
             setTab("./src/frontend/BasicFXML/SearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
 
+            setTab("./src/frontend/AdminFXML/CategoryMain.fxml", categoryTab);
+
+            setTab("./src/frontend/AdminFXML/UserMain.fxml", userTab);
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @FXML
-    public void importButton() {
+    public void importButton(){
         try {
 
             FXMLLoader loader = new FXMLLoader();
