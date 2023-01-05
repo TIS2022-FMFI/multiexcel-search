@@ -1,6 +1,5 @@
 package frontend.BasicControllers;
 
-import backend.Entities.User;
 import backend.Managers.UserManager;
 import backend.Sessions.SESSION;
 import javafx.fxml.FXML;

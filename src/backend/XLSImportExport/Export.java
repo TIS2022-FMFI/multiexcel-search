@@ -1,12 +1,12 @@
 package backend.XLSImportExport;
 
 
-import backend.Sessions.DBS;
 import backend.Entities.Category;
 import backend.Entities.Customer;
 import backend.Entities.Part;
 import backend.Entities.Part_name;
 import backend.Managers.*;
+import backend.Sessions.DBS;
 import javafx.scene.control.Alert;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
@@ -64,8 +64,9 @@ public class Export {
 
     /**
      * Exports list of parts into xls file and saves file at input path
+     *
      * @param parts - list of parts to export
-     * @param path - path to save xls file to
+     * @param path  - path to save xls file to
      * @return true, if export ran without errors
      */
     public static boolean exportPartsToXLS(List<Part> parts, String path) {
@@ -229,7 +230,8 @@ public class Export {
 
     /**
      * Converts xls file located at inputPath to pdf and save pdf at outputPath
-     * @param inputPath - path to xls file to convert
+     *
+     * @param inputPath  - path to xls file to convert
      * @param outputPath - path to pdf file
      */
     public static void convertXLSToPdf(String inputPath, String outputPath) {
