@@ -3,13 +3,13 @@ package backend.Managers;
 import backend.Entities.Category_query;
 import backend.Sessions.DBS;
 import backend.Entities.Category;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryManager {
     /**
@@ -44,10 +44,10 @@ public class CategoryManager {
      *
      * @return List of all Categories
      */
-    public static List<Category> getAllCategories() {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories")) {
+    public static ObservableList<Category> getAllCategories() {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories ORDER BY category_name")) {
             try (ResultSet r = s.executeQuery()) {
-                List<Category> categories = new ArrayList<>();
+                ObservableList<Category> categories = FXCollections.observableArrayList();
                 while (r.next()) {
                     Category category = new Category();
                     category.setCategory_id(r.getInt("category_id"));
@@ -94,13 +94,11 @@ public class CategoryManager {
     /**
      * Inserts category to database
      *
-     * @param categoryId   - id of category
      * @param categoryName - name of category
      */
-    public static boolean insertCategory(Integer categoryId, String categoryName) {
+    public static boolean insertCategory(String categoryName) {
         try {
             Category category = new Category();
-            category.setCategory_id(categoryId);
             category.setCategory_name(categoryName);
             category.insert();
             return true;
