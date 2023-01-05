@@ -227,7 +227,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     private <T> void setTriple(Triple<T, T, Integer> triple, TextField from, TextField to, ChoiceBox<String> priority, Function<T, String> toStringFunc) {
         from.setText(toStringFunc.apply(triple.first));
         to.setText(toStringFunc.apply(triple.second));
-        priority.getSelectionModel().select(triple.third.toString());
+        if (triple.third != Integer.MAX_VALUE)
+            priority.getSelectionModel().select(triple.third.toString());
     }
 
     private void setDoubleTriple(Triple<Double, Double, Integer> triple, TextField from, TextField to, ChoiceBox<String> priority) {

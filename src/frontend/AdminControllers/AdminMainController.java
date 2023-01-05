@@ -53,7 +53,6 @@ public class AdminMainController implements Initializable {
     @FXML
     public void importButton() {
         try {
-
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/AdminFXML/Import.fxml";
             setScene(loader, fxmlDocPath, "Import");
