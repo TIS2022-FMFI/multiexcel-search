@@ -1,38 +1,34 @@
-package frontend.HistoryControllers;
+package frontend.AdminControllers.HistoryControllers;
 
 import backend.Entities.*;
-
 import backend.Managers.CategoryManager;
 import backend.Managers.HistoryManager;
-import backend.Managers.PartManager;
 import backend.Managers.UserManager;
+import backend.Models.Filterable;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import frontend.BasicControllers.AbstractControllers.FilterController;
+import frontend.BasicControllers.AbstractControllers.FilterMasterController;
+import frontend.BasicControllers.BasicController;
 
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class HistoryMainController implements Initializable {
+public class HistoryMainController implements Initializable, FilterMasterController {
 
     @FXML
     public TableView<Query> table_queries;
@@ -87,14 +83,15 @@ public class HistoryMainController implements Initializable {
     public Button button_delte_selected;
     @FXML
     public Button button_user_filter;
+    public Button button_category_filter;
 
 
     private boolean isAdmin;
     private ObservableList<Query> queries;
     private int currentPageIndex = 0;
-    private int itemsPerPage = 10;
+    private final int itemsPerPage = 10;
     private int currentSelectedIndex = -1;
-    private List<Integer> currentSelectedIndexes = new ArrayList<>();
+    private final List<Integer> currentSelectedIndexes = new ArrayList<>();
     private int totalItemCount;
     private int maxPagesIndex;
     private List<User> users;
@@ -110,21 +107,22 @@ public class HistoryMainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         isAdmin = SESSION.getSession().getUser_name().equals("admin");
 
-        if(!isAdmin){
+        if (!isAdmin) {
             col_username.setVisible(false);
             button_user_filter.setVisible(false);
         }
         historySession = HistorySession.getInstance();
         initializeController();
+        setFilterStyle();
     }
 
-    private void initializeController(){
+    private void initializeController() {
         userIdToName = new HashMap<>();
         categoryIdToName = new HashMap<>();
 
         col_username.setCellValueFactory(feature -> createUsernameWrapperFromUserID(feature.getValue().getUser_id()));
         col_categories.setCellValueFactory(feature -> createCategoriesWrapper(feature.getValue().getQuery_id()));
-        col_rubber.setCellValueFactory( featrue -> createFromToWrapper(featrue.getValue().getRubber_from(), featrue.getValue().getRubber_to()));
+        col_rubber.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getRubber_from(), featrue.getValue().getRubber_to()));
         col_diameter_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_AT_from(), featrue.getValue().getDiameter_AT_to()));
         col_length_l_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_AT_from(), featrue.getValue().getLength_L_AT_to()));
         col_diameter_it.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_IT_from(), featrue.getValue().getDiameter_IT_to()));
@@ -148,15 +146,15 @@ public class HistoryMainController implements Initializable {
         System.out.println("Current page index: " + currentPageIndex + ". Max page index: " + maxPagesIndex);
 
         date_picker_from.setOnAction(event -> {
-            if(date_picker_from.getValue() != null){
-                System.out.printf("Selected from date: %s%n",Date.valueOf(date_picker_from.getValue()));
+            if (date_picker_from.getValue() != null) {
+                System.out.printf("Selected from date: %s%n", Date.valueOf(date_picker_from.getValue()));
                 filter();
             }
         });
 
         date_picker_to.setOnAction(event -> {
-            if(date_picker_to.getValue() != null){
-                System.out.printf("Selected TO date: %s%n",Date.valueOf(date_picker_to.getValue()));
+            if (date_picker_to.getValue() != null) {
+                System.out.printf("Selected TO date: %s%n", Date.valueOf(date_picker_to.getValue()));
                 filter();
             }
         });
@@ -164,39 +162,35 @@ public class HistoryMainController implements Initializable {
     }
 
     private ReadOnlyStringWrapper createCategoriesWrapper(int queryId){
-        List<Part> parts = PartManager.GetPartsByQueryId(queryId);
+        List<Category_query> category_queries = CategoryManager.getAllCategoriesByQueryId(queryId);
 
-        if(parts == null){
+        if(category_queries == null){
             return new ReadOnlyStringWrapper("<none>");
         }
 
-        /*if(parts.size() == 0){
+        if(category_queries.size() == 0){
             return new ReadOnlyStringWrapper("<none>");
-        }*/
-
-        HashSet<BigInteger> categoryIds = new HashSet<>();
-        for (Part p : parts) {
-            categoryIds.add(p.getCategory_id());
         }
+
         List<String> displayedCategories = new ArrayList<>();
 
-        for (BigInteger b: categoryIds) {
-            if(!categoryIdToName.containsKey(b)){
-                Category category = CategoryManager.getCategory(b);
+        for (Category_query cq: category_queries) {
+            if(!categoryIdToName.containsKey(cq.getCategory_id())){
+                Category category = CategoryManager.getCategory(cq.getCategory_id());
                 if(category == null){
                     continue;
                 }
-                categoryIdToName.put(b, category.getCategory_name());
+                categoryIdToName.put(cq.getCategory_id(), category.getCategory_name());
             }
-            displayedCategories.add(categoryIdToName.get(b));
+            displayedCategories.add(categoryIdToName.get(cq.getCategory_id()));
         }
         return new ReadOnlyStringWrapper(String.join(", ", displayedCategories));
     }
 
-    private ReadOnlyStringWrapper createUsernameWrapperFromUserID(int userId){
-        if(!userIdToName.containsKey(userId)){
+    private ReadOnlyStringWrapper createUsernameWrapperFromUserID(int userId) {
+        if (!userIdToName.containsKey(userId)) {
             User user = UserManager.getUserById(userId);
-            if(user == null){
+            if (user == null) {
                 return new ReadOnlyStringWrapper("not existing user");
             }
             userIdToName.put(userId, user.getUser_name());
@@ -205,30 +199,31 @@ public class HistoryMainController implements Initializable {
         return new ReadOnlyStringWrapper(userIdToName.get(userId));
     }
 
-    private <K, V>ReadOnlyStringWrapper createFromToWrapper(K first, V second){
-        if(first == null || second == null){
+    private <K, V> ReadOnlyStringWrapper createFromToWrapper(K first, V second) {
+        if (first == null || second == null) {
             return new ReadOnlyStringWrapper("null in arguments");
         }
         return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
     }
 
-    private void calculatePageIndexesAndUpdate(){
+    private void calculatePageIndexesAndUpdate() {
         totalItemCount = HistoryManager.getTotalNumberOfQueriesWithFilters(categories, dateFromTo, users);
-        maxPagesIndex = (int) Math.ceil((double)totalItemCount/itemsPerPage);
-        if(maxPagesIndex == 0){
+        maxPagesIndex = (int) Math.ceil((double) totalItemCount / itemsPerPage);
+        if (maxPagesIndex == 0) {
             currentPageIndex = -1;
         }
         updatePageTextLabel();
     }
-    private void updatePageTextLabel(){
+
+    private void updatePageTextLabel() {
         label_page_index.setText(pageTextInfo());
     }
 
-    private String pageTextInfo(){
-        return String.format("Page %d / %d", currentPageIndex+1, maxPagesIndex);
+    private String pageTextInfo() {
+        return String.format("Page %d / %d", currentPageIndex + 1, maxPagesIndex);
     }
 
-    private void updateTableContent(){
+    private void updateTableContent() {
         currentSelectedIndex = -1;
         currentSelectedIndexes.clear();
         updateDeleteButton();
@@ -236,7 +231,7 @@ public class HistoryMainController implements Initializable {
         queries.clear();
 
         ObservableList<Query> result = HistoryManager.getQueriesWithFilters(categories, dateFromTo, users, itemsPerPage, currentPageIndex);
-        if(result != null){
+        if (result != null) {
             queries.addAll(result);
         }
 
@@ -245,36 +240,37 @@ public class HistoryMainController implements Initializable {
         System.out.printf("Updated table content. Total rows: %d. Current Page: %d. Max page index: %d.%n", totalItemCount, currentPageIndex, maxPagesIndex);
     }
 
-    private boolean isNextValidIndexForward(){
+    private boolean isNextValidIndexForward() {
         return (currentPageIndex + 1 < maxPagesIndex);
     }
 
 
-    private boolean isNextValidIndexBackward(){
+    private boolean isNextValidIndexBackward() {
         return (currentPageIndex - 1 >= 0);
     }
 
-    private void resetFilters(){
+    private void resetFilters() {
         categories = null;
         dateFromTo = null;
 
-        if(!isAdmin){
-            if(users == null){
+        if (!isAdmin) {
+            if (users == null) {
                 users = new ArrayList<>();
             }
-            if(users.size() == 0){
+            if (users.size() == 0) {
                 users.add(SESSION.getSession());
             }
-        }else{
+        } else {
             users = null;
         }
+        setFilterStyle();
     }
 
-    private void updateSelectButton(){
+    private void updateSelectButton() {
         button_open_selected.setDisable(!(currentSelectedIndex >= 0 && currentSelectedIndex < queries.size()));
     }
 
-    private void saveCurrentFiltersAndSelectedQuery(){
+    private void saveCurrentFiltersAndSelectedQuery() {
         historySession.setSelectedQuery(queries.get(currentSelectedIndex));
         historySession.setUsersFilter(users);
         historySession.setCategoriesFilter(categories);
@@ -285,33 +281,33 @@ public class HistoryMainController implements Initializable {
         System.out.println("Filter data saved to HistorySession");
     }
 
-    private void loadFiltersAndSelectedQuery(){
-        if(historySession.getUsersFilter() != null){
+    private void loadFiltersAndSelectedQuery() {
+        if (historySession.getUsersFilter() != null) {
             users = historySession.getUsersFilter();
         }
-        if(historySession.getCategoriesFilter() != null){
+        if (historySession.getCategoriesFilter() != null) {
             categories = historySession.getCategoriesFilter();
         }
-        if(historySession.getDateFromToFilter() != null){
+        if (historySession.getDateFromToFilter() != null) {
             dateFromTo = historySession.getDateFromToFilter();
             date_picker_from.setValue(dateFromTo.getKey().toLocalDate());
             date_picker_to.setValue(dateFromTo.getValue().toLocalDate());
         }
-        if(historySession.getUserIdToName() != null){
+        if (historySession.getUserIdToName() != null) {
             userIdToName = historySession.getUserIdToName();
         }
-        if(historySession.getCurrentPageIndex() != null){
+        if (historySession.getCurrentPageIndex() != null) {
             currentPageIndex = historySession.getCurrentPageIndex();
             ignorePageCalculation = true;
         }
-        if(historySession.getCategoryIdToName() != null){
+        if (historySession.getCategoryIdToName() != null) {
             categoryIdToName = historySession.getCategoryIdToName();
         }
         System.out.println("Filter data loaded from HistorySession");
         historySession.removeSessionData();
     }
-    
-    private void filter(){
+
+    private void filter() {
         currentPageIndex = 0;
         updateDateFilter();
         updateTableContent();
@@ -321,171 +317,124 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void updateDateFilter(){
-        if(date_picker_to.getValue() != null && date_picker_from.getValue() != null){
+    public void updateDateFilter() {
+        if (date_picker_to.getValue() != null && date_picker_from.getValue() != null) {
             dateFromTo = new Pair<>(Date.valueOf(date_picker_from.getValue()), Date.valueOf(date_picker_to.getValue()));
-        }else if(date_picker_to.getValue() == null && date_picker_from.getValue() != null){
+        } else if (date_picker_to.getValue() == null && date_picker_from.getValue() != null) {
             date_picker_to.setValue(LocalDate.now());
             dateFromTo = new Pair<>(Date.valueOf(date_picker_from.getValue()), Date.valueOf(date_picker_to.getValue()));
-        }else if(date_picker_to.getValue() != null && date_picker_from.getValue() == null){
-            date_picker_from.setValue(LocalDate.of(2022,1,1));
+        } else if (date_picker_to.getValue() != null && date_picker_from.getValue() == null) {
+            date_picker_from.setValue(LocalDate.of(2022, 1, 1));
             dateFromTo = new Pair<>(Date.valueOf(date_picker_from.getValue()), Date.valueOf(date_picker_to.getValue()));
-        }else{
+        } else {
             dateFromTo = null;
             date_picker_from.setValue(null);
             date_picker_to.setValue(null);
         }
     }
 
-    private void updatePageButtonsDisabledStatus(){
-        if(!isNextValidIndexForward()){
+    private void updatePageButtonsDisabledStatus() {
+        if (!isNextValidIndexForward()) {
             button_next_page.setDisable(true);
-        }else{
-            if(button_next_page.isDisabled()){
+        } else {
+            if (button_next_page.isDisabled()) {
                 button_next_page.setDisable(false);
             }
         }
 
-        if(!isNextValidIndexBackward()){
+        if (!isNextValidIndexBackward()) {
             button_previous_page.setDisable(true);
-        }else{
-            if(button_previous_page.isDisabled()){
+        } else {
+            if (button_previous_page.isDisabled()) {
                 button_previous_page.setDisable(false);
             }
         }
     }
-    private void openHistoryDetailFXML(ActionEvent actionEvent){
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/BasicFXML/HistoryDetails.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
 
-            SESSION.getHistoryTab().setContent(root);
-
-            /*Scene scene = new Scene(root);
-
-            Stage stage =  (Stage)  ((Node)actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();*/
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void openHistoryDetailFXML() {
+        BasicController.switchTab("./src/frontend/AdminFXML/HistoryFXML/HistoryDetails.fxml", SESSION.getHistoryTab());
     }
 
-    private void updateDeleteButton(){
-        if(currentSelectedIndexes.size() > 0){
-            button_delte_selected.setDisable(false);
-        }else{
-            button_delte_selected.setDisable(true);
-        }
+    private void updateDeleteButton() {
+        button_delte_selected.setDisable(currentSelectedIndexes.size() <= 0);
     }
 
     @FXML
-    public void getSelected(){
+    public void getSelected() {
         currentSelectedIndexes.clear();
         ObservableList<Integer> selectedIndexes = table_queries.getSelectionModel().getSelectedIndices();
-        if(selectedIndexes.size() == 1){
+        if (selectedIndexes.size() == 1) {
             currentSelectedIndex = selectedIndexes.get(0);
             updateSelectButton();
             System.out.printf("Selected index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery_id());
-        }else{
+        } else {
             currentSelectedIndex = -1;
             updateSelectButton();
         }
         currentSelectedIndexes.addAll(selectedIndexes);
         updateDeleteButton();
-        System.out.printf("Selected indexes size %d. Selected indexes: %s%n",selectedIndexes.size(),selectedIndexes);
+        System.out.printf("Selected indexes size %d. Selected indexes: %s%n", selectedIndexes.size(), selectedIndexes);
     }
 
     @FXML
-    public void onNextPageButtonClick(){
-        if(isNextValidIndexForward()){
+    public void onNextPageButtonClick() {
+        if (isNextValidIndexForward()) {
             currentPageIndex++;
-            System.out.printf("Moved from page %d to page %d.%n", currentPageIndex-1 ,currentPageIndex);
+            System.out.printf("Moved from page %d to page %d.%n", currentPageIndex - 1, currentPageIndex);
             updateTableContent();
             updatePageTextLabel();
-        }else{
+        } else {
             System.out.println("No next page availible!");
         }
         updatePageButtonsDisabledStatus();
     }
 
     @FXML
-    public void onPreviousPageButtonClick(){
-        if(isNextValidIndexBackward()){
+    public void onPreviousPageButtonClick() {
+        if (isNextValidIndexBackward()) {
             currentPageIndex--;
-            System.out.printf("Moved from page %d to page %d.%n", currentPageIndex+1 ,currentPageIndex);
+            System.out.printf("Moved from page %d to page %d.%n", currentPageIndex + 1, currentPageIndex);
             updateTableContent();
             updatePageTextLabel();
-        }else{
+        } else {
             System.out.println("No previous page availible!");
         }
         updatePageButtonsDisabledStatus();
     }
 
     @FXML
-    public void onClearDateFromClick(){
+    public void onClearDateFromClick() {
         dateFromTo = null;
         date_picker_from.setValue(null);
         refreshTable();
     }
 
     @FXML
-    public void onClearDateToClick(){
+    public void onClearDateToClick() {
         dateFromTo = null;
         date_picker_to.setValue(null);
         refreshTable();
     }
 
     @FXML
-    public void onClickCategoryFilterButton(){
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/BasicFXML/CategoryFilter.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
-
-            CategoryFilterController categoryFilterController = loader.getController();
-            categoryFilterController.setHistoryMainController(this);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle("Filter by category");
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void onClickCategoryFilterButton() {
+        FilterController.onClickFilterButton("./src/frontend/AdminFXML/HistoryFXML/CategoryFilter.fxml",
+                this,
+                "Filter by category");
     }
+
     @FXML
-    public void onClickUserFilterButton(){
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/BasicFXML/UserFilter.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
-
-            UserFilterController userFilterController = loader.getController();
-            userFilterController.setHistoryMainController(this);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle("Filter by users");
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void onClickUserFilterButton() {
+        FilterController.onClickFilterButton("./src/frontend/AdminFXML/HistoryFXML/UserFilter.fxml",
+                this,
+                "Filter by users");
     }
-    
+
     @FXML
-    public void refreshTable(){
-        if(!ignorePageCalculation){
+    public void refreshTable() {
+        if (!ignorePageCalculation) {
             currentPageIndex = 0;
-        }else{
+        } else {
             ignorePageCalculation = false;
         }
         updateTableContent();
@@ -495,7 +444,7 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void clearAllFiltersAndRefreshTable(){
+    public void clearAllFiltersAndRefreshTable() {
         resetFilters();
         date_picker_from.setValue(null);
         date_picker_to.setValue(null);
@@ -504,71 +453,54 @@ public class HistoryMainController implements Initializable {
     }
 
     @FXML
-    public void openSelectedQuery(ActionEvent actionEvent){
+    public void openSelectedQuery() {
         System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery_id());
         saveCurrentFiltersAndSelectedQuery();
-        openHistoryDetailFXML(actionEvent);
+        openHistoryDetailFXML();
     }
 
     @FXML
-    public void deleteSelectedQueries(){
-        try{
-            FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/BasicFXML/HistoryDelete.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
-
-            HistoryDeleteController historyDeleteController = loader.getController();
-            historyDeleteController.setHistoryMainController(this);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle("Delete selection");
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void deleteSelectedQueries() {
+        HistoryDeleteController historyDeleteController = BasicController.loadNewFXML("./src/frontend/AdminFXML/HistoryFXML/HistoryDelete.fxml", "Delete selection");
+        historyDeleteController.setHistoryMainController(this);
     }
 
-    public void deleteSelectionConfirmed(){
-        try{
+    public void deleteSelectionConfirmed() {
+        try {
             for (int i = 0; i < currentSelectedIndexes.size(); i++) {
                 queries.get(i).delete();
             }
-        }catch (SQLException sqlException){
+        } catch (SQLException sqlException) {
             System.err.printf("Error occured during selection removeal in HistoryMainController::deleteSelectionConfirmed()%n.Tried deleting items from: %s", queries);
         }
     }
 
-    public void setUserFilter(List<User> users){
-        if(this.users == null){
-            this.users = new ArrayList<>();
-        }
-        this.users.clear();
-        this.users.addAll(users);
+    private void setFilterStyle(){
+        setStyleBasedOnParameters(users, button_user_filter);
+        setStyleBasedOnParameters(categories, button_category_filter);
     }
 
-    public List<User> getUserFilter(){
-        if(users == null){
-            return null;
+    @Override
+    public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
+        if (parameters == null)
+            return;
+        if (type.equals(User.class)) {
+            users = parameters.stream().map(x -> (User) x).collect(Collectors.toList());
+            setStyleBasedOnParameters(parameters, button_user_filter);
         }
-        return Collections.unmodifiableList(users);
+        else if (type.equals(Category.class)){
+            categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
+            setStyleBasedOnParameters(parameters, button_category_filter);
+        }
+        refreshTable();
     }
 
-    public void setCategoryFilter(List<Category> categories){
-        if(this.categories == null){
-            this.categories = new ArrayList<>();
-        }
-        this.categories.clear();
-        this.categories.addAll(categories);
-    }
-
-    public List<Category> getCategoryFilter(){
-        if(categories == null){
-            return null;
-        }
-        return Collections.unmodifiableList(categories);
+    @Override
+    public List<? extends Filterable> getParameters(Class<?> type) {
+        if (type.equals(User.class))
+            return users;
+        if (type.equals(Category.class))
+            return categories;
+        return null;
     }
 }

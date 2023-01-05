@@ -1,9 +1,9 @@
 package backend.Managers;
 
-import backend.Sessions.DBS;
 import backend.Entities.Part;
 import backend.Models.Criteria;
 import backend.Models.Triple;
+import backend.Sessions.DBS;
 import javafx.util.Pair;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -14,37 +14,44 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
-import java.sql.*;
-import java.util.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 public class FirstSearchManager {
-    private static Double check(Double d){
+    private static Double check(Double d) {
         return d == 0 ? null : d;
     }
-    private static Short check(Short s){
+
+    private static Short check(Short s) {
         return s == 0 ? null : s;
     }
+
     private static Integer check(Integer i) {
         return i == 0 ? null : i;
     }
 
-    public static List<Part> search(Criteria criteria){
-        try{
+    public static List<Part> search(Criteria criteria) {
+        try {
             StringBuilder statement = new StringBuilder("SELECT * FROM parts p JOIN part_names pn ON p.part_name_id = pn.part_name_id");
             List<String> subStatements = new ArrayList<>();
             List<Object> statementValues = new ArrayList<>();
             List<Pair<String, Integer>> orders = new ArrayList<>();
 
-            if(criteria.getPartsName() != null){
+            if (criteria.getPartsNameStrings() != null) {
                 subStatements.add("FIND_IN_SET( pn.part_name, ? ) > 0");
-                statementValues.add(String.join(",", criteria.getPartsName()));
+                statementValues.add(String.join(",", criteria.getPartsNameStrings()));
             }
 
             BeanInfo beanInfo = Introspector.getBeanInfo(Criteria.class);
             for (PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {
                 String propertyName = propertyDesc.getName();
                 try {
-                    if(Objects.equals(propertyName, "partsName"))
+                    if (Objects.equals(propertyName, "partsName"))
                         continue;
                     if (BeanUtils.getProperty(criteria, propertyName) != null) {
                         Triple<Object, Object, Integer> property = (Triple<Object, Object, Integer>) PropertyUtils.getProperty(criteria, propertyName);
@@ -53,26 +60,26 @@ public class FirstSearchManager {
                         statementValues.add(property.second);
                         orders.add(new Pair<>("p." + propertyName, property.third));
                     }
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {
                 }
-                catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {}
             }
 
-            if(!subStatements.isEmpty()){
-                statement.append( " WHERE ");
+            if (!subStatements.isEmpty()) {
+                statement.append(" WHERE ");
                 statement.append(String.join(" AND ", subStatements));
             }
 
-            if(!orders.isEmpty()){
+            if (!orders.isEmpty()) {
                 statement.append(" ORDER BY");
                 orders.sort(Comparator.comparingInt(Pair::getValue));
-                for(Pair<String, Integer> order : orders){
+                for (Pair<String, Integer> order : orders) {
                     statement.append(" ").append(order.getKey()).append(" DESC");
                 }
             }
 
             PreparedStatement s = DBS.getConnection().prepareStatement(statement.toString());
             int i = 1;
-            for(Object value : statementValues){
+            for (Object value : statementValues) {
                 s.setObject(i, value);
                 i++;
             }
@@ -110,8 +117,7 @@ public class FirstSearchManager {
             }
             return parts;
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             return null;
         } catch (IntrospectionException e) {
             e.printStackTrace();

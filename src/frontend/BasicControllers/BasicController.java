@@ -19,39 +19,72 @@ public class BasicController implements Initializable {
 
     @FXML
     public Tab historyTab;
+    @FXML
+    public Tab searchTab;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public static <T> T loadNewFXML(String fxmlDocPath, String windowName) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/BasicFXML/HistoryMain.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            Parent root = loader.load(fxmlStream);
-            historyTab.setContent(root);
-            SESSION.setHistoryTab(historyTab);
-
-        } catch(IOException e) {
+            setScene(loader, fxmlDocPath, windowName);
+            return loader.getController();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public void changePassword() {
+
+    public static void switchTab(String fxmlDocPath, Tab tab) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/BasicFXML/ChangePasswordScreen.fxml";
-            setScene(loader, fxmlDocPath);
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+            tab.setContent(root);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void setScene(FXMLLoader loader, String fxmlDocPath) throws IOException {
+    private void setTab(String path, Tab tab) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        FileInputStream fxmlStream = new FileInputStream(path);
+        Parent root = loader.load(fxmlStream);
+        tab.setContent(root);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            setTab("./src/frontend/AdminFXML/HistoryFXML/HistoryMain.fxml", historyTab);
+            SESSION.setHistoryTab(historyTab);
+
+            setTab("./src/frontend/BasicFXML/SearchFXML/FirstSearch.fxml", searchTab);
+            SESSION.setSearchTab(searchTab);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void changePassword() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            String fxmlDocPath = "./src/frontend/BasicFXML/ChangePasswordScreen.fxml";
+            setScene(loader, fxmlDocPath, "Change password");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setScene(FXMLLoader loader, String fxmlDocPath, String stageTitle) throws IOException {
         FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
         AnchorPane root = loader.load(fxmlStream);
 
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setResizable(false);
+        stage.setTitle(stageTitle);
         stage.setScene(scene);
         stage.show();
     }

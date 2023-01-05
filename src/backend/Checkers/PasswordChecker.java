@@ -1,9 +1,8 @@
 package backend.Checkers;
 
+import backend.Entities.User;
 import backend.Sessions.DBS;
 import backend.Sessions.SESSION;
-
-import backend.Entities.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,27 +14,10 @@ public class PasswordChecker {
     private String userName;
     private String password;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    private String getPassword() {
-        return password;
-    }
-
     /**
      * Returns user by his/her name
      *
      * @param userName username
-     *
      * @return User if succeeded
      */
     private static User getUserByName(String userName) throws SQLException {
@@ -45,7 +27,6 @@ public class PasswordChecker {
             return getUser(s);
         }
     }
-
 
     private static User getUser(PreparedStatement s) throws SQLException {
         ResultSet rs = s.executeQuery();
@@ -60,6 +41,22 @@ public class PasswordChecker {
         } else {
             return null;
         }
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    private String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**

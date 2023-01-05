@@ -1,5 +1,6 @@
 package backend.Entities;
 
+import backend.Models.Filterable;
 import backend.Sessions.DBS;
 
 import java.sql.PreparedStatement;
@@ -7,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Part_name {
+public class Part_name implements Filterable {
 
     private Integer part_name_id;
     private String part_name;
@@ -55,6 +56,16 @@ public class Part_name {
 
             s.executeUpdate();
         }
+    }
+
+    @Override
+    public Integer getId() {
+        return getPart_name_id();
+    }
+
+    @Override
+    public String getName() {
+        return getPart_name();
     }
 }
 

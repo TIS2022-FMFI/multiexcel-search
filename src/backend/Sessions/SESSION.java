@@ -1,13 +1,18 @@
 package backend.Sessions;
 
 import backend.Entities.User;
+import backend.Models.Criteria;
 import javafx.scene.control.Tab;
 
 public class SESSION {
 
     private static User user;
 
+    private static Criteria criteria;
+
     private static Tab historyTab;
+
+    private static Tab searchTab;
 
     //add other Tabs also here
 
@@ -29,15 +34,33 @@ public class SESSION {
         user = null;
     }
 
-    public static Tab getHistoryTab(){
-        if(historyTab == null){
+    public static Tab getHistoryTab() {
+        if (historyTab == null) {
             throw new IllegalStateException("historyTab == null");
         }
         return historyTab;
     }
 
-    public static void setHistoryTab(Tab historyTab){
+    public static void setHistoryTab(Tab historyTab) {
         SESSION.historyTab = historyTab;
+    }
+
+
+    public static Tab getSearchTab() {
+        if (searchTab == null) {
+            throw new IllegalStateException("searchTab == null");
+        }
+        return searchTab;
+    }
+
+    public static void setSearchTab(Tab searchTab) {
+        SESSION.searchTab = searchTab;
+    }
+
+    public static Criteria getCriteria() {
+        if (criteria == null)
+            criteria = new Criteria();
+        return criteria;
     }
 
 }

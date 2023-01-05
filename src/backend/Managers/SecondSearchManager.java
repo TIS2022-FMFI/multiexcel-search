@@ -15,7 +15,7 @@ public class SecondSearchManager {
         List<Integer> categoriesId = categories.stream().map(Category::getCategory_id).collect(Collectors.toList());
         List<Part> matchingCategories = parts.stream().filter(x -> categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());
         List<Part> notMatchingCategories = parts.stream().filter(x -> !categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());
-        if(ratingSort){
+        if (ratingSort) {
             matchingCategories.sort(Comparator.comparingInt(Part::getRating));
             notMatchingCategories.sort(Comparator.comparingInt(Part::getRating));
         }

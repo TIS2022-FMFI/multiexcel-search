@@ -64,11 +64,12 @@ public class Query {
     public Short getRubber_from() {
         return rubber_from;
     }
+
     public void setRubber_from(Short rubber_from) {
         this.rubber_from = rubber_from;
     }
 
-    public Double getDiameter_AT_from(){
+    public Double getDiameter_AT_from() {
         return diameter_AT_from;
     }
 
@@ -88,6 +89,7 @@ public class Query {
     public Short getRubber_to() {
         return rubber_to;
     }
+
     public void setRubber_to(Short rubber_to) {
         this.rubber_to = rubber_to;
     }
@@ -251,6 +253,7 @@ public class Query {
     public void setCt_to(Double ct_to) {
         this.ct_to = ct_to;
     }
+
     public Date getDate() {
         return date;
     }

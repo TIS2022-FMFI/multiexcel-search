@@ -1,7 +1,7 @@
 package backend.Managers;
 
-import backend.Sessions.DBS;
 import backend.Entities.Drawing;
+import backend.Sessions.DBS;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ public class DrawingManager {
             newDrawing.setDrawing(drawing);
             newDrawing.insert();
             return BigInteger.valueOf(newDrawing.getDrawing_id());
-        } catch (SQLException ignored){
+        } catch (SQLException ignored) {
             return null;
         }
     }
