@@ -1,6 +1,9 @@
 package backend.Managers;
 
 import backend.Entities.Part;
+import backend.Models.PartBasic;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import backend.Sessions.DBS;
 
 import java.math.BigInteger;
@@ -154,6 +157,68 @@ public class PartManager {
             return null;
         } catch (SQLException ignored) {
             return null;
+        }
+    }
+
+    public static ObservableList<PartBasic> getPartsBasicByCatogoryId(Integer categoryId, Integer limit, Integer offset){
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name, p.rating FROM parts p " +
+                "JOIN part_names pn ON p.part_name_id = pn.part_name_id " +
+                "WHERE p.category_id = ? ORDER BY p.rating DESC " +
+                "LIMIT ? OFFSET ?")) {
+            s.setInt(1, categoryId);
+            s.setInt(2, limit);
+            s.setInt(3, offset);
+
+            ObservableList<PartBasic> result = FXCollections.observableArrayList();
+            ResultSet rs = s.executeQuery();
+            while (rs.next()){
+                PartBasic partBasic = new PartBasic();
+                partBasic.setPartNumber(rs.getString("part_number"));
+                partBasic.setPartName(rs.getString("part_name"));
+                partBasic.setRating(rs.getInt("rating"));
+
+                result.add(partBasic);
+            }
+            return result;
+        } catch (SQLException ignored) {
+            return null;
+        }
+    }
+
+    public static Integer getPartCountForCategoryId(Integer categoryId){
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT count(*) count FROM parts WHERE category_id = ?")) {
+            s.setInt(1, categoryId);
+
+            ResultSet rs = s.executeQuery();
+            if (rs.next()){
+                return rs.getInt("count");
+            }
+            return 0;
+        } catch (SQLException ignored) {
+            return 0;
+        }
+    }
+
+    public static boolean SwapRatings(String partNumber1, String partNumber2){
+        try{
+            DBS.getConnection().setAutoCommit(false);
+            Part part1 = getPartByPartNumber(partNumber1);
+            Part part2 = getPartByPartNumber(partNumber2);
+            if(part1 == null || part2 == null)
+                return false;
+
+            Integer part1Rating = part1.getRating();
+            part1.setRating(part2.getRating());
+            part2.setRating(part1Rating);
+
+            part1.update();
+            part2.update();
+
+            DBS.getConnection().setAutoCommit(true);
+            return true;
+        }
+        catch (SQLException ignored) {
+            return false;
         }
     }
 }

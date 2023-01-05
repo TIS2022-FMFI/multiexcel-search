@@ -46,6 +46,8 @@ public class AdminMainController implements Initializable {
             setTab("./src/frontend/AdminFXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
+            setTab("./src/frontend/AdminFXML/CategoryMain.fxml", categoryTab);
+
             setTab("./src/frontend/BasicFXML/SearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
 
@@ -62,6 +64,7 @@ public class AdminMainController implements Initializable {
     @FXML
     public void importButton(){
         try {
+
             FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/AdminFXML/Import.fxml";
             setScene(loader, fxmlDocPath, "Import");
