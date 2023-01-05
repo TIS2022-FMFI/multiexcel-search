@@ -1,8 +1,8 @@
 package backend.Managers;
 
+import backend.Entities.Category;
 import backend.Entities.Category_query;
 import backend.Sessions.DBS;
-import backend.Entities.Category;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -65,6 +65,7 @@ public class CategoryManager {
             return null;
         }
     }
+
     /**
      * Returns all categories with query id from database
      *
@@ -75,7 +76,7 @@ public class CategoryManager {
                 PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories_queries WHERE query_id=?")
         ) {
             s.setInt(1, queryId);
-            try (ResultSet r = s.executeQuery()){
+            try (ResultSet r = s.executeQuery()) {
                 List<Category_query> category_queries = new ArrayList<>();
                 while (r.next()) {
                     Category_query category_query = new Category_query();

@@ -1,15 +1,14 @@
 package backend.Managers;
 
-import backend.Sessions.DBS;
 import backend.Entities.User;
+import backend.Sessions.DBS;
+import backend.Sessions.SESSION;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserManager {
 
@@ -116,14 +115,7 @@ public class UserManager {
         return true;
     }
 
-    /**
-     * Get user by id
-     *
-     * @param userId user id
-     * @return User if succeeded, NULL if not found, NULL if failed
-     */
-    public static User getUserById(int userId) {
-        String sqlQuery = String.format("SELECT * FROM multiexcel.users WHERE user_id = %d", userId);
+    private static User getUser(String sqlQuery) {
         try (
                 PreparedStatement s = DBS.getConnection().prepareStatement(sqlQuery);
                 ResultSet r = s.executeQuery()
@@ -143,17 +135,56 @@ public class UserManager {
     }
 
     /**
+     * Get user by id
+     *
+     * @param userId user id
+     * @return User if succeeded, NULL if not found, NULL if failed
+     */
+    public static User getUserById(int userId) {
+        String sqlQuery = String.format("SELECT * FROM multiexcel.users WHERE user_id = %d", userId);
+        return getUser(sqlQuery);
+    }
+
+
+    /**
+     * Get user by username
+     *
+     * @param userName username
+     * @return User if succeeded, NULL if not found, NULL if failed
+     */
+    public static User getUserByName(String userName) {
+        String sqlQuery = String.format("SELECT * FROM multiexcel.users WHERE user_name = '%s'", userName);
+        return getUser(sqlQuery);
+    }
+
+
+    /**
+     * Compare User password with given password, set SESSION
+     *
+     * @return True if succeeded otherwise False
+     */
+    public static boolean validateCredentials(String userName, String password) {
+        User user = UserManager.getUserByName(userName);
+
+        if (user == null) return false;
+
+        SESSION.setSession(user);
+
+        return password.equals(user.getPassword());
+    }
+
+    /**
      * Get list of all or only suspended users
      *
      * @return List if succeeded otherwise returns NULL
      */
-    public static ObservableList<User> getSuspendedUsers(){
-        try(
+    public static ObservableList<User> getSuspendedUsers() {
+        try (
                 PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users WHERE suspended = 1 ORDER BY user_name");
                 ResultSet r = s.executeQuery()
-        ){
+        ) {
             ObservableList<User> users = FXCollections.observableArrayList();
-            while (r.next()){
+            while (r.next()) {
                 User c = new User();
                 c.setUser_id(r.getInt("user_id"));
                 c.setUser_name(r.getString("user_name"));
@@ -162,7 +193,7 @@ public class UserManager {
                 users.add(c);
             }
             return users;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             return null;
         }
     }

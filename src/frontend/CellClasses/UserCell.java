@@ -2,7 +2,7 @@ package frontend.CellClasses;
 
 import backend.Entities.User;
 import backend.Managers.UserManager;
-import frontend.AdminControllers.UserMainController;
+import frontend.Controllers.UserManagementControllers.UserMainController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -27,7 +27,7 @@ public class UserCell extends ListCell<User> {
     /**
      * constructor
      */
-    public UserCell(UserMainController userMainController){
+    public UserCell(UserMainController userMainController) {
         super();
 
         hbox.getChildren().addAll(label, pane, button);
@@ -37,26 +37,27 @@ public class UserCell extends ListCell<User> {
 
     /**
      * This method is override and called on update of cell.
-     * @param user - list item.
+     *
+     * @param user  - list item.
      * @param empty - empty.
      */
     @Override
-    public void updateItem(User user, boolean empty){
+    public void updateItem(User user, boolean empty) {
         super.updateItem(user, empty);
         setText(null);
         setGraphic(null);
 
-        if(user != null && !empty){
+        if (user != null && !empty) {
             label.setText(user.getUser_name());
             setGraphic(hbox);
-            if(Objects.equals(user.getUser_name(), "admin")){
+            if (Objects.equals(user.getUser_name(), "admin")) {
                 button.setVisible(false);
                 return;
             }
-            if(user.getSuspended()){
+            if (user.getSuspended()) {
                 button.setText("Enable");
                 button.setOnAction(x -> {
-                    if(!UserManager.enableAccount(user)){
+                    if (!UserManager.enableAccount(user)) {
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                         errorAlert.setHeaderText("Failure");
                         errorAlert.setContentText("Enabling user has failed");
@@ -65,11 +66,10 @@ public class UserCell extends ListCell<User> {
                     }
                     userMainController.updateList();
                 });
-            }
-            else{
+            } else {
                 button.setText("Suspend");
                 button.setOnAction(x -> {
-                    if(!UserManager.suspendAccount(user)){
+                    if (!UserManager.suspendAccount(user)) {
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                         errorAlert.setHeaderText("Failure");
                         errorAlert.setContentText("Suspending user has failed");

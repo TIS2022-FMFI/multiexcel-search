@@ -1,7 +1,7 @@
 package frontend.CellClasses;
 
 import backend.Models.PartBasic;
-import frontend.AdminControllers.CategoryMainController;
+import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -27,7 +27,7 @@ public class PartCell extends ListCell<PartBasic> {
     /**
      * constructor
      */
-    public PartCell(CategoryMainController categoryMainController, Boolean firstPage, Boolean lastPage, Integer listSize){
+    public PartCell(CategoryMainController categoryMainController, Boolean firstPage, Boolean lastPage, Integer listSize) {
         super();
 
         this.categoryMainController = categoryMainController;
@@ -41,26 +41,27 @@ public class PartCell extends ListCell<PartBasic> {
 
     /**
      * This method is override and called on update of cell.
-     * @param part - list item.
+     *
+     * @param part  - list item.
      * @param empty - empty.
      */
     @Override
-    public void updateItem(PartBasic part, boolean empty){
+    public void updateItem(PartBasic part, boolean empty) {
         super.updateItem(part, empty);
         setText(null);
         setGraphic(null);
 
-        if(part != null && !empty){
+        if (part != null && !empty) {
             int index = getIndex();
             label.setText(part.getPartName() + ' ' + part.getPartNumber());
             setGraphic(hbox);
 
-            if(firstPage && index == 0)
+            if (firstPage && index == 0)
                 buttonUp.setVisible(false);
             buttonUp.setText("up");
             buttonUp.setOnAction(x -> categoryMainController.onIncerasePartRating(part));
 
-            if(lastPage && index == listSize - 1)
+            if (lastPage && index == listSize - 1)
                 buttonDown.setVisible(false);
             buttonDown.setText("down");
             buttonDown.setOnAction(x -> categoryMainController.onDecreasePartRating(part));

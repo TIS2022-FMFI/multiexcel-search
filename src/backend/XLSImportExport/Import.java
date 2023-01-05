@@ -250,7 +250,7 @@ public class Import {
                     throw new RuntimeException("Error at line: " + index);
                 }
             }
-            DBS.getConnection().commit();
+
             DBS.getConnection().setAutoCommit(true);
         } catch (SQLException ignored) {
             throw new RuntimeException("Error connecting to DBS");
