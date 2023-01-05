@@ -1,12 +1,14 @@
 package backend.Managers;
 
-import backend.Sessions.DBS;
 import backend.Entities.Customer;
+import backend.Sessions.DBS;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerManager {
     /**
@@ -57,6 +59,31 @@ public class CustomerManager {
             }
             return null;
         } catch (SQLException ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Returns all customers from database
+     *
+     * @return List of all Customers
+     */
+    public static List<Customer> getAllCustomers() {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.customers")) {
+            try (ResultSet r = s.executeQuery()) {
+                List<Customer> customers = new ArrayList<>();
+                while (r.next()) {
+                    Customer customer = new Customer();
+                    customer.setCustomer_id(r.getInt("customer_id"));
+                    customer.setCustomer_name(r.getString("customer_name"));
+
+                    customers.add(customer);
+                }
+                return customers;
+            } catch (SQLException e) {
+                return null;
+            }
+        } catch (SQLException e) {
             return null;
         }
     }

@@ -1,10 +1,10 @@
 package backend.Managers;
 
-import backend.Sessions.DBS;
 import backend.Entities.Part;
 import backend.Models.PartBasic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import backend.Sessions.DBS;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;

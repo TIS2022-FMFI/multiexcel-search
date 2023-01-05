@@ -1,7 +1,6 @@
 package frontend.BasicControllers;
 
 
-
 import backend.Checkers.PasswordChecker;
 import backend.Sessions.SESSION;
 import javafx.event.ActionEvent;
@@ -81,7 +80,7 @@ public class LoginController {
             AnchorPane root = loader.load(fxmlStream);
 
             Scene scene = new Scene(root);
-            Stage stage =  (Stage)  ((Node)event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

@@ -1,12 +1,14 @@
 package backend.Managers;
 
-import backend.Sessions.DBS;
 import backend.Entities.Part_name;
+import backend.Sessions.DBS;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PartNameManager {
     /**
@@ -60,6 +62,32 @@ public class PartNameManager {
             }
             return null;
         } catch (SQLException ignored) {
+            return null;
+        }
+    }
+
+
+    /**
+     * Returns all part names from database
+     *
+     * @return List of all Part names
+     */
+    public static List<Part_name> getAllPartNames() {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.part_names")) {
+            try (ResultSet r = s.executeQuery()) {
+                List<Part_name> partNames = new ArrayList<>();
+                while (r.next()) {
+                    Part_name partName = new Part_name();
+                    partName.setPart_name_id(r.getInt("part_name_id"));
+                    partName.setPart_name(r.getString("part_name"));
+
+                    partNames.add(partName);
+                }
+                return partNames;
+            } catch (SQLException e) {
+                return null;
+            }
+        } catch (SQLException e) {
             return null;
         }
     }

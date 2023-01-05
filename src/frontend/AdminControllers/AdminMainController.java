@@ -13,7 +13,7 @@ import javafx.scene.control.TabPane;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ResourceBundle;
 
 public class AdminMainController implements Initializable {
     @FXML
@@ -28,34 +28,28 @@ public class AdminMainController implements Initializable {
     private TabPane tabPane;
     @FXML
     private Tab historyTab;
+    @FXML
+    private Tab searchTab;
 
+    private void setTab(String path, Tab tab) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        FileInputStream fxmlStream = new FileInputStream(path);
+        Parent root = loader.load(fxmlStream);
+        tab.setContent(root);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/AdminFXML/CategoryMain.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            Parent root = loader.load(fxmlStream);
-            categoryTab.setContent(root);
-        }
-        catch(IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-        try
-        {
-            FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/BasicFXML/HistoryMain.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            Parent root = loader.load(fxmlStream);
-            historyTab.setContent(root);
+        try {
+            setTab("./src/frontend/AdminFXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
-        }
-        catch(IOException e)
-        {
+            setTab("./src/frontend/AdminFXML/CategoryMain.fxml", categoryTab);
+
+            setTab("./src/frontend/BasicFXML/SearchFXML/FirstSearch.fxml", searchTab);
+            SESSION.setSearchTab(searchTab);
+
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

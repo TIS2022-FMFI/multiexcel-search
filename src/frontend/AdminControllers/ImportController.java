@@ -20,18 +20,16 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ImportController implements Initializable {
+    private final List<Text> textsOfFiles = new ArrayList<>();
     @FXML
     private Button chooseFilesButton;
     @FXML
     private Button importButton;
     @FXML
     private VBox scrollVBox;
-
     @FXML
     private Text message;
-
     private List<File> filesToImport = new ArrayList<>();
-    private final List<Text> textsOfFiles = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
