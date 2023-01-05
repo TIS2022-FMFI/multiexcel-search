@@ -51,6 +51,8 @@ public class AdminMainController implements Initializable {
 
             setTab("./src/frontend/AdminFXML/CategoryMain.fxml", categoryTab);
 
+            setTab("./src/frontend/AdminFXML/UserMain.fxml", userTab);
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
