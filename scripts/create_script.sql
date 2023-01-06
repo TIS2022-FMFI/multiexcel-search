@@ -5,9 +5,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 drop table if exists users cascade;
 drop table if exists queries cascade;
 drop table if exists part_name_queries cascade;
-drop table if exists categories_queries;
-drop table if exists customers_queries;
-drop table if exists parts_queries;
 drop table if exists categories;
 drop table if exists part_names;
 drop table if exists customers;
@@ -55,13 +52,6 @@ create table queries
     date             datetime        not null
 );
 
-create table part_name_queries
-(
-    part_name_query_id serial primary key,
-    part_name_id       bigint unsigned not null,
-    query_id           bigint unsigned not null
-);
-
 create table categories_queries
 (
     category_query_id serial primary key,
@@ -69,12 +59,6 @@ create table categories_queries
     query_id          bigint unsigned not null
 );
 
-create table customers_queries
-(
-    customer_query_id serial primary key,
-    customer_id       bigint unsigned not null,
-    query_id          bigint unsigned not null
-);
 
 create table parts_queries
 (

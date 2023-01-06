@@ -1,8 +1,8 @@
 package frontend.CellClasses;
 
 import backend.Entities.Category;
-import frontend.AdminControllers.CategoryDeleteController;
-import frontend.AdminControllers.CategoryMainController;
+import frontend.Controllers.CategoryManagementControllers.CategoryDeleteController;
+import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,7 +30,7 @@ public class CategoryCell extends ListCell<Category> {
     /**
      * constructor
      */
-    public CategoryCell(CategoryMainController categoryMainController){
+    public CategoryCell(CategoryMainController categoryMainController) {
         super();
 
         this.categoryMainController = categoryMainController;
@@ -40,17 +40,18 @@ public class CategoryCell extends ListCell<Category> {
 
     /**
      * This method is override and called on update of cell.
+     *
      * @param category - list item.
-     * @param empty - empty.
-     * @exception RuntimeException On fxml loading error.
+     * @param empty    - empty.
+     * @throws RuntimeException On fxml loading error.
      */
     @Override
-    public void updateItem(Category category, boolean empty){
+    public void updateItem(Category category, boolean empty) {
         super.updateItem(category, empty);
         setText(null);
         setGraphic(null);
 
-        if(category != null && !empty){
+        if (category != null && !empty) {
             label.setText(category.getCategory_name());
             setGraphic(hbox);
             button.setText("Delete");
