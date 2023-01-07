@@ -3,6 +3,7 @@ package frontend.Controllers.CategoryManagementControllers;
 import backend.Entities.Category;
 import backend.Managers.CategoryManager;
 import backend.Managers.PartManager;
+import backend.Models.Constants;
 import backend.Models.PartBasic;
 import frontend.CellClasses.CategoryCell;
 import frontend.CellClasses.PartCell;
@@ -106,7 +107,7 @@ public class CategoryMainController implements Initializable {
     @FXML
     public void addCategory() {
         String fxmlDocPath = "./src/frontend/FXML/CategoryManagementFXML/CategoryAdd.fxml";
-        CategoryAddController controller = MainController.setNewStage(fxmlDocPath, "");
+        CategoryAddController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_ADD);
         if (controller != null)
             controller.init(CategoryMainController.this);
     }

@@ -3,6 +3,7 @@ package frontend.Controllers.SearchControllers.FirstSearch;
 import backend.Entities.Customer;
 import backend.Entities.Part_name;
 import backend.Managers.CriteriaManager;
+import backend.Models.Constants;
 import backend.Models.Criteria;
 import backend.Models.Filterable;
 import backend.Models.Triple;
@@ -305,14 +306,14 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     public void onClickPartNameFilterButton() {
         FilterController.onClickFilterButton("src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchPartNameFilter.fxml",
                 this,
-                "Part Name");
+                Constants.WINDOW_TITLE_SEARCH_PART_NAME_FILTER);
     }
 
     @FXML
     public void onClickCustomerFilterButton() {
         FilterController.onClickFilterButton("src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchCustomerFilter.fxml",
                 this,
-                "Customer");
+                Constants.WINDOW_TITLE_SEARCH_CUSTOMER_FILTER);
     }
 
     private Triple<Double, Double, Integer> getDoubleTripleFromUI(TextField from, TextField to, ChoiceBox<String> priority) {

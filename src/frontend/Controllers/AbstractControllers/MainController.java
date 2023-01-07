@@ -1,6 +1,8 @@
 package frontend.Controllers.AbstractControllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -56,5 +58,22 @@ public class MainController {
         alert.setTitle(title);
         alert.setContentText(text);
         alert.showAndWait();
+    }
+
+    public static void replaceStageByEvent(String fxmlDocPath, String stageTitle, ActionEvent event){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+
+            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
+            AnchorPane root = loader.load(fxmlStream);
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            if(!stageTitle.equals("")) {stage.setTitle(stageTitle);}
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

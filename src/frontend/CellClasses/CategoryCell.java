@@ -1,6 +1,7 @@
 package frontend.CellClasses;
 
 import backend.Entities.Category;
+import backend.Models.Constants;
 import frontend.Controllers.CategoryManagementControllers.CategoryDeleteController;
 import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
 import javafx.fxml.FXMLLoader;
@@ -58,7 +59,7 @@ public class CategoryCell extends ListCell<Category> {
             button.setOnAction(x -> {
                 try {
                     FXMLLoader loader = new FXMLLoader();
-                    String fxmlDocPath = "./src/frontend/AdminFXML/CategoryDelete.fxml";
+                    String fxmlDocPath = "./src/frontend/FXML/CategoryManagementFXML/CategoryDelete.fxml";
                     FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
                     AnchorPane root = loader.load(fxmlStream);
 
@@ -69,6 +70,7 @@ public class CategoryCell extends ListCell<Category> {
                     Stage stage = new Stage();
                     stage.setResizable(false);
                     stage.setScene(scene);
+                    stage.setTitle(Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE);
                     stage.show();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
