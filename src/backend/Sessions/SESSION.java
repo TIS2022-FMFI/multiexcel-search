@@ -66,7 +66,7 @@ public class SESSION {
         return criteria;
     }
 
-    public static void clearCriteria(){
+    public static void clearCriteria() {
         criteria = null;
     }
 

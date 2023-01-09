@@ -1,7 +1,5 @@
 package frontend.Controllers.SearchControllers.SecondSearchControllers;
 
-import backend.Managers.HistoryManager;
-import backend.Managers.PartManager;
 import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.event.ActionEvent;
@@ -11,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class SecondSearchConfirm implements Initializable {
@@ -19,14 +16,16 @@ public class SecondSearchConfirm implements Initializable {
     private SecondSearchController secondSearchController;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 
     @FXML
     public void onClickCancel(ActionEvent event) {
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
+
     @FXML
-    public void onClickConfirm(ActionEvent event){
+    public void onClickConfirm(ActionEvent event) {
 //        HistoryManager.saveSearchToHistory(SESSION.getCriteria(), secondSearchController.selectedParts, secondSearchController.categories);
 //        PartManager.IncreaseRating(secondSearchController.selectedParts);
         SESSION.clearCriteria();
@@ -37,14 +36,14 @@ public class SecondSearchConfirm implements Initializable {
     }
 
     @FXML
-    public void onClickExportToPdf(){
+    public void onClickExportToPdf() {
 //        File file = MainController.saveFile("PDF Files", "*.pdf");
 //        if (file != null)
 //            Export.exportPartsToPdf(secondSearchController.parts, file.getAbsolutePath());
     }
 
     @FXML
-    public void onClickExportToExcel(){
+    public void onClickExportToExcel() {
 //        File file = MainController.saveFile("Excel Files", "*.xlsx");
 //        if (file != null)
 //            Export.exportPartsToXLS(secondSearchController.parts, file.getAbsolutePath());

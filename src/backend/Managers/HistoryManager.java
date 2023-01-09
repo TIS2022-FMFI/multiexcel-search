@@ -20,6 +20,18 @@ public class HistoryManager {
 
     private static boolean countOnly = false;
 
+    private static Double check(Double d) {
+        return d == 0 ? null : d;
+    }
+
+    private static Short check(Short s) {
+        return s == 0 ? null : s;
+    }
+
+    private static Integer check(Integer i) {
+        return i == 0 ? null : i;
+    }
+
     /**
      * Add search and selected parts to History
      *
@@ -55,12 +67,12 @@ public class HistoryManager {
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-//            try {
-//                DBS.getConnection().rollback();
-//                DBS.getConnection().setAutoCommit(true);
-//            } catch (SQLException ignored1) {
-//            }
+//            throw new RuntimeException(e);
+            try {
+                DBS.getConnection().rollback();
+                DBS.getConnection().setAutoCommit(true);
+            } catch (SQLException ignored1) {
+            }
         }
     }
 
@@ -194,33 +206,33 @@ public class HistoryManager {
                 q.setQuery_id(r.getInt("query_id"));
                 q.setUser_id(r.getInt("user_id"));
 
-                q.setRubber_from(r.getShort("rubber_from"));
-                q.setDiameter_AT_from(r.getDouble("diameter_AT_from"));
-                q.setLength_L_AT_from(r.getDouble("length_L_AT_from"));
-                q.setDiameter_IT_from(r.getDouble("diameter_IT_from"));
-                q.setLength_L_IT_from(r.getDouble("length_L_IT_from"));
-                q.setDiameter_ZT_from(r.getDouble("diameter_ZT_from"));
-                q.setLength_L_ZT_from(r.getDouble("length_L_ZT_from"));
-                q.setCr_steg_from(r.getInt("cr_steg_from"));
-                q.setCr_niere_from(r.getShort("cr_niere_from"));
-                q.setCa_from(r.getShort("ca_from"));
-                q.setCt_from(r.getDouble("ct_from"));
-                q.setCk_from(r.getDouble("ck_from"));
+                q.setRubber_from(check(r.getShort("rubber_from")));
+                q.setDiameter_AT_from(check(r.getDouble("diameter_AT_from")));
+                q.setLength_L_AT_from(check(r.getDouble("length_L_AT_from")));
+                q.setDiameter_IT_from(check(r.getDouble("diameter_IT_from")));
+                q.setLength_L_IT_from(check(r.getDouble("length_L_IT_from")));
+                q.setDiameter_ZT_from(check(r.getDouble("diameter_ZT_from")));
+                q.setLength_L_ZT_from(check(r.getDouble("length_L_ZT_from")));
+                q.setCr_steg_from(check(r.getInt("cr_steg_from")));
+                q.setCr_niere_from(check(r.getShort("cr_niere_from")));
+                q.setCa_from(check(r.getShort("ca_from")));
+                q.setCt_from(check(r.getDouble("ct_from")));
+                q.setCk_from(check(r.getDouble("ck_from")));
 
                 q.setDate(r.getDate("date"));
 
-                q.setRubber_to(r.getShort("rubber_to"));
-                q.setDiameter_AT_to(r.getDouble("diameter_AT_to"));
-                q.setLength_L_AT_to(r.getDouble("length_L_AT_to"));
-                q.setDiameter_IT_to(r.getDouble("diameter_IT_to"));
-                q.setLength_L_IT_to(r.getDouble("length_L_IT_to"));
-                q.setDiameter_ZT_to(r.getDouble("diameter_ZT_to"));
-                q.setLength_L_ZT_to(r.getDouble("length_L_ZT_to"));
-                q.setCr_steg_to(r.getInt("cr_steg_to"));
-                q.setCr_niere_to(r.getShort("cr_niere_to"));
-                q.setCa_to(r.getShort("ca_to"));
-                q.setCt_to(r.getDouble("ct_to"));
-                q.setCk_to(r.getDouble("ck_to"));
+                q.setRubber_to(check(r.getShort("rubber_to")));
+                q.setDiameter_AT_to(check(r.getDouble("diameter_AT_to")));
+                q.setLength_L_AT_to(check(r.getDouble("length_L_AT_to")));
+                q.setDiameter_IT_to(check(r.getDouble("diameter_IT_to")));
+                q.setLength_L_IT_to(check(r.getDouble("length_L_IT_to")));
+                q.setDiameter_ZT_to(check(r.getDouble("diameter_ZT_to")));
+                q.setLength_L_ZT_to(check(r.getDouble("length_L_ZT_to")));
+                q.setCr_steg_to(check(r.getInt("cr_steg_to")));
+                q.setCr_niere_to(check(r.getShort("cr_niere_to")));
+                q.setCa_to(check(r.getShort("ca_to")));
+                q.setCt_to(check(r.getDouble("ct_to")));
+                q.setCk_to(check(r.getDouble("ck_to")));
 
                 queries.add(q);
             }

@@ -53,32 +53,32 @@ public class CriteriaManager {
         return getTriple(fromText, toText, priority, Integer::valueOf, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 
-    private static <T extends Comparable<T>> boolean checkIfInRange(T value, T minValue, T maxValue){
+    private static <T extends Comparable<T>> boolean checkIfInRange(T value, T minValue, T maxValue) {
         return value.compareTo(minValue) > 0 && value.compareTo(maxValue) < 0;
     }
 
-    private static boolean checkDecimal(Double value){
+    private static boolean checkDecimal(Double value) {
         return checkIfInRange(value, -1000., 1000.);
     }
 
 
-    private static boolean checkMediumInt(Integer value){
+    private static boolean checkMediumInt(Integer value) {
         return checkIfInRange(value, -8388608, 8388607);
     }
 
-    private static Double roundDecimal(Double value){
+    private static Double roundDecimal(Double value) {
         return Math.round(value * 100) / 100.;
     }
 
-    private static boolean checkShort(Short value){
+    private static boolean checkShort(Short value) {
         return checkIfInRange(value, Short.MIN_VALUE, Short.MAX_VALUE);
     }
 
     // Ak to vie niekto lepsie tak mi to povedzte
-    public static Query convertCriteriaToQuery(Criteria criteria){
+    public static Query convertCriteriaToQuery(Criteria criteria) {
         Query query = new Query();
 
-        if (criteria.getRubber() != null){
+        if (criteria.getRubber() != null) {
             if (checkShort(criteria.getRubber().first))
                 query.setRubber_from(criteria.getRubber().first);
             if (checkShort(criteria.getRubber().second))
@@ -92,55 +92,55 @@ public class CriteriaManager {
                 query.setDiameter_AT_to(roundDecimal(criteria.getDiameter_AT().second));
         }
 
-        if (criteria.getLength_L_AT() != null){
+        if (criteria.getLength_L_AT() != null) {
             if (checkDecimal(criteria.getLength_L_AT().first))
                 query.setLength_L_AT_from(roundDecimal(criteria.getLength_L_AT().first));
             if (checkDecimal(criteria.getLength_L_AT().second))
                 query.setLength_L_AT_to(roundDecimal(criteria.getLength_L_AT().second));
         }
 
-        if (criteria.getDiameter_IT() != null){
+        if (criteria.getDiameter_IT() != null) {
             if (checkDecimal(criteria.getDiameter_IT().first))
                 query.setDiameter_IT_from(roundDecimal(criteria.getDiameter_IT().first));
             if (checkDecimal(criteria.getDiameter_IT().second))
                 query.setDiameter_IT_to(roundDecimal(criteria.getDiameter_IT().second));
         }
 
-        if (criteria.getLength_L_IT() != null){
+        if (criteria.getLength_L_IT() != null) {
             if (checkDecimal(criteria.getLength_L_IT().first))
                 query.setLength_L_IT_from(roundDecimal(criteria.getLength_L_IT().first));
             if (checkDecimal(criteria.getLength_L_IT().second))
                 query.setLength_L_IT_to(roundDecimal(criteria.getLength_L_IT().second));
         }
 
-        if (criteria.getDiameter_ZT() != null){
+        if (criteria.getDiameter_ZT() != null) {
             if (checkDecimal(criteria.getDiameter_ZT().first))
                 query.setDiameter_ZT_from(roundDecimal(criteria.getDiameter_ZT().first));
             if (checkDecimal(criteria.getDiameter_ZT().second))
                 query.setDiameter_ZT_to(roundDecimal(criteria.getDiameter_ZT().second));
         }
 
-        if (criteria.getLength_L_ZT() != null){
+        if (criteria.getLength_L_ZT() != null) {
             if (checkDecimal(criteria.getLength_L_ZT().first))
                 query.setLength_L_ZT_from(roundDecimal(criteria.getLength_L_ZT().first));
             if (checkDecimal(criteria.getLength_L_ZT().second))
                 query.setLength_L_ZT_to(roundDecimal(criteria.getLength_L_ZT().second));
         }
 
-        if (criteria.getCr_steg() != null){
+        if (criteria.getCr_steg() != null) {
             if (checkMediumInt(criteria.getCr_steg().first))
                 query.setCr_steg_from(criteria.getCr_steg().first);
             if (checkMediumInt(criteria.getCr_steg().second))
                 query.setCr_steg_to(criteria.getCr_steg().second);
         }
-        if (criteria.getCr_niere() != null){
+        if (criteria.getCr_niere() != null) {
             if (checkShort(criteria.getCr_niere().first))
                 query.setCr_niere_from(criteria.getCr_niere().first);
             if (checkShort(criteria.getCr_niere().second))
                 query.setCr_niere_to(criteria.getCr_niere().second);
         }
 
-        if (criteria.getCa() != null){
+        if (criteria.getCa() != null) {
             if (checkShort(criteria.getCa().first))
                 query.setCa_from(criteria.getCa().first);
             if (checkShort(criteria.getCa().second))
@@ -154,7 +154,7 @@ public class CriteriaManager {
                 query.setCt_to(roundDecimal(criteria.getCt().second));
         }
 
-        if (criteria.getCk() != null){
+        if (criteria.getCk() != null) {
             if (checkDecimal(criteria.getCk().first))
                 query.setCk_from(roundDecimal(criteria.getCk().first));
             if (checkDecimal(criteria.getCk().second))

@@ -19,7 +19,7 @@ public class PartManager {
         return d == 0 ? null : d;
     }
 
-    private static Short check(Short s) {
+    public static Short check(Short s) {
         return s == 0 ? null : s;
     }
 
@@ -198,7 +198,8 @@ public class PartManager {
             try {
                 DBS.getConnection().rollback();
                 DBS.getConnection().setAutoCommit(true);
-            } catch (SQLException ignored1){}
+            } catch (SQLException ignored1) {
+            }
             return false;
         }
     }
