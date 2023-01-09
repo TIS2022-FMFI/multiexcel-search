@@ -1,5 +1,7 @@
 package frontend.Controllers.SearchControllers.SecondSearchControllers;
 
+import backend.Managers.FirstSearchManager;
+import backend.Models.Constants;
 import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.fxml.FXML;
@@ -11,7 +13,12 @@ import java.util.ResourceBundle;
 public class SecondSearchController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        FirstSearchManager.search(SESSION.getCriteria());
+    }
 
+    @FXML
+    public void onClickConfirmButton() {
+        MainController.setNewStage("./src/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
     }
 
     @FXML
