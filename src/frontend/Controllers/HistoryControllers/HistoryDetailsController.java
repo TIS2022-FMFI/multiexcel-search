@@ -10,6 +10,7 @@ import backend.Managers.PartManager;
 import backend.Managers.PartNameManager;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
+import backend.XLSImportExport.Export;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.File;
 import java.math.BigInteger;
 import java.net.URL;
 import java.util.*;
@@ -195,5 +197,19 @@ public class HistoryDetailsController implements Initializable {
         } else {
             System.err.println("requested parts returned null");
         }
+    }
+
+    @FXML
+    public void exportToExcel() {
+        File file = MainController.saveFile("Excel Files", "*.xlsx");
+        if (file != null)
+            Export.exportPartsToXLS(parts, file.getAbsolutePath());
+    }
+
+    @FXML
+    public void exportToPdf() {
+        File file = MainController.saveFile("PDF Files", "*.pdf");
+        if (file != null)
+            Export.exportPartsToPdf(parts, file.getAbsolutePath());
     }
 }

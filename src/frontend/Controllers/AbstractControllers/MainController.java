@@ -8,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -60,8 +62,8 @@ public class MainController {
         alert.showAndWait();
     }
 
-    public static void replaceStageByEvent(String fxmlDocPath, String stageTitle, ActionEvent event){
-        try{
+    public static void replaceStageByEvent(String fxmlDocPath, String stageTitle, ActionEvent event) {
+        try {
             FXMLLoader loader = new FXMLLoader();
 
             FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
@@ -69,11 +71,21 @@ public class MainController {
 
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            if(!stageTitle.equals("")) {stage.setTitle(stageTitle);}
+            if (!stageTitle.equals("")) {
+                stage.setTitle(stageTitle);
+            }
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static File saveFile(String description, String extension) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Save");
+        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(description, extension));
+        fc.setInitialDirectory(new File("."));
+        return fc.showSaveDialog(null);
     }
 }
