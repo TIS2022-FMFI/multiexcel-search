@@ -48,7 +48,7 @@ public class AdminMainController implements Initializable {
     }
 
     @FXML
-    public void logoutUser(ActionEvent event){
+    public void logoutUser(ActionEvent event) {
         SESSION.logout(event);
     }
 
