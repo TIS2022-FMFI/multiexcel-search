@@ -1,3 +1,4 @@
+import backend.Models.Constants;
 import backend.Sessions.DBS;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -43,7 +44,7 @@ public class Main extends Application {
 //        stage.setMaximized(true);
         stage.setScene(scene);
         //stage.setOnCloseRequest(event -> Platform.exit());
-        stage.setTitle("Intelligent Search");
+        stage.setTitle(Constants.WINDOW_TITLE_LOGIN);
         stage.show();
     }
 }

@@ -2,21 +2,15 @@ package frontend.Controllers;
 
 
 import backend.Managers.UserManager;
+import backend.Models.Constants;
 import backend.Sessions.SESSION;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -59,22 +53,14 @@ public class LoginController {
 
     private void goToNextScreen(ActionEvent event) {
         try {
-
-            FXMLLoader loader = new FXMLLoader();
             String fxmlDocPath = "./src/frontend/FXML/BasicFXML/BasicMain.fxml";
 
             if (SESSION.getSession().getUser_name().equals("admin")) {
                 fxmlDocPath = "./src/frontend/FXML/AdminFXML/AdminMain.fxml";
             }
 
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
-
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
+            MainController.replaceStageByEvent(fxmlDocPath, Constants.WINDOW_TITLE_LOGGEDIN, event);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

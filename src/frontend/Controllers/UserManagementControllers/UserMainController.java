@@ -2,6 +2,7 @@ package frontend.Controllers.UserManagementControllers;
 
 import backend.Entities.User;
 import backend.Managers.UserManager;
+import backend.Models.Constants;
 import frontend.CellClasses.UserCell;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -66,6 +67,7 @@ public class UserMainController implements Initializable {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.setTitle(Constants.WINDOW_TITLE_USER_MANAGMENT_ADD);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

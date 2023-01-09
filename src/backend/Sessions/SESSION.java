@@ -1,7 +1,10 @@
 package backend.Sessions;
 
 import backend.Entities.User;
+import backend.Models.Constants;
 import backend.Models.Criteria;
+import frontend.Controllers.AbstractControllers.MainController;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Tab;
 
 public class SESSION {
@@ -61,6 +64,11 @@ public class SESSION {
         if (criteria == null)
             criteria = new Criteria();
         return criteria;
+    }
+
+    public static void logout(ActionEvent event){
+        MainController.replaceStageByEvent("./src/frontend/FXML/loginScreen.fxml", Constants.WINDOW_TITLE_LOGIN, event);
+        clear();
     }
 
 }

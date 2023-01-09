@@ -21,7 +21,7 @@
             </tabs>
         </TabPane>
         <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Log off" AnchorPane.rightAnchor="3.0"
-                AnchorPane.topAnchor="3.0"/>
+                AnchorPane.topAnchor="3.0" onAction="#logoutUser" />
         <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Change Password"
                 AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="3.0" onAction="#changePassword"/>
     </children>

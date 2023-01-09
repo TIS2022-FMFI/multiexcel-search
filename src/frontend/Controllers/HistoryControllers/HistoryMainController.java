@@ -7,6 +7,7 @@ import backend.Entities.User;
 import backend.Managers.CategoryManager;
 import backend.Managers.HistoryManager;
 import backend.Managers.UserManager;
+import backend.Models.Constants;
 import backend.Models.Filterable;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
@@ -419,14 +420,14 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public void onClickCategoryFilterButton() {
         FilterController.onClickFilterButton("./src/frontend/FXML/HistoryFXML/HistoryCategoryFilter.fxml",
                 this,
-                "Filter by category");
+                Constants.WINDOW_TITLE_HISTORY_CATEGORY_FILTER);
     }
 
     @FXML
     public void onClickUserFilterButton() {
         FilterController.onClickFilterButton("./src/frontend/FXML/HistoryFXML/HistoryUserFilter.fxml",
                 this,
-                "Filter by users");
+                Constants.WINDOW_TITLE_HISTORY_USER_FILTER);
     }
 
     @FXML
@@ -460,7 +461,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void deleteSelectedQueries() {
-        HistoryDeleteController historyDeleteController = MainController.setNewStage("./src/frontend/FXML/HistoryFXML/HistoryDelete.fxml", "Delete selection");
+        HistoryDeleteController historyDeleteController = MainController.setNewStage("./src/frontend/FXML/HistoryFXML/HistoryDelete.fxml", Constants.WINDOW_TITLE_HISTORY_DELETE);
         historyDeleteController.setHistoryMainController(this);
     }
 

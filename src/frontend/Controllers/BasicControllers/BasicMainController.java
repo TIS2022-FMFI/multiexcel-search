@@ -1,7 +1,9 @@
 package frontend.Controllers.BasicControllers;
 
+import backend.Models.Constants;
 import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.MainController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -31,9 +33,14 @@ public class BasicMainController implements Initializable {
         }
     }
 
+    @FXML
+    public void logoutUser(ActionEvent event){
+        SESSION.logout(event);
+    }
+
     public void changePassword() {
         String fxmlDocPath = "./src/frontend/FXML/ChangePasswordScreen.fxml";
-        MainController.setNewStage(fxmlDocPath, "Change password");
+        MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CHANGE_PASSWORD);
     }
 
 }
