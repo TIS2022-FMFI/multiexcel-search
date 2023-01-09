@@ -1,17 +1,19 @@
 package backend.Managers;
 
-import backend.Entities.Category;
-import backend.Entities.Query;
-import backend.Entities.User;
+import backend.Entities.*;
+import backend.Models.Criteria;
 import backend.Sessions.DBS;
+import backend.Sessions.SESSION;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class HistoryManager {
@@ -19,33 +21,47 @@ public class HistoryManager {
     private static boolean countOnly = false;
 
     /**
-     * remove query from database
+     * Add search and selected parts to History
      *
-     * @param query query
-     * @return True if succeeded otherwise False
+     * @param criteria   criteria by which the first search was commenced
+     * @param parts      selected parts
+     * @param categories categories by which the results where filtered
      */
-    public static boolean removeQueryFromHistory(Query query) {
+    public static void saveSearchToHistory(Criteria criteria, List<Part> parts, List<Category> categories) {
         try {
-            query.delete();
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
-    }
+            DBS.getConnection().setAutoCommit(false);
 
-    /**
-     * add new query to database
-     *
-     * @param query query
-     * @return True if succeeded otherwise False
-     */
-    public static boolean addQueryToHistory(Query query) {
-        try {
+            Query query = CriteriaManager.convertCriteriaToQuery(criteria);
+
+            query.setUser_id(SESSION.getSession().getUser_id());
+
+            query.setDate(Date.valueOf(LocalDate.now()));
+
             query.insert();
+
+            for (Part part : parts) {
+                Part_query partQuery = new Part_query();
+                partQuery.setPart_number(part.getPart_number());
+                partQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
+                partQuery.insert();
+            }
+
+            for (Category category : categories) {
+                Category_query categoryQuery = new Category_query();
+                categoryQuery.setCategory_id(BigInteger.valueOf(category.getCategory_id()));
+                categoryQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
+                categoryQuery.insert();
+            }
+            DBS.getConnection().commit();
+            DBS.getConnection().setAutoCommit(true);
         } catch (SQLException e) {
-            return false;
+            throw new RuntimeException(e);
+//            try {
+//                DBS.getConnection().rollback();
+//                DBS.getConnection().setAutoCommit(true);
+//            } catch (SQLException ignored1) {
+//            }
         }
-        return true;
     }
 
     private static String createQueryString(List<Category> categories, Pair<Date, Date> dateFromTo, List<User> users) {

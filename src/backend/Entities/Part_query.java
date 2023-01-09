@@ -11,7 +11,7 @@ import java.sql.Statement;
 public class Part_query {
 
     private Integer part_query_id;
-    private BigInteger part_number;
+    private String part_number;
     private BigInteger query_id;
 
     public Integer getPart_query_id() {
@@ -22,11 +22,11 @@ public class Part_query {
         this.part_query_id = part_query_id;
     }
 
-    public BigInteger getPart_number() {
+    public String getPart_number() {
         return part_number;
     }
 
-    public void setPart_number(BigInteger part_number) {
+    public void setPart_number(String part_number) {
         this.part_number = part_number;
     }
 
@@ -40,7 +40,7 @@ public class Part_query {
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts_queries (part_number, query_id) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            s.setObject(1, part_number);
+            s.setString(1, part_number);
             s.setObject(2, query_id);
             s.executeUpdate();
 
@@ -53,7 +53,7 @@ public class Part_query {
 
     public void update() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts_queries SET part_number = ?, query_id = ? WHERE part_query_id = ?")) {
-            s.setObject(1, part_number);
+            s.setString(1, part_number);
             s.setObject(2, query_id);
             s.setInt(3, part_query_id);
 

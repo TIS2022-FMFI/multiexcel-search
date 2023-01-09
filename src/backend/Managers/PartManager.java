@@ -191,10 +191,14 @@ public class PartManager {
 
             part1.update();
             part2.update();
-
+            DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
             return true;
         } catch (SQLException ignored) {
+            try {
+                DBS.getConnection().rollback();
+                DBS.getConnection().setAutoCommit(true);
+            } catch (SQLException ignored1){}
             return false;
         }
     }

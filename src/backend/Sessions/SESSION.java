@@ -66,6 +66,10 @@ public class SESSION {
         return criteria;
     }
 
+    public static void clearCriteria(){
+        criteria = null;
+    }
+
     public static void logout(ActionEvent event) {
         MainController.replaceStageByEvent("./src/frontend/FXML/loginScreen.fxml", Constants.WINDOW_TITLE_LOGIN, event);
         clear();
