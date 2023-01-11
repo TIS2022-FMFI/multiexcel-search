@@ -203,9 +203,9 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         if (first == null && second == null) {
             return new ReadOnlyStringWrapper("-");
         }else if(first == null){
-            return new ReadOnlyStringWrapper(String.format("<= %s", second));
+            return new ReadOnlyStringWrapper(String.format("≤ %s", second));
         }else if(second == null){
-            return new ReadOnlyStringWrapper(String.format("%s >=", first));
+            return new ReadOnlyStringWrapper(String.format("%s ≥", first));
         }else{
             return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
         }
