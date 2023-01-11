@@ -207,6 +207,9 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         }else if(second == null){
             return new ReadOnlyStringWrapper(String.format("%s ≥", first));
         }else{
+            if(first.equals(second)){
+                return new ReadOnlyStringWrapper(String.format("%s", first));
+            }
             return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
         }
     }
