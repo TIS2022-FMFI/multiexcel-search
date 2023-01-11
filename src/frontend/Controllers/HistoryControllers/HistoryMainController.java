@@ -200,10 +200,15 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     private <K, V> ReadOnlyStringWrapper createFromToWrapper(K first, V second) {
-        if (first == null || second == null) {
-            return new ReadOnlyStringWrapper("null in arguments");
+        if (first == null && second == null) {
+            return new ReadOnlyStringWrapper("-");
+        }else if(first == null){
+            return new ReadOnlyStringWrapper(String.format("<= %s", second));
+        }else if(second == null){
+            return new ReadOnlyStringWrapper(String.format("%s >=", first));
+        }else{
+            return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
         }
-        return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
     }
 
     private void calculatePageIndexesAndUpdate() {
