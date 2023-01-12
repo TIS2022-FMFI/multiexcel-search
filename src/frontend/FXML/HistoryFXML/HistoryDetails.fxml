@@ -41,7 +41,9 @@
             <!--TableColumn fx:id="col_rating" editable="false" prefWidth="75.0" sortable="false" text="Rating" /-->
         </columns>
     </TableView>
-    <Button layoutX="853.0" layoutY="616.0" mnemonicParsing="false" text="Export selection to excel"/>
-    <Button layoutX="856.0" layoutY="585.0" mnemonicParsing="false" text="Export selection to PDF"/>
+    <Button layoutX="853.0" layoutY="616.0" mnemonicParsing="false" text="Export selection to Excel"
+            onAction="#exportToExcel"/>
+    <Button layoutX="856.0" layoutY="585.0" mnemonicParsing="false" text="Export selection to PDF"
+            onAction="#exportToPdf"/>
     <Button layoutX="22.0" layoutY="35.0" onAction="#openHistoryFXML" mnemonicParsing="false" text="Back"/>
 </AnchorPane>

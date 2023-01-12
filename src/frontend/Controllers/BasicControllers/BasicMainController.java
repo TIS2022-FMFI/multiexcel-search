@@ -34,7 +34,7 @@ public class BasicMainController implements Initializable {
     }
 
     @FXML
-    public void logoutUser(ActionEvent event){
+    public void logoutUser(ActionEvent event) {
         SESSION.logout(event);
     }
 

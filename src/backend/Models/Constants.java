@@ -14,4 +14,5 @@ public class Constants {
     public static final String WINDOW_TITLE_CHANGE_PASSWORD = "Change password";
     public static final String WINDOW_TITLE_IMPORT = "Import";
     public static final String WINDOW_TITLE_HISTORY_DELETE = "Delete selection";
+    public static final String WINDOW_TITLE_CONFIRM_SEARCH = "Confirm search";
 }
