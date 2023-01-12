@@ -285,31 +285,31 @@ public class Query {
     }
 
     private void setVariables(PreparedStatement s) throws SQLException {
-        s.setInt(1, user_id);
-        s.setShort(2, rubber_from);
-        s.setShort(3, rubber_to);
-        s.setDouble(4, diameter_AT_from);
-        s.setDouble(5, diameter_AT_to);
-        s.setDouble(6, length_L_AT_from);
-        s.setDouble(7, length_L_AT_to);
-        s.setDouble(8, diameter_IT_from);
-        s.setDouble(9, diameter_IT_to);
-        s.setDouble(10, length_L_IT_from);
-        s.setDouble(11, length_L_IT_to);
-        s.setDouble(12, diameter_ZT_from);
-        s.setDouble(13, diameter_ZT_to);
-        s.setDouble(14, length_L_ZT_from);
-        s.setDouble(15, length_L_ZT_to);
-        s.setInt(16, cr_steg_from);
-        s.setInt(17, cr_steg_to);
-        s.setShort(18, cr_niere_from);
-        s.setShort(19, cr_niere_to);
-        s.setShort(20, ca_from);
-        s.setShort(21, ca_to);
-        s.setDouble(22, ct_from);
-        s.setDouble(23, ct_to);
-        s.setDouble(24, ck_from);
-        s.setDouble(25, ck_to);
+        s.setObject(1, user_id);
+        s.setObject(2, rubber_from);
+        s.setObject(3, rubber_to);
+        s.setObject(4, diameter_AT_from);
+        s.setObject(5, diameter_AT_to);
+        s.setObject(6, length_L_AT_from);
+        s.setObject(7, length_L_AT_to);
+        s.setObject(8, diameter_IT_from);
+        s.setObject(9, diameter_IT_to);
+        s.setObject(10, length_L_IT_from);
+        s.setObject(11, length_L_IT_to);
+        s.setObject(12, diameter_ZT_from);
+        s.setObject(13, diameter_ZT_to);
+        s.setObject(14, length_L_ZT_from);
+        s.setObject(15, length_L_ZT_to);
+        s.setObject(16, cr_steg_from);
+        s.setObject(17, cr_steg_to);
+        s.setObject(18, cr_niere_from);
+        s.setObject(19, cr_niere_to);
+        s.setObject(20, ca_from);
+        s.setObject(21, ca_to);
+        s.setObject(22, ct_from);
+        s.setObject(23, ct_to);
+        s.setObject(24, ck_from);
+        s.setObject(25, ck_to);
     }
 
     public void delete() throws SQLException {

@@ -74,6 +74,8 @@ public class FirstSearchManager {
                 orders.sort(Comparator.comparingInt(Pair::getValue));
                 for (Pair<String, Integer> order : orders) {
                     statement.append(" ").append(order.getKey()).append(" DESC");
+                    if (order != orders.get(orders.size() - 1))
+                        statement.append(",");
                 }
             }
 

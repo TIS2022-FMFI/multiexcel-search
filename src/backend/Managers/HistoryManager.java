@@ -1,51 +1,79 @@
 package backend.Managers;
 
-import backend.Entities.Category;
-import backend.Entities.Query;
-import backend.Entities.User;
+import backend.Entities.*;
+import backend.Models.Criteria;
 import backend.Sessions.DBS;
+import backend.Sessions.SESSION;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class HistoryManager {
 
     private static boolean countOnly = false;
 
-    /**
-     * remove query from database
-     *
-     * @param query query
-     * @return True if succeeded otherwise False
-     */
-    public static boolean removeQueryFromHistory(Query query) {
-        try {
-            query.delete();
-        } catch (SQLException e) {
-            return false;
-        }
-        return true;
+    private static Double check(Double d) {
+        return d == 0 ? null : d;
+    }
+
+    private static Short check(Short s) {
+        return s == 0 ? null : s;
+    }
+
+    private static Integer check(Integer i) {
+        return i == 0 ? null : i;
     }
 
     /**
-     * add new query to database
+     * Add search and selected parts to History
      *
-     * @param query query
-     * @return True if succeeded otherwise False
+     * @param criteria   criteria by which the first search was commenced
+     * @param parts      selected parts
+     * @param categories categories by which the results where filtered
      */
-    public static boolean addQueryToHistory(Query query) {
+    public static void saveSearchToHistory(Criteria criteria, List<Part> parts, List<Category> categories) {
         try {
+            DBS.getConnection().setAutoCommit(false);
+
+            Query query = CriteriaManager.convertCriteriaToQuery(criteria);
+
+            query.setUser_id(SESSION.getSession().getUser_id());
+
+            query.setDate(Date.valueOf(LocalDate.now()));
+
             query.insert();
+
+            for (Part part : parts) {
+                Part_query partQuery = new Part_query();
+                partQuery.setPart_number(part.getPart_number());
+                partQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
+                partQuery.insert();
+            }
+
+            for (Category category : categories) {
+                Category_query categoryQuery = new Category_query();
+                categoryQuery.setCategory_id(BigInteger.valueOf(category.getCategory_id()));
+                categoryQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
+                categoryQuery.insert();
+            }
+            DBS.getConnection().commit();
+            DBS.getConnection().setAutoCommit(true);
         } catch (SQLException e) {
-            return false;
+//            throw new RuntimeException(e);
+            try {
+                DBS.getConnection().rollback();
+                DBS.getConnection().setAutoCommit(true);
+            } catch (SQLException ignored1) {
+            }
         }
-        return true;
     }
 
     private static String createQueryString(List<Category> categories, Pair<Date, Date> dateFromTo, List<User> users) {
@@ -178,33 +206,33 @@ public class HistoryManager {
                 q.setQuery_id(r.getInt("query_id"));
                 q.setUser_id(r.getInt("user_id"));
 
-                q.setRubber_from(r.getShort("rubber_from"));
-                q.setDiameter_AT_from(r.getDouble("diameter_AT_from"));
-                q.setLength_L_AT_from(r.getDouble("length_L_AT_from"));
-                q.setDiameter_IT_from(r.getDouble("diameter_IT_from"));
-                q.setLength_L_IT_from(r.getDouble("length_L_IT_from"));
-                q.setDiameter_ZT_from(r.getDouble("diameter_ZT_from"));
-                q.setLength_L_ZT_from(r.getDouble("length_L_ZT_from"));
-                q.setCr_steg_from(r.getInt("cr_steg_from"));
-                q.setCr_niere_from(r.getShort("cr_niere_from"));
-                q.setCa_from(r.getShort("ca_from"));
-                q.setCt_from(r.getDouble("ct_from"));
-                q.setCk_from(r.getDouble("ck_from"));
+                q.setRubber_from(check(r.getShort("rubber_from")));
+                q.setDiameter_AT_from(check(r.getDouble("diameter_AT_from")));
+                q.setLength_L_AT_from(check(r.getDouble("length_L_AT_from")));
+                q.setDiameter_IT_from(check(r.getDouble("diameter_IT_from")));
+                q.setLength_L_IT_from(check(r.getDouble("length_L_IT_from")));
+                q.setDiameter_ZT_from(check(r.getDouble("diameter_ZT_from")));
+                q.setLength_L_ZT_from(check(r.getDouble("length_L_ZT_from")));
+                q.setCr_steg_from(check(r.getInt("cr_steg_from")));
+                q.setCr_niere_from(check(r.getShort("cr_niere_from")));
+                q.setCa_from(check(r.getShort("ca_from")));
+                q.setCt_from(check(r.getDouble("ct_from")));
+                q.setCk_from(check(r.getDouble("ck_from")));
 
                 q.setDate(r.getDate("date"));
 
-                q.setRubber_to(r.getShort("rubber_to"));
-                q.setDiameter_AT_to(r.getDouble("diameter_AT_to"));
-                q.setLength_L_AT_to(r.getDouble("length_L_AT_to"));
-                q.setDiameter_IT_to(r.getDouble("diameter_IT_to"));
-                q.setLength_L_IT_to(r.getDouble("length_L_IT_to"));
-                q.setDiameter_ZT_to(r.getDouble("diameter_ZT_to"));
-                q.setLength_L_ZT_to(r.getDouble("length_L_ZT_to"));
-                q.setCr_steg_to(r.getInt("cr_steg_to"));
-                q.setCr_niere_to(r.getShort("cr_niere_to"));
-                q.setCa_to(r.getShort("ca_to"));
-                q.setCt_to(r.getDouble("ct_to"));
-                q.setCk_to(r.getDouble("ck_to"));
+                q.setRubber_to(check(r.getShort("rubber_to")));
+                q.setDiameter_AT_to(check(r.getDouble("diameter_AT_to")));
+                q.setLength_L_AT_to(check(r.getDouble("length_L_AT_to")));
+                q.setDiameter_IT_to(check(r.getDouble("diameter_IT_to")));
+                q.setLength_L_IT_to(check(r.getDouble("length_L_IT_to")));
+                q.setDiameter_ZT_to(check(r.getDouble("diameter_ZT_to")));
+                q.setLength_L_ZT_to(check(r.getDouble("length_L_ZT_to")));
+                q.setCr_steg_to(check(r.getInt("cr_steg_to")));
+                q.setCr_niere_to(check(r.getShort("cr_niere_to")));
+                q.setCa_to(check(r.getShort("ca_to")));
+                q.setCt_to(check(r.getDouble("ct_to")));
+                q.setCk_to(check(r.getDouble("ck_to")));
 
                 queries.add(q);
             }

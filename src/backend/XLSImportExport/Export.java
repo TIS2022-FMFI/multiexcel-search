@@ -5,8 +5,11 @@ import backend.Entities.Category;
 import backend.Entities.Customer;
 import backend.Entities.Part;
 import backend.Entities.Part_name;
-import backend.Managers.*;
-import backend.Sessions.DBS;
+import backend.Managers.CategoryManager;
+import backend.Managers.CustomerManager;
+import backend.Managers.DrawingManager;
+import backend.Managers.PartNameManager;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.scene.control.Alert;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
@@ -15,16 +18,13 @@ import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Properties;
 
 public class Export {
     private final static short COLUMN_SIZE = 10000;
@@ -64,12 +64,12 @@ public class Export {
 
     /**
      * Exports list of parts into xls file and saves file at input path
+     * Shows alert when failure occurs
      *
      * @param parts - list of parts to export
      * @param path  - path to save xls file to
-     * @return true, if export ran without errors
      */
-    public static boolean exportPartsToXLS(List<Part> parts, String path) {
+    public static void exportPartsToXLS(List<Part> parts, String path) {
         try {
             File tempalateXLS = new File(TEMPLATE_PATH);
             File newXLS = new File(path);
@@ -221,10 +221,9 @@ public class Export {
             }
 
             workbook.write(Files.newOutputStream(Paths.get(path)));
-            return true;
         } catch (Exception e) {
 //            throw new RuntimeException(e);
-            return false;
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", "Error occured when saving to Excel.");
         }
     }
 
@@ -234,7 +233,7 @@ public class Export {
      * @param inputPath  - path to xls file to convert
      * @param outputPath - path to pdf file
      */
-    public static void convertXLSToPdf(String inputPath, String outputPath) {
+    private static void convertXLSToPdf(String inputPath, String outputPath) {
         try {
             Path tempScript = Files.createTempFile("script", ".vbs");
             List<String> script = Files.readAllLines(Paths.get(PDF_CONVERT_SCRIPT_PATH));
@@ -257,38 +256,25 @@ public class Export {
 
             pb.start();
         } catch (Exception e) {
-            e.printStackTrace();
-            Alert saveAsPdfAlert = new Alert(Alert.AlertType.ERROR);
-            saveAsPdfAlert.setTitle("ERROR: Error converting to pdf.");
-            saveAsPdfAlert.setHeaderText("Exception message is:");
-            saveAsPdfAlert.setContentText(e.getMessage());
-            saveAsPdfAlert.showAndWait();
+            throw new RuntimeException(e);
         }
     }
 
-
-    public static void main(String[] args) {
+    /**
+     * Exports list of parts into pdf file and saves file at input path
+     * Shows alert when failure occurs
+     *
+     * @param parts - list of parts to export
+     * @param path  - path to save pdf file to
+     */
+    public static void exportPartsToPdf(List<Part> parts, String path) {
         try {
-            java.util.Properties prop = new Properties();
-            prop.loadFromXML(Files.newInputStream(Paths.get("configuration/configuration.xml")));
-            Connection connection = DriverManager.getConnection(
-                    prop.getProperty("database"),
-                    prop.getProperty("user"),
-                    prop.getProperty("password"));
-            DBS.setConnection(connection);
-            Part part = PartManager.getPartByPartNumber("774.226.151.311");
-            Part part1 = PartManager.getPartByPartNumber("714.221.138.029");
-            Part part2 = PartManager.getPartByPartNumber("712.335.152.205");
-            Part part3 = PartManager.getPartByPartNumber("714.126.137.142");
-            Part part4 = PartManager.getPartByPartNumber("714.126.137.143");
-            Part part5 = PartManager.getPartByPartNumber("714.126.137.144");
-            Part part6 = PartManager.getPartByPartNumber("714.221.146.110");
-            Part part7 = PartManager.getPartByPartNumber("714.221.148.739");
-
-            System.out.println(exportPartsToXLS(Arrays.asList(part, part1, part2, part3, part4, part5, part6, part7), "./src/backend/export.xlsx"));
-            convertXLSToPdf("./src/backend/export.xlsx", "./src/backend/export.pdf");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            Path temp = Files.createTempFile("tmp", ".xlsx");
+            exportPartsToXLS(parts, temp.toAbsolutePath().toString());
+            convertXLSToPdf(temp.toAbsolutePath().toString(), path);
+        } catch (IOException e) {
+//            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", "Error occured when saving to Pdf.");
         }
     }
 }
