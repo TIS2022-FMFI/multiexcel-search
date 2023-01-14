@@ -30,7 +30,7 @@ public class SecondSearchConfirm implements Initializable {
 //        PartManager.IncreaseRating(secondSearchController.selectedParts);
         SESSION.clearCriteria();
 
-        MainController.switchTab("./src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
+        MainController.switchTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
 
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }

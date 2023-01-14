@@ -45,7 +45,7 @@ public class Criteria {
         this.customers = customers;
     }
 
-    public List<String> getPartsNameStrings() {
+    public List<String> getPartNamesStrings() {
 
         if (partNames == null)
             return null;

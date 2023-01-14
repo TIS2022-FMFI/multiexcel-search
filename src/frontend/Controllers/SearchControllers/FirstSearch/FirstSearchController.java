@@ -304,14 +304,14 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
     @FXML
     public void onClickPartNameFilterButton() {
-        FilterController.onClickFilterButton("src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchPartNameFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchPartNameFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_SEARCH_PART_NAME_FILTER);
     }
 
     @FXML
     public void onClickCustomerFilterButton() {
-        FilterController.onClickFilterButton("src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchCustomerFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchCustomerFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_SEARCH_CUSTOMER_FILTER);
     }
@@ -371,7 +371,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
         criteria.setCt(getDoubleTripleFromUI(ctFrom, ctTo, ctPriority));
 
         if (errorMessage.getText().isEmpty())
-            MainController.switchTab("./src/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearch.fxml", SESSION.getSearchTab());
+            MainController.switchTab("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearch.fxml", SESSION.getSearchTab());
     }
 
     @FXML

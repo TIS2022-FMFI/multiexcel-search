@@ -8,21 +8,36 @@
     <TableView fx:id="table_queries" layoutX="101.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="411.0"
                prefWidth="1054.0">
         <columns>
-            <TableColumn fx:id="col_username" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="User"/>
-            <TableColumn fx:id="col_categories" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Categories"/>
-            <TableColumn fx:id="col_rubber" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Rubber"/>
-            <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Diameter AT"/>
-            <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Length L AT"/>
-            <TableColumn fx:id="col_diameter_it" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Diameter IT"/>
-            <TableColumn fx:id="col_length_l_it" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Length L IT"/>
-            <TableColumn fx:id="col_diameter_zt" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Diameter ZT"/>
-            <TableColumn fx:id="col_length_l_zt" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Length L ZT"/>
-            <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Cr steg"/>
-            <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Cr niere"/>
-            <TableColumn fx:id="col_ca" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Ca"/>
-            <TableColumn fx:id="col_ct" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Ct"/>
-            <TableColumn fx:id="col_ck" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Ck"/>
-            <TableColumn fx:id="col_date" editable="false" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Date"/>
+            <TableColumn fx:id="col_username" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="User"/>
+            <TableColumn fx:id="col_categories" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Categories"/>
+            <TableColumn fx:id="col_rubber" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Rubber"/>
+            <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Diameter AT"/>
+            <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Length L AT"/>
+            <TableColumn fx:id="col_diameter_it" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Diameter IT"/>
+            <TableColumn fx:id="col_length_l_it" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Length L IT"/>
+            <TableColumn fx:id="col_diameter_zt" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Diameter ZT"/>
+            <TableColumn fx:id="col_length_l_zt" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Length L ZT"/>
+            <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Cr steg"/>
+            <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Cr niere"/>
+            <TableColumn fx:id="col_ca" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Ca"/>
+            <TableColumn fx:id="col_ct" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Ct"/>
+            <TableColumn fx:id="col_ck" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Ck"/>
+            <TableColumn fx:id="col_date" editable="false" prefWidth="75.0" sortable="false"
+                         style="-fx-alignment: CENTER;" text="Date"/>
         </columns>
     </TableView>
     <Button fx:id="button_previous_page" layoutX="123.0" layoutY="580.0" mnemonicParsing="false"

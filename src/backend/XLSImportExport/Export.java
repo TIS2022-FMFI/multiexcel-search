@@ -29,8 +29,8 @@ import java.util.Objects;
 public class Export {
     private final static short COLUMN_SIZE = 10000;
     private final static short BIAS = 100;
-    private final static String TEMPLATE_PATH = "./src/backend/XLSImportExport/template.xlsx";
-    private final static String PDF_CONVERT_SCRIPT_PATH = "./src/backend/XLSImportExport/xl2pdf.vbs";
+    private final static String TEMPLATE_PATH = "/backend/XLSImportExport/template.xlsx";
+    private final static String PDF_CONVERT_SCRIPT_PATH = "/backend/XLSImportExport/xl2pdf.vbs";
 
     private static CellStyle getCellStyle(XSSFWorkbook workbook) {
         CellStyle cellStyle = workbook.createCellStyle();
@@ -71,7 +71,7 @@ public class Export {
      */
     public static void exportPartsToXLS(List<Part> parts, String path) {
         try {
-            File tempalateXLS = new File(TEMPLATE_PATH);
+            File tempalateXLS = new File(Objects.requireNonNull(Class.class.getResource(TEMPLATE_PATH)).toURI());
             File newXLS = new File(path);
             Files.copy(tempalateXLS.toPath(), newXLS.toPath(), StandardCopyOption.REPLACE_EXISTING);
             XSSFWorkbook workbook = new XSSFWorkbook(Files.newInputStream(Paths.get(path)));
@@ -222,8 +222,7 @@ public class Export {
 
             workbook.write(Files.newOutputStream(Paths.get(path)));
         } catch (Exception e) {
-//            throw new RuntimeException(e);
-            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", "Error occured when saving to Excel.");
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
     }
 
@@ -236,7 +235,9 @@ public class Export {
     private static void convertXLSToPdf(String inputPath, String outputPath) {
         try {
             Path tempScript = Files.createTempFile("script", ".vbs");
-            List<String> script = Files.readAllLines(Paths.get(PDF_CONVERT_SCRIPT_PATH));
+            List<String> script = Files.readAllLines(Paths.get(Objects
+                    .requireNonNull(Class.class.getResource(PDF_CONVERT_SCRIPT_PATH))
+                    .toURI()));
 
             String origPath = Paths.get(inputPath).toAbsolutePath().toString();
             origPath = origPath.replace("\\", "\\\\");
@@ -273,8 +274,7 @@ public class Export {
             exportPartsToXLS(parts, temp.toAbsolutePath().toString());
             convertXLSToPdf(temp.toAbsolutePath().toString(), path);
         } catch (IOException e) {
-//            throw new RuntimeException(e);
-            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", "Error occured when saving to Pdf.");
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
     }
 }

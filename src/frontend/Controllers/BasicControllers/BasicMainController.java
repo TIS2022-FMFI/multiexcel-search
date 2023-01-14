@@ -6,6 +6,7 @@ import frontend.Controllers.AbstractControllers.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 
 import java.io.IOException;
@@ -22,14 +23,14 @@ public class BasicMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            MainController.setTab("./src/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
+            MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
-            MainController.setTab("./src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
+            MainController.setTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
     }
 
@@ -39,7 +40,7 @@ public class BasicMainController implements Initializable {
     }
 
     public void changePassword() {
-        String fxmlDocPath = "./src/frontend/FXML/ChangePasswordScreen.fxml";
+        String fxmlDocPath = "/frontend/FXML/ChangePasswordScreen.fxml";
         MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CHANGE_PASSWORD);
     }
 

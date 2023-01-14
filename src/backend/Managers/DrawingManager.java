@@ -2,6 +2,8 @@ package backend.Managers;
 
 import backend.Entities.Drawing;
 import backend.Sessions.DBS;
+import frontend.Controllers.AbstractControllers.MainController;
+import javafx.scene.control.Alert;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -28,7 +30,8 @@ public class DrawingManager {
             newDrawing.setDrawing(drawing);
             newDrawing.insert();
             return BigInteger.valueOf(newDrawing.getDrawing_id());
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -51,7 +54,8 @@ public class DrawingManager {
                 return drawing;
             }
             return null;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }

@@ -6,6 +6,7 @@ import frontend.Controllers.AbstractControllers.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 
 import java.io.IOException;
@@ -25,25 +26,25 @@ public class AdminMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            MainController.setTab("./src/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
+            MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
-            MainController.setTab("./src/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml", categoryTab);
+            MainController.setTab("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml", categoryTab);
 
-            MainController.setTab("./src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
+            MainController.setTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
 
-            MainController.setTab("./src/frontend/FXML/UserManagementFXML/UserMain.fxml", userTab);
+            MainController.setTab("/frontend/FXML/UserManagementFXML/UserMain.fxml", userTab);
 
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
     }
 
     @FXML
     public void importButton() {
-        String fxmlDocPath = "./src/frontend/FXML/AdminFXML/Import.fxml";
+        String fxmlDocPath = "/frontend/FXML/AdminFXML/Import.fxml";
         MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_IMPORT);
     }
 
@@ -54,7 +55,7 @@ public class AdminMainController implements Initializable {
 
 
     public void changePassword() {
-        String fxmlDocPath = "./src/frontend/FXML/ChangePasswordScreen.fxml";
+        String fxmlDocPath = "/frontend/FXML/ChangePasswordScreen.fxml";
         MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CHANGE_PASSWORD);
     }
 }

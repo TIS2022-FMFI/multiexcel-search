@@ -5,8 +5,9 @@ import backend.Entities.Part;
 import backend.Managers.*;
 import backend.Models.MutablePair;
 import backend.Sessions.DBS;
+import frontend.Controllers.AbstractControllers.MainController;
+import javafx.scene.control.Alert;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,17 +17,11 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class Import {
@@ -254,27 +249,10 @@ public class Import {
             }
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
-        } catch (SQLException ignored) {
-            throw new RuntimeException("Error connecting to DBS");
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
 
         return insertUpdate;
-    }
-
-    public static void main(String[] args) {
-        try {
-            java.util.Properties prop = new Properties();
-            prop.loadFromXML(Files.newInputStream(Paths.get("configuration/configuration.xml")));
-            Connection connection = DriverManager.getConnection(
-                    prop.getProperty("database"),
-                    prop.getProperty("user"),
-                    prop.getProperty("password"));
-            DBS.setConnection(connection);
-
-            XSSFWorkbook workbook = new XSSFWorkbook(new File("./src/backend/testData.xlsx"));
-            uploadXLStoDBS(workbook);
-        } catch (IOException | InvalidFormatException | SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

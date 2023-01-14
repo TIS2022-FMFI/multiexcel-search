@@ -2,6 +2,8 @@ package backend.Managers;
 
 import backend.Entities.Customer;
 import backend.Sessions.DBS;
+import frontend.Controllers.AbstractControllers.MainController;
+import javafx.scene.control.Alert;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -32,7 +34,8 @@ public class CustomerManager {
             customer.setCustomer_name(customerName);
             customer.insert();
             return BigInteger.valueOf(customer.getCustomer_id());
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -58,7 +61,8 @@ public class CustomerManager {
                 return customer;
             }
             return null;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -81,9 +85,11 @@ public class CustomerManager {
                 }
                 return customers;
             } catch (SQLException e) {
+                MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
                 return null;
             }
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }

@@ -104,7 +104,7 @@ public class HistoryDetailsController implements Initializable {
 
     @FXML
     private void openHistoryFXML() {
-        MainController.switchTab("./src/frontend/FXML/HistoryFXML/HistoryMain.fxml", SESSION.getHistoryTab());
+        MainController.switchTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", SESSION.getHistoryTab());
     }
 
     private void initializeController() {

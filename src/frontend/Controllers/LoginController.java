@@ -7,10 +7,7 @@ import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.sql.SQLException;
 
@@ -31,7 +28,7 @@ public class LoginController {
             try {
                 login(event);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             }
         });
     }
@@ -54,15 +51,15 @@ public class LoginController {
 
     private void goToNextScreen(ActionEvent event) {
         try {
-            String fxmlDocPath = "./src/frontend/FXML/BasicFXML/BasicMain.fxml";
+            String fxmlDocPath = "/frontend/FXML/BasicFXML/BasicMain.fxml";
 
             if (SESSION.getSession().getUser_name().equals("admin")) {
-                fxmlDocPath = "./src/frontend/FXML/AdminFXML/AdminMain.fxml";
+                fxmlDocPath = "/frontend/FXML/AdminFXML/AdminMain.fxml";
             }
 
             MainController.replaceStageByEvent(fxmlDocPath, Constants.WINDOW_TITLE_LOGGEDIN, event);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
     }
 }

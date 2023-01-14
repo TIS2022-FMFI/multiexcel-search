@@ -4,17 +4,12 @@ import backend.Entities.User;
 import backend.Managers.UserManager;
 import backend.Models.Constants;
 import frontend.CellClasses.UserCell;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -54,23 +49,9 @@ public class UserMainController implements Initializable {
      */
     @FXML
     public void addUser() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            String fxmlDocPath = "./src/frontend/FXML/UserManagementFXML/UserAdd.fxml";
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+        String fxmlDocPath = "/frontend/FXML/UserManagementFXML/UserAdd.fxml";
+        UserAddController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_USER_MANAGMENT_ADD);
+        controller.init(UserMainController.this);
 
-            UserAddController controller = loader.getController();
-            controller.init(UserMainController.this);
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.setTitle(Constants.WINDOW_TITLE_USER_MANAGMENT_ADD);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
