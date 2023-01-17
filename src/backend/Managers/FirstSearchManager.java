@@ -51,7 +51,7 @@ public class FirstSearchManager {
             for (PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {
                 String propertyName = propertyDesc.getName();
                 try {
-                    if (Objects.equals(propertyName, "partsName"))
+                    if (Objects.equals(propertyName, "partsName") || Objects.equals(propertyName, "customers"))
                         continue;
                     if (BeanUtils.getProperty(criteria, propertyName) != null) {
                         Triple<Object, Object, Integer> property = (Triple<Object, Object, Integer>) PropertyUtils.getProperty(criteria, propertyName);
