@@ -17,10 +17,7 @@ import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class FirstSearchManager {
     private static Double check(Double d) {
@@ -37,21 +34,26 @@ public class FirstSearchManager {
 
     public static List<Part> search(Criteria criteria) {
         try {
-            StringBuilder statement = new StringBuilder("SELECT * FROM parts p JOIN part_names pn ON p.part_name_id = pn.part_name_id");
+            StringBuilder statement = new StringBuilder("SELECT * FROM parts p JOIN part_names pn ON p.part_name_id = pn.part_name_id JOIN customers c ON p.customer_id = c.customer_id");
             List<String> subStatements = new ArrayList<>();
             List<Object> statementValues = new ArrayList<>();
             List<Pair<String, Integer>> orders = new ArrayList<>();
 
-            if (criteria.getPartsNameStrings() != null) {
+            if (criteria.getPartNamesStrings() != null) {
                 subStatements.add("FIND_IN_SET( pn.part_name, ? ) > 0");
-                statementValues.add(String.join(",", criteria.getPartsNameStrings()));
+                statementValues.add(String.join(", ", criteria.getPartNamesStrings()));
+            }
+
+            if (criteria.getCustomersStrings() != null) {
+                subStatements.add("FIND_IN_SET( c.customer_name, ? ) > 0");
+                statementValues.add(String.join(", ", criteria.getCustomersStrings()));
             }
 
             BeanInfo beanInfo = Introspector.getBeanInfo(Criteria.class);
             for (PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {
                 String propertyName = propertyDesc.getName();
                 try {
-                    if (Objects.equals(propertyName, "partsName") || Objects.equals(propertyName, "customers"))
+                    if (Objects.equals(propertyName, "partsName"))
                         continue;
                     if (BeanUtils.getProperty(criteria, propertyName) != null) {
                         Triple<Object, Object, Integer> property = (Triple<Object, Object, Integer>) PropertyUtils.getProperty(criteria, propertyName);
@@ -60,8 +62,9 @@ public class FirstSearchManager {
                         statementValues.add(property.second);
                         orders.add(new Pair<>("p." + propertyName, property.third));
                     }
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {
-                }
+                } catch (IllegalAccessException | InvocationTargetException  e) {
+                    MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.getMessage());
+                } catch (NoSuchMethodException ignored){}
             }
 
             if (!subStatements.isEmpty()) {
