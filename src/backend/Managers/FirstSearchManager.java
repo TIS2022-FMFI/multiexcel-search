@@ -4,6 +4,8 @@ import backend.Entities.Part;
 import backend.Models.Criteria;
 import backend.Models.Triple;
 import backend.Sessions.DBS;
+import frontend.Controllers.AbstractControllers.MainController;
+import javafx.scene.control.Alert;
 import javafx.util.Pair;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
