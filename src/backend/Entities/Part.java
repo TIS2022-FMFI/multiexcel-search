@@ -1,6 +1,7 @@
 package backend.Entities;
 
 import backend.Sessions.DBS;
+import backend.Sessions.PartCountSession;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -35,6 +36,7 @@ public class Part {
     private Double ct = null;
     private Double ck = null;
     private Integer rating = 0;
+    private Integer internal_rating;
 
     public String getPart_number() {
         return part_number;
@@ -228,10 +230,20 @@ public class Part {
         this.rating = rating;
     }
 
+    public Integer getInternal_rating() {
+        return internal_rating;
+    }
+
+    public void setInternal_rating(Integer internal_rating) {
+        this.internal_rating = internal_rating;
+    }
+
     public void insert() throws SQLException {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating, part_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating, part_number, internal_rating) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             setVariables(s);
+            s.setObject(25, PartCountSession.getPartCount());
             s.executeUpdate();
+            PartCountSession.incrememntPartCount();
         }
     }
 

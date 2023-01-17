@@ -19,7 +19,10 @@ import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 public class FirstSearchManager {
     private static Double check(Double d) {
@@ -64,9 +67,10 @@ public class FirstSearchManager {
                         statementValues.add(property.second);
                         orders.add(new Pair<>("p." + propertyName, property.third));
                     }
-                } catch (IllegalAccessException | InvocationTargetException  e) {
+                } catch (IllegalAccessException | InvocationTargetException e) {
                     MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.getMessage());
-                } catch (NoSuchMethodException ignored){}
+                } catch (NoSuchMethodException ignored) {
+                }
             }
 
             if (!subStatements.isEmpty()) {
