@@ -1,11 +1,15 @@
 SET
     FOREIGN_KEY_CHECKS = 0;
+truncate table categories;
+truncate table customers;
 truncate table users;
 truncate table queries;
 truncate table categories_queries;
 truncate table parts_queries;
-SET
-    FOREIGN_KEY_CHECKS = 1;
+truncate table parts;
+truncate table drawings;
+truncate table part_names;
+
 
 insert into multiexcel.users (user_name, password)
 values ('admin', 'admin');
@@ -631,3 +635,6 @@ WHILE @count < (SELECT COUNT(*)
         INSERT INTO multiexcel.parts_queries(part_number, query_id)
         values ('735.910.144.828', @count);
     END WHILE;
+
+SET
+    FOREIGN_KEY_CHECKS = 1;
