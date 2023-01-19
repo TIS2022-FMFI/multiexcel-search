@@ -71,7 +71,7 @@ public class SESSION {
     }
 
     public static void logout(ActionEvent event) {
-        MainController.replaceStageByEvent("./src/frontend/FXML/loginScreen.fxml", Constants.WINDOW_TITLE_LOGIN, event);
+        MainController.replaceStageByEvent("/frontend/FXML/LoginScreen.fxml", Constants.WINDOW_TITLE_LOGIN, event);
         clear();
     }
 

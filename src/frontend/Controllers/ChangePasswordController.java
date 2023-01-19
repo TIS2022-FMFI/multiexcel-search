@@ -2,7 +2,9 @@ package frontend.Controllers;
 
 import backend.Managers.UserManager;
 import backend.Sessions.SESSION;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -29,7 +31,7 @@ public class ChangePasswordController {
             try {
                 changePassword();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             }
         });
     }

@@ -18,11 +18,11 @@ public class SecondSearchController implements Initializable {
 
     @FXML
     public void onClickConfirmButton() {
-        MainController.setNewStage("./src/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
+        MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
     }
 
     @FXML
     public void onClickBackButton() {
-        MainController.switchTab("./src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
+        MainController.switchTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
     }
 }

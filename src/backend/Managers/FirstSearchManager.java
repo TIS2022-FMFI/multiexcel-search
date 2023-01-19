@@ -49,6 +49,7 @@ public class FirstSearchManager {
                 statementValues.add(String.join(", ", criteria.getPartNamesStrings()));
             }
 
+
             if (criteria.getCustomersStrings() != null) {
                 subStatements.add("FIND_IN_SET( c.customer_name, ? ) > 0");
                 statementValues.add(String.join(", ", criteria.getCustomersStrings()));
@@ -128,10 +129,8 @@ public class FirstSearchManager {
             }
             return parts;
 
-        } catch (SQLException e) {
-            return null;
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
+        } catch (SQLException | IntrospectionException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
         return null;
     }

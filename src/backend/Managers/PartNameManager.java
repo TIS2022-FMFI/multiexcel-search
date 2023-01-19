@@ -2,6 +2,8 @@ package backend.Managers;
 
 import backend.Entities.Part_name;
 import backend.Sessions.DBS;
+import frontend.Controllers.AbstractControllers.MainController;
+import javafx.scene.control.Alert;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -34,7 +36,8 @@ public class PartNameManager {
                 newPartName.insert();
                 return BigInteger.valueOf(newPartName.getPart_name_id());
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -61,7 +64,8 @@ public class PartNameManager {
                 return partName;
             }
             return null;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -85,9 +89,11 @@ public class PartNameManager {
                 }
                 return partNames;
             } catch (SQLException e) {
+                MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
                 return null;
             }
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }

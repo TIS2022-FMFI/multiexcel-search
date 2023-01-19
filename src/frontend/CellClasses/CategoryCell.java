@@ -2,21 +2,15 @@ package frontend.CellClasses;
 
 import backend.Entities.Category;
 import backend.Models.Constants;
+import frontend.Controllers.AbstractControllers.MainController;
 import frontend.Controllers.CategoryManagementControllers.CategoryDeleteController;
 import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.stage.Stage;
-
-import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  * Class used as Cell in ListView consists of category name and button to delete category
@@ -57,24 +51,11 @@ public class CategoryCell extends ListCell<Category> {
             setGraphic(hbox);
             button.setText("Delete");
             button.setOnAction(x -> {
-                try {
-                    FXMLLoader loader = new FXMLLoader();
-                    String fxmlDocPath = "./src/frontend/FXML/CategoryManagementFXML/CategoryDelete.fxml";
-                    FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-                    AnchorPane root = loader.load(fxmlStream);
+                String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryDelete.fxml";
 
-                    CategoryDeleteController controller = loader.getController();
-                    controller.init(categoryMainController, category.getCategory_id());
+                CategoryDeleteController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE);
 
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setResizable(false);
-                    stage.setScene(scene);
-                    stage.setTitle(Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE);
-                    stage.show();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                controller.init(categoryMainController, category.getCategory_id());
             });
         }
     }

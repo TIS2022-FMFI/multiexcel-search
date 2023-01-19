@@ -3,8 +3,10 @@ package backend.Managers;
 import backend.Entities.User;
 import backend.Sessions.DBS;
 import backend.Sessions.SESSION;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +30,7 @@ public class UserManager {
             user.setSuspended(suspended);
             user.insert();
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
         return true;
@@ -44,6 +47,7 @@ public class UserManager {
             accountToSuspend.setSuspended(true);
             accountToSuspend.update();
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
         return true;
@@ -60,6 +64,7 @@ public class UserManager {
             accountToEnable.setSuspended(false);
             accountToEnable.update();
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
         return true;
@@ -94,6 +99,7 @@ public class UserManager {
             }
             return allUsers;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -110,6 +116,7 @@ public class UserManager {
             user.setPassword(password);
             user.update();
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
         return true;
@@ -130,6 +137,7 @@ public class UserManager {
             }
             return null;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -194,6 +202,7 @@ public class UserManager {
             }
             return users;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }

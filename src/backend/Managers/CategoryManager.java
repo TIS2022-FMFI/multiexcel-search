@@ -3,8 +3,10 @@ package backend.Managers;
 import backend.Entities.Category;
 import backend.Entities.Category_query;
 import backend.Sessions.DBS;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -35,7 +37,8 @@ public class CategoryManager {
                 category.insert();
                 return BigInteger.valueOf(category.getCategory_id());
             }
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
 
@@ -59,9 +62,11 @@ public class CategoryManager {
                 }
                 return categories;
             } catch (SQLException e) {
+                MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
                 return null;
             }
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -87,9 +92,11 @@ public class CategoryManager {
                 }
                 return category_queries;
             } catch (SQLException e) {
+                MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
                 return null;
             }
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -106,6 +113,7 @@ public class CategoryManager {
             category.insert();
             return true;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
     }
@@ -131,7 +139,8 @@ public class CategoryManager {
                 return category;
             }
             return null;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -148,6 +157,7 @@ public class CategoryManager {
             category.delete();
             return true;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
     }

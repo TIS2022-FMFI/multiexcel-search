@@ -3,8 +3,10 @@ package backend.Managers;
 import backend.Entities.Part;
 import backend.Models.PartBasic;
 import backend.Sessions.DBS;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
@@ -78,6 +80,7 @@ public class PartManager {
                 return null;
             }
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -90,6 +93,7 @@ public class PartManager {
             }
             return true;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
     }
@@ -102,6 +106,7 @@ public class PartManager {
             s.executeUpdate();
             return true;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }
     }
@@ -118,6 +123,7 @@ public class PartManager {
             }
             return parts;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -137,7 +143,8 @@ public class PartManager {
                 return BigInteger.valueOf(rs.getInt("drawing_id"));
 
             return null;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -162,7 +169,8 @@ public class PartManager {
                 result.add(partBasic);
             }
             return result;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -176,7 +184,8 @@ public class PartManager {
                 return rs.getInt("count");
             }
             return 0;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return 0;
         }
     }
@@ -208,7 +217,8 @@ public class PartManager {
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
             return true;
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             try {
                 DBS.getConnection().rollback();
                 DBS.getConnection().setAutoCommit(true);

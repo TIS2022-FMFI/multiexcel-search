@@ -12,23 +12,20 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainController {
 
     public static void setTab(String path, Tab tab) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        FileInputStream fxmlStream = new FileInputStream(path);
-        Parent root = loader.load(fxmlStream);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Class.class.getResource(path)));
         tab.setContent(root);
     }
 
     public static <T> T setNewStage(String fxmlDocPath, String stageTitle) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
+            AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -38,20 +35,19 @@ public class MainController {
             stage.show();
             return loader.getController();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+            return null;
         }
     }
 
     public static void switchTab(String fxmlDocPath, Tab tab) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+            AnchorPane root = FXMLLoader.load(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
 
             tab.setContent(root);
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
     }
 
@@ -64,10 +60,7 @@ public class MainController {
 
     public static void replaceStageByEvent(String fxmlDocPath, String stageTitle, ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-
-            FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = loader.load(fxmlStream);
+            AnchorPane root = FXMLLoader.load(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
 
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -77,7 +70,7 @@ public class MainController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
     }
 

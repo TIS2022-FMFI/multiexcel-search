@@ -106,7 +106,7 @@ public class CategoryMainController implements Initializable {
      */
     @FXML
     public void addCategory() {
-        String fxmlDocPath = "./src/frontend/FXML/CategoryManagementFXML/CategoryAdd.fxml";
+        String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryAdd.fxml";
         CategoryAddController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_ADD);
         if (controller != null)
             controller.init(CategoryMainController.this);

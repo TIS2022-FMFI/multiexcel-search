@@ -4,8 +4,10 @@ import backend.Entities.*;
 import backend.Models.Criteria;
 import backend.Sessions.DBS;
 import backend.Sessions.SESSION;
+import frontend.Controllers.AbstractControllers.MainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.util.Pair;
 
 import java.math.BigInteger;
@@ -67,7 +69,7 @@ public class HistoryManager {
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
         } catch (SQLException e) {
-//            throw new RuntimeException(e);
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             try {
                 DBS.getConnection().rollback();
                 DBS.getConnection().setAutoCommit(true);
@@ -238,6 +240,7 @@ public class HistoryManager {
             }
             return queries;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
     }
@@ -262,6 +265,7 @@ public class HistoryManager {
             }
             return 0;
         } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return -1;
         }
     }

@@ -202,12 +202,12 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     private <K, V> ReadOnlyStringWrapper createFromToWrapper(K first, V second) {
         if (first == null && second == null) {
             return new ReadOnlyStringWrapper("-");
-        }else if(first == null){
+        } else if (first == null) {
             return new ReadOnlyStringWrapper(String.format("≤ %s", second));
-        }else if(second == null){
+        } else if (second == null) {
             return new ReadOnlyStringWrapper(String.format("%s ≥", first));
-        }else{
-            if(first.equals(second)){
+        } else {
+            if (first.equals(second)) {
                 return new ReadOnlyStringWrapper(String.format("%s", first));
             }
             return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
@@ -360,7 +360,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     private void openHistoryDetailFXML() {
-        MainController.switchTab("./src/frontend/FXML/HistoryFXML/HistoryDetails.fxml", SESSION.getHistoryTab());
+        MainController.switchTab("/frontend/FXML/HistoryFXML/HistoryDetails.fxml", SESSION.getHistoryTab());
     }
 
     private void updateDeleteButton() {
@@ -426,14 +426,14 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void onClickCategoryFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/FXML/HistoryFXML/HistoryCategoryFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/HistoryFXML/HistoryCategoryFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_HISTORY_CATEGORY_FILTER);
     }
 
     @FXML
     public void onClickUserFilterButton() {
-        FilterController.onClickFilterButton("./src/frontend/FXML/HistoryFXML/HistoryUserFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/HistoryFXML/HistoryUserFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_HISTORY_USER_FILTER);
     }
@@ -469,7 +469,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void deleteSelectedQueries() {
-        HistoryDeleteController historyDeleteController = MainController.setNewStage("./src/frontend/FXML/HistoryFXML/HistoryDelete.fxml", Constants.WINDOW_TITLE_HISTORY_DELETE);
+        HistoryDeleteController historyDeleteController = MainController.setNewStage("/frontend/FXML/HistoryFXML/HistoryDelete.fxml", Constants.WINDOW_TITLE_HISTORY_DELETE);
         historyDeleteController.setHistoryMainController(this);
     }
 
@@ -479,6 +479,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
                 queries.get(i).delete();
             }
         } catch (SQLException sqlException) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", sqlException.toString());
             System.err.printf("Error occured during selection removeal in HistoryMainController::deleteSelectionConfirmed()%n.Tried deleting items from: %s", queries);
         }
     }
