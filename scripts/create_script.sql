@@ -1,10 +1,12 @@
 #drop database if exists Multiexcel;
-create database Multiexcel;
+#create database Multiexcel;
 
 SET FOREIGN_KEY_CHECKS = 0;
 drop table if exists users cascade;
 drop table if exists queries cascade;
 drop table if exists part_name_queries cascade;
+drop table if exists categories_queries cascade;
+drop table if exists parts_queries cascade;
 drop table if exists categories;
 drop table if exists part_names;
 drop table if exists customers;
@@ -110,7 +112,8 @@ create table parts
     ca              smallint,
     ct              decimal(5, 2),
     ck              decimal(5, 2),
-    rating          int default 0
+    rating          int default 0,
+    internal_rating int
 );
 
 create table drawings
@@ -125,25 +128,9 @@ alter table queries
         references users (user_id)
         on delete cascade;
 
-alter table part_name_queries
-    add foreign key (part_name_id)
-        references part_names (part_name_id)
-        on delete cascade,
-    add foreign key (query_id)
-        references queries (query_id)
-        on delete cascade;
-
 alter table categories_queries
     add foreign key (category_id)
         references categories (category_id)
-        on delete cascade,
-    add foreign key (query_id)
-        references queries (query_id)
-        on delete cascade;
-
-alter table customers_queries
-    add foreign key (customer_id)
-        references customers (customer_id)
         on delete cascade,
     add foreign key (query_id)
         references queries (query_id)

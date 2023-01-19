@@ -41,7 +41,10 @@ public class LoginController {
         // Validate the login credentials
         if (UserManager.validateCredentials(username, password)) {
             // Login successful, go to the next screen
-            goToNextScreen(event);
+            if (SESSION.getSession().getSuspended())
+                errorLabel.setText("Account suspended");
+            else
+                goToNextScreen(event);
 
         } else {
             // Login failed, show an error message

@@ -14,9 +14,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class PartManager {
+    public static Integer count;
+
     private static Double check(Double d) {
         return d == 0 ? null : d;
     }
@@ -54,7 +57,8 @@ public class PartManager {
         part.setCa(check(rs.getShort("ca")));
         part.setCt(check(rs.getDouble("ct")));
         part.setCk(check(rs.getDouble("ck")));
-        part.setRating(check(rs.getInt("rating")));
+        part.setRating(rs.getInt("rating"));
+        part.setInternal_rating(rs.getInt("internal_rating"));
 
         return part;
     }
@@ -148,7 +152,7 @@ public class PartManager {
     public static ObservableList<PartBasic> getPartsBasicByCatogoryId(Integer categoryId, Integer limit, Integer offset) {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name, p.rating FROM parts p " +
                 "JOIN part_names pn ON p.part_name_id = pn.part_name_id " +
-                "WHERE p.category_id = ? ORDER BY p.rating DESC " +
+                "WHERE p.category_id = ? ORDER BY p.rating DESC, p.internal_rating " +
                 "LIMIT ? OFFSET ?")) {
             s.setInt(1, categoryId);
             s.setInt(2, limit);
@@ -186,7 +190,7 @@ public class PartManager {
         }
     }
 
-    public static boolean SwapRatings(String partNumber1, String partNumber2) {
+    public static boolean swapRatings(String partNumber1, String partNumber2) {
         try {
             DBS.getConnection().setAutoCommit(false);
             Part part1 = getPartByPartNumber(partNumber1);
@@ -195,11 +199,21 @@ public class PartManager {
                 return false;
 
             Integer part1Rating = part1.getRating();
-            part1.setRating(part2.getRating());
-            part2.setRating(part1Rating);
+            Integer part2Rating = part2.getRating();
 
-            part1.update();
-            part2.update();
+            if(Objects.equals(part1Rating, part2Rating)){
+                Integer part1InternalRating = part1.getInternal_rating();
+                Integer part2InternalRating = part2.getInternal_rating();
+                setInternalRating(partNumber1, part2InternalRating);
+                setInternalRating(partNumber2, part1InternalRating);
+            }
+            else{
+                part1.setRating(part2Rating);
+                part2.setRating(part1Rating);
+                part1.update();
+                part2.update();
+            }
+
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
             return true;
@@ -212,5 +226,25 @@ public class PartManager {
             }
             return false;
         }
+    }
+
+    public static Integer getCount(){
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT count(*) count FROM parts")) {
+            ResultSet rs = s.executeQuery();
+            if (rs.next()){
+                return rs.getInt("count");
+            }
+        }
+        catch (SQLException ex){
+            return null;
+        }
+        return null;
+    }
+
+    private static void setInternalRating(String partNumber, Integer internalRating) throws SQLException{
+        PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET internal_rating = ? WHERE part_number = ?");
+        s.setInt(1, internalRating);
+        s.setString(2, partNumber);
+        s.executeUpdate();
     }
 }

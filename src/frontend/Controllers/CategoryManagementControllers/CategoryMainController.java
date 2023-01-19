@@ -144,16 +144,14 @@ public class CategoryMainController implements Initializable {
         int index = parts.indexOf(part);
         PartBasic part2 = parts.get(index - 1);
 
-        if (Objects.equals(part.getRating(), part2.getRating())) {
-            equalsRatingAlert();
-            return;
-        }
-
-        if (index - 1 == 0)
+        if (index - 1 == 0 && currentPage > 1)
             currentPage--;
         checkPageButtonsVisible();
 
-        PartManager.SwapRatings(part.getPartNumber(), part2.getPartNumber());
+        if(!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())){
+            swapRatingFailedAlert();
+            return;
+        }
         updatePartListAndPageLabel(selectedCategoryId);
     }
 
@@ -161,16 +159,14 @@ public class CategoryMainController implements Initializable {
         int index = parts.indexOf(part);
         PartBasic part2 = parts.get(index + 1);
 
-        if (Objects.equals(part.getRating(), part2.getRating())) {
-            equalsRatingAlert();
-            return;
-        }
-
-        if (index + 1 == parts.size() - 1)
+        if (index + 1 == parts.size() - 1 && currentPage < pages)
             currentPage++;
         checkPageButtonsVisible();
 
-        PartManager.SwapRatings(part.getPartNumber(), part2.getPartNumber());
+        if(!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())){
+            swapRatingFailedAlert();
+            return;
+        }
         updatePartListAndPageLabel(selectedCategoryId);
     }
 
@@ -180,8 +176,8 @@ public class CategoryMainController implements Initializable {
     }
 
 
-    private void equalsRatingAlert() {
-        MainController.showAlert(Alert.AlertType.INFORMATION, "INFO", "Rating of these parts are equal.");
+    private void swapRatingFailedAlert() {
+        MainController.showAlert(Alert.AlertType.INFORMATION, "INFO", "Swap ratings failed");
     }
 
 }
