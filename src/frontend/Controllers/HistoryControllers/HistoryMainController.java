@@ -1,12 +1,9 @@
 package frontend.Controllers.HistoryControllers;
 
 import backend.Entities.Category;
-import backend.Entities.Category_query;
 import backend.Entities.Query;
 import backend.Entities.User;
-import backend.Managers.CategoryManager;
 import backend.Managers.HistoryManager;
-import backend.Managers.UserManager;
 import backend.Models.Constants;
 import backend.Models.Filterable;
 import backend.Sessions.HistorySession;
@@ -14,7 +11,7 @@ import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.FilterController;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
-import javafx.beans.property.ReadOnlyStringWrapper;
+import frontend.Wrappers.QueryWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -36,37 +33,37 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     private final int itemsPerPage = 10;
     private final List<Integer> currentSelectedIndexes = new ArrayList<>();
     @FXML
-    public TableView<Query> table_queries;
+    public TableView<QueryWrapper> table_queries;
     @FXML
-    public TableColumn<Query, String> col_username;
+    public TableColumn<QueryWrapper, String> col_username;
     @FXML
-    public TableColumn<Query, String> col_categories;
+    public TableColumn<QueryWrapper, String> col_categories;
     @FXML
-    public TableColumn<Query, String> col_rubber;
+    public TableColumn<QueryWrapper, String> col_rubber;
     @FXML
-    public TableColumn<Query, String> col_diameter_at;
+    public TableColumn<QueryWrapper, String> col_diameter_at;
     @FXML
-    public TableColumn<Query, String> col_length_l_at;
+    public TableColumn<QueryWrapper, String> col_length_l_at;
     @FXML
-    public TableColumn<Query, String> col_diameter_it;
+    public TableColumn<QueryWrapper, String> col_diameter_it;
     @FXML
-    public TableColumn<Query, String> col_length_l_it;
+    public TableColumn<QueryWrapper, String> col_length_l_it;
     @FXML
-    public TableColumn<Query, String> col_diameter_zt;
+    public TableColumn<QueryWrapper, String> col_diameter_zt;
     @FXML
-    public TableColumn<Query, String> col_length_l_zt;
+    public TableColumn<QueryWrapper, String> col_length_l_zt;
     @FXML
-    public TableColumn<Query, String> col_cr_steg;
+    public TableColumn<QueryWrapper, String> col_cr_steg;
     @FXML
-    public TableColumn<Query, String> col_cr_niere;
+    public TableColumn<QueryWrapper, String> col_cr_niere;
     @FXML
-    public TableColumn<Query, String> col_ca;
+    public TableColumn<QueryWrapper, String> col_ca;
     @FXML
-    public TableColumn<Query, String> col_ct;
+    public TableColumn<QueryWrapper, String> col_ct;
     @FXML
-    public TableColumn<Query, String> col_ck;
+    public TableColumn<QueryWrapper, String> col_ck;
     @FXML
-    public TableColumn<Query, Date> col_date;
+    public TableColumn<QueryWrapper, String> col_date;
     @FXML
     public Button button_previous_page;
     @FXML
@@ -89,7 +86,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public Button button_user_filter;
     public Button button_category_filter;
     private boolean isAdmin;
-    private ObservableList<Query> queries;
+    private ObservableList<QueryWrapper> queries;
     private int currentPageIndex = 0;
     private int currentSelectedIndex = -1;
     private int totalItemCount;
@@ -120,20 +117,20 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         userIdToName = new HashMap<>();
         categoryIdToName = new HashMap<>();
 
-        col_username.setCellValueFactory(feature -> createUsernameWrapperFromUserID(feature.getValue().getUser_id()));
-        col_categories.setCellValueFactory(feature -> createCategoriesWrapper(feature.getValue().getQuery_id()));
-        col_rubber.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getRubber_from(), featrue.getValue().getRubber_to()));
-        col_diameter_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_AT_from(), featrue.getValue().getDiameter_AT_to()));
-        col_length_l_at.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_AT_from(), featrue.getValue().getLength_L_AT_to()));
-        col_diameter_it.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_IT_from(), featrue.getValue().getDiameter_IT_to()));
-        col_length_l_it.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_IT_from(), featrue.getValue().getLength_L_IT_to()));
-        col_diameter_zt.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getDiameter_ZT_from(), featrue.getValue().getDiameter_ZT_to()));
-        col_length_l_zt.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getLength_L_ZT_from(), featrue.getValue().getLength_L_ZT_to()));
-        col_cr_steg.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCr_steg_from(), featrue.getValue().getCr_steg_to()));
-        col_cr_niere.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCr_niere_from(), featrue.getValue().getCr_niere_to()));
-        col_ca.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCa_from(), featrue.getValue().getCa_to()));
-        col_ct.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCt_from(), featrue.getValue().getCt_to()));
-        col_ck.setCellValueFactory(featrue -> createFromToWrapper(featrue.getValue().getCk_from(), featrue.getValue().getCk_to()));
+        col_username.setCellValueFactory(new PropertyValueFactory<>("username"));
+        col_categories.setCellValueFactory(new PropertyValueFactory<>("categories"));
+        col_rubber.setCellValueFactory(new PropertyValueFactory<>("rubber"));
+        col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("diameter_AT"));
+        col_length_l_at.setCellValueFactory(new PropertyValueFactory<>("length_L_AT"));
+        col_diameter_it.setCellValueFactory(new PropertyValueFactory<>("diameter_IT"));
+        col_length_l_it.setCellValueFactory(new PropertyValueFactory<>("length_L_IT"));
+        col_diameter_zt.setCellValueFactory(new PropertyValueFactory<>("diameter_ZT"));
+        col_length_l_zt.setCellValueFactory(new PropertyValueFactory<>("length_L_ZT"));
+        col_cr_steg.setCellValueFactory(new PropertyValueFactory<>("cr_steg"));
+        col_cr_niere.setCellValueFactory(new PropertyValueFactory<>("cr_niere"));
+        col_ca.setCellValueFactory(new PropertyValueFactory<>("ca"));
+        col_ct.setCellValueFactory(new PropertyValueFactory<>("ct"));
+        col_ck.setCellValueFactory(new PropertyValueFactory<>("ck"));
         col_date.setCellValueFactory(new PropertyValueFactory<>("date"));
         table_queries.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         queries = FXCollections.observableArrayList();
@@ -159,59 +156,6 @@ public class HistoryMainController implements Initializable, FilterMasterControl
             }
         });
 
-    }
-
-    private ReadOnlyStringWrapper createCategoriesWrapper(int queryId) {
-        List<Category_query> category_queries = CategoryManager.getAllCategoriesByQueryId(queryId);
-
-        if (category_queries == null) {
-            return new ReadOnlyStringWrapper("<none>");
-        }
-
-        if (category_queries.size() == 0) {
-            return new ReadOnlyStringWrapper("<none>");
-        }
-
-        List<String> displayedCategories = new ArrayList<>();
-
-        for (Category_query cq : category_queries) {
-            if (!categoryIdToName.containsKey(cq.getCategory_id())) {
-                Category category = CategoryManager.getCategory(cq.getCategory_id());
-                if (category == null) {
-                    continue;
-                }
-                categoryIdToName.put(cq.getCategory_id(), category.getCategory_name());
-            }
-            displayedCategories.add(categoryIdToName.get(cq.getCategory_id()));
-        }
-        return new ReadOnlyStringWrapper(String.join(", ", displayedCategories));
-    }
-
-    private ReadOnlyStringWrapper createUsernameWrapperFromUserID(int userId) {
-        if (!userIdToName.containsKey(userId)) {
-            User user = UserManager.getUserById(userId);
-            if (user == null) {
-                return new ReadOnlyStringWrapper("not existing user");
-            }
-            userIdToName.put(userId, user.getUser_name());
-        }
-
-        return new ReadOnlyStringWrapper(userIdToName.get(userId));
-    }
-
-    private <K, V> ReadOnlyStringWrapper createFromToWrapper(K first, V second) {
-        if (first == null && second == null) {
-            return new ReadOnlyStringWrapper("-");
-        } else if (first == null) {
-            return new ReadOnlyStringWrapper(String.format("≤ %s", second));
-        } else if (second == null) {
-            return new ReadOnlyStringWrapper(String.format("%s ≥", first));
-        } else {
-            if (first.equals(second)) {
-                return new ReadOnlyStringWrapper(String.format("%s", first));
-            }
-            return new ReadOnlyStringWrapper(String.format("%s - %s", first, second));
-        }
     }
 
     private void calculatePageIndexesAndUpdate() {
@@ -240,7 +184,9 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
         ObservableList<Query> result = HistoryManager.getQueriesWithFilters(categories, dateFromTo, users, itemsPerPage, currentPageIndex);
         if (result != null) {
-            queries.addAll(result);
+            for (Query q : result) {
+                queries.add(new QueryWrapper(q, userIdToName, categoryIdToName));
+            }
         }
 
         table_queries.setItems(queries);
@@ -279,7 +225,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     private void saveCurrentFiltersAndSelectedQuery() {
-        historySession.setSelectedQuery(queries.get(currentSelectedIndex));
+        historySession.setSelectedQuery(queries.get(currentSelectedIndex).getQuery());
         historySession.setUsersFilter(users);
         historySession.setCategoriesFilter(categories);
         historySession.setDateFromToFilter(dateFromTo);
@@ -374,7 +320,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         if (selectedIndexes.size() == 1) {
             currentSelectedIndex = selectedIndexes.get(0);
             updateSelectButton();
-            System.out.printf("Selected index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery_id());
+            System.out.printf("Selected index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery().getQuery_id());
         } else {
             currentSelectedIndex = -1;
             updateSelectButton();
@@ -462,7 +408,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void openSelectedQuery() {
-        System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery_id());
+        System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery().getQuery_id());
         saveCurrentFiltersAndSelectedQuery();
         openHistoryDetailFXML();
     }
@@ -476,7 +422,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public void deleteSelectionConfirmed() {
         try {
             for (int i = 0; i < currentSelectedIndexes.size(); i++) {
-                queries.get(i).delete();
+                queries.get(i).getQuery().delete();
             }
         } catch (SQLException sqlException) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", sqlException.toString());
