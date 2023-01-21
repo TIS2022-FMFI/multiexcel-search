@@ -39,8 +39,10 @@ public class Main extends Application {
         AnchorPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlDocPath)));
 
         Scene scene = new Scene(root);
-//        stage.setMaximized(true);
         stage.setScene(scene);
+        stage.setWidth(Constants.WINDOW_LOGIN_WIDTH);
+        stage.setHeight(Constants.WINDOW_LOGIN_HEIGHT);
+        stage.setResizable(false);
         //stage.setOnCloseRequest(event -> Platform.exit());
         stage.setTitle(Constants.WINDOW_TITLE_LOGIN);
         stage.show();

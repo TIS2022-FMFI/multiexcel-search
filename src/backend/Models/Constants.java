@@ -15,4 +15,7 @@ public class Constants {
     public static final String WINDOW_TITLE_IMPORT = "Import";
     public static final String WINDOW_TITLE_HISTORY_DELETE = "Delete selection";
     public static final String WINDOW_TITLE_CONFIRM_SEARCH = "Confirm search";
+
+    public static final Double WINDOW_LOGIN_WIDTH = 600.0;
+    public static final Double WINDOW_LOGIN_HEIGHT = 300.0;
 }
