@@ -618,7 +618,6 @@ SET @count = 1;
 WHILE @count < (SELECT COUNT(*)
                 FROM queries)
     DO
-        SELECT @count;
         SET @count = @count + 1;
         INSERT INTO multiexcel.parts_queries(part_number, query_id)
         values ('712.335.152.205', @count);
