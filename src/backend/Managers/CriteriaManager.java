@@ -7,10 +7,12 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.function.Function;
 
+import static backend.Models.Constants.CHOOSE_PRIORITY;
+
 public class CriteriaManager {
 
     private static Integer getPriority(String priority) {
-        if (!priority.equals(""))
+        if (!priority.equals(CHOOSE_PRIORITY))
             return Integer.valueOf(priority);
         return Integer.MAX_VALUE;
     }

@@ -31,6 +31,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static backend.Models.Constants.CHOOSE_PRIORITY;
+
 public class FirstSearchController implements Initializable, FilterMasterController {
     @FXML
     public AnchorPane mainPane;
@@ -176,7 +178,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     }
 
     private void setupChoiceBox(ChoiceBox<String> choiceBox) {
-        choiceBox.getItems().add("");
+        choiceBox.getItems().add(CHOOSE_PRIORITY);
         for (int i = 1; i < 13; i++) {
             choiceBox.getItems().add(String.valueOf(i));
         }
@@ -186,12 +188,12 @@ public class FirstSearchController implements Initializable, FilterMasterControl
                     .filter(x -> x instanceof ChoiceBox<?>).map(x -> (ChoiceBox<String>) x);
             choiceBoxes.forEach(chB -> {
                 if (chB != choiceBox) {
-                    if (!oldVal.equals("") && !chB.getItems().contains(oldVal))
+                    if (!oldVal.equals(CHOOSE_PRIORITY) && !chB.getItems().contains(oldVal))
                         chB.getItems().add(oldVal);
-                    if (!newVal.equals(""))
+                    if (!newVal.equals(CHOOSE_PRIORITY))
                         chB.getItems().remove(newVal);
                     chB.getItems().sort(Comparator.comparing(x -> {
-                        if (x.equals(""))
+                        if (x.equals(CHOOSE_PRIORITY))
                             return 0;
                         return Integer.valueOf(x);
                     }));
