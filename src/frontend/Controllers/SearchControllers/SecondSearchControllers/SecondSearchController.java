@@ -94,6 +94,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     private List<Part> partsAfterFilter;
     private ObservableList<PartWrapper> parts;
 
+    private List<Part> selectedParts;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -160,14 +161,20 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
     @FXML
     public void onClickConfirmButton() {
-        MainController.setNewStage("./src/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
-        System.out.println(selectedParts());
+
+        SecondSearchConfirm secondSearchConfirm = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
+        assert secondSearchConfirm != null;
+        secondSearchConfirm.setSelectedParts(selectedParts());
+        secondSearchConfirm.setCategories(getCategories());
     }
 
     @FXML
     public void onClickBackButton() {
-        MainController.switchTab("./src/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
+        this.selectedParts = selectedParts();
+        MainController.switchTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
     }
+
+    public List<Category> getCategories() {return categories;}
 
     public void setVisiblePartNumber() {
         col_part_number.setVisible(!check_part_number.isSelected());
@@ -297,6 +304,20 @@ public class SecondSearchController implements Initializable, FilterMasterContro
             categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
 
             partsAfterFilter = SecondSearchManager.filterByCategories(resultOfFirstSearch, categories);
+            refreshTable();
+        }
+    }
+
+    @Override
+    public void updateTable() {
+        parts.retainAll();
+
+        if (partsAfterFilter == null || partsAfterFilter.isEmpty()) {
+            for (Part p: resultOfFirstSearch) {
+                parts.add(new PartWrapper(p, this));
+            }
+            table_parts.setItems(parts);
+        } else {
             refreshTable();
         }
     }

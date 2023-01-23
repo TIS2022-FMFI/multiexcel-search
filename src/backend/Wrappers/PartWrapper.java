@@ -28,6 +28,10 @@ public class PartWrapper {
     public PartWrapper(Part part, FilterMasterController filterMasterController) {
         this.part = part;
         this.button = new Button("+");
+
+        if (!SESSION.isAdmin() && part.getCategory_id() != null) {
+            button.setDisable(true);
+        }
         this.checkBox = new CheckBox();
         this.filterMasterController = filterMasterController;
 
@@ -38,11 +42,16 @@ public class PartWrapper {
 
                 SecondSearchEditCategory secondSearchEditCategory = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchEditCategory.fxml", Constants.WINDOW_TITLE_EDIT_CATEGORY);
                 secondSearchEditCategory.setPart(part);
+                secondSearchEditCategory.setFilterMasterController(filterMasterController);
 
             } else {
 
                 if (part.getCategory_id() == null) {
-                    System.out.println("Zmen category");
+
+                    SecondSearchEditCategory secondSearchEditCategory = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchEditCategory.fxml", Constants.WINDOW_TITLE_EDIT_CATEGORY);
+                    secondSearchEditCategory.setPart(part);
+                    secondSearchEditCategory.setFilterMasterController(filterMasterController);
+
                 } else {
                     System.out.println("Zmena nie je mozna");
                 }
@@ -52,12 +61,10 @@ public class PartWrapper {
         checkBox.setOnAction(event -> {
 
             if (checkBox.isSelected()){
-                System.out.println("zabrane");
                 isChecked = true;
             }
 
             if (!checkBox.isSelected()){
-                System.out.println("zrusene");
                 isChecked = false;
             }
         });
