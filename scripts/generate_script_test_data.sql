@@ -1,6 +1,8 @@
 use multiexcel;
 
-# RUN AFTER IMPORTING DATA FROM XLS file
+# DON'T FORGET TO IMPORT PARTS FROM XLS
+
+SET FOREIGN_KEY_CHECKS = 0;
 
 insert into multiexcel.users (user_name, password)
 values ('user', 'user');
@@ -623,5 +625,5 @@ WHILE @count < (SELECT COUNT(*)
         values ('735.910.144.828', @count);
     END WHILE;
 
-SET
-    FOREIGN_KEY_CHECKS = 1;
+
+SET FOREIGN_KEY_CHECKS = 1;

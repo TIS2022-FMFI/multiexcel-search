@@ -10,6 +10,7 @@ truncate table parts_queries;
 truncate table parts;
 truncate table drawings;
 truncate table part_names;
+SET FOREIGN_KEY_CHECKS = 1;
 
 
 insert into multiexcel.users (user_name, password)
