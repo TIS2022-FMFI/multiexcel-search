@@ -1,5 +1,7 @@
-#drop database if exists Multiexcel;
-#create database Multiexcel;
+drop database if exists multiexcel;
+create database multiexcel;
+
+use multiexcel;
 
 SET FOREIGN_KEY_CHECKS = 0;
 drop table if exists users cascade;
