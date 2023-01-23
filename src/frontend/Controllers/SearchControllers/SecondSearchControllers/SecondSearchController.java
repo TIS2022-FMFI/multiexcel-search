@@ -62,20 +62,18 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     public TableColumn<PartWrapper, String> col_part_number;
     public TableColumn<PartWrapper, String> col_part_name;
     public TableColumn<PartWrapper, String> col_category;
-    public TableColumn<PartWrapper, Short> col_rubber;
-    public TableColumn<PartWrapper, Double> col_diameter_at;
-    public TableColumn<PartWrapper, Double> col_length_l_at;
-    public TableColumn<PartWrapper, Double> col_diameter_it;
-    public TableColumn<PartWrapper, Double> col_length_l_it;
-    public TableColumn<PartWrapper, Double> col_diameter_zt;
-    public TableColumn<PartWrapper, Double> col_length_l_zt;
-    public TableColumn<PartWrapper, Integer> col_cr_steg;
-    public TableColumn<PartWrapper, Short> col_cr_niere;
-    public TableColumn<PartWrapper, Short> col_ca;
-    public TableColumn<PartWrapper, Double> col_ct;
-    public TableColumn<PartWrapper, Double> col_ck;
-
-    //TODO: pridanie zobrazenia customerov
+    public TableColumn<PartWrapper, String> col_rubber;
+    public TableColumn<PartWrapper, String> col_diameter_at;
+    public TableColumn<PartWrapper, String> col_length_l_at;
+    public TableColumn<PartWrapper, String> col_diameter_it;
+    public TableColumn<PartWrapper, String> col_length_l_it;
+    public TableColumn<PartWrapper, String> col_diameter_zt;
+    public TableColumn<PartWrapper, String> col_length_l_zt;
+    public TableColumn<PartWrapper, String> col_cr_steg;
+    public TableColumn<PartWrapper, String> col_cr_niere;
+    public TableColumn<PartWrapper, String> col_ca;
+    public TableColumn<PartWrapper, String> col_ct;
+    public TableColumn<PartWrapper, String> col_ck;
     public TableColumn<PartWrapper, String> col_customer;
     //TODO: pridanie zobrazenia obrazkov
     public TableColumn<PartWrapper, String> col_drawing;
@@ -94,7 +92,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     private List<Part> partsAfterFilter;
     private ObservableList<PartWrapper> parts;
 
-    private List<Part> selectedParts;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -170,7 +167,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
     @FXML
     public void onClickBackButton() {
-        this.selectedParts = selectedParts();
         MainController.switchTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
     }
 
