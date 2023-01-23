@@ -11,11 +11,9 @@ import javafx.scene.control.Alert;
 import javafx.util.Pair;
 
 import java.math.BigInteger;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class HistoryManager {
@@ -49,7 +47,7 @@ public class HistoryManager {
 
             query.setUser_id(SESSION.getSession().getUser_id());
 
-            query.setDate(Date.valueOf(LocalDate.now()));
+            query.setDate(Timestamp.valueOf(LocalDateTime.now()));
 
             query.insert();
 
@@ -221,7 +219,7 @@ public class HistoryManager {
                 q.setCt_from(check(r.getDouble("ct_from")));
                 q.setCk_from(check(r.getDouble("ck_from")));
 
-                q.setDate(r.getDate("date"));
+                q.setDate(r.getTimestamp("date"));
 
                 q.setRubber_to(check(r.getShort("rubber_to")));
                 q.setDiameter_AT_to(check(r.getDouble("diameter_AT_to")));

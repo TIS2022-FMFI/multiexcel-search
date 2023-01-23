@@ -19,7 +19,7 @@ public class QueryWrapper {
     private Map<Integer, String> userIdToName;
     private Map<BigInteger, String> categoryIdToName;
 
-    private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss");
 
     public QueryWrapper(Query query, Map<Integer, String> userIdToName, Map<BigInteger, String> categoryIdToName){
         this.query = query;
@@ -111,7 +111,7 @@ public class QueryWrapper {
     }
 
     public String getDate() {
-        return query.getDate().toLocalDate().format(dateTimeFormat);
+        return query.getDate().toLocalDateTime().format(dateTimeFormat);
     }
 
     public void setDateTimeFormat(DateTimeFormatter dateTimeFormat){

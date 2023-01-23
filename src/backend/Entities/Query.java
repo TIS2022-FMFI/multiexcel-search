@@ -43,7 +43,7 @@ public class Query {
 
     private Double ck_from;
     private Double ck_to;
-    private Date date;
+    private Timestamp date;
 
     public Integer getQuery_id() {
         return query_id;
@@ -254,18 +254,18 @@ public class Query {
         this.ct_to = ct_to;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
     public void insert() throws SQLException {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO queries (user_id, rubber_from, rubber_to, diameter_AT_from, diameter_AT_to, length_L_AT_from, length_L_AT_to, diameter_IT_from, diameter_IT_to, length_L_IT_from, length_L_IT_to, diameter_ZT_from, diameter_ZT_to, length_L_ZT_from, length_L_ZT_to, cr_steg_from, cr_steg_to, cr_niere_from, cr_niere_to, ca_from, ca_to, ct_from, ct_to, ck_from, ck_to, date) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             setVariables(s);
-            s.setDate(26, date);
+            s.setTimestamp(26, date);
             s.executeUpdate();
 
             try (ResultSet r = s.getGeneratedKeys()) {
