@@ -7,6 +7,7 @@ import backend.Models.MutablePair;
 import backend.Sessions.DBS;
 import backend.Sessions.PartCountSession;
 import frontend.Controllers.AbstractControllers.MainController;
+import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
 import javafx.scene.control.Alert;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
 import org.apache.poi.ss.usermodel.Cell;
@@ -253,6 +254,8 @@ public class Import {
             }
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
+
+            CategoryMainController.refreshCategories();
         } catch (SQLException e) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }

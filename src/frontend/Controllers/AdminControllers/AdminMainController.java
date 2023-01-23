@@ -30,6 +30,7 @@ public class AdminMainController implements Initializable {
             SESSION.setHistoryTab(historyTab);
 
             MainController.setTab("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml", categoryTab);
+            SESSION.setCategoryTab(categoryTab);
 
             MainController.setTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
