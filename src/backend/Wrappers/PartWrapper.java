@@ -6,14 +6,12 @@ import backend.Managers.PartNameManager;
 import backend.Managers.CategoryManager;
 import backend.Models.Constants;
 import backend.Sessions.SESSION;
-import frontend.Controllers.AbstractControllers.FilterController;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
 import frontend.Controllers.SearchControllers.SecondSearchControllers.SecondSearchEditCategory;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
-import java.math.BigInteger;
 
 public class PartWrapper {
 
@@ -81,6 +79,7 @@ public class PartWrapper {
 
     public Button getButton() {return button;}
 
+
     public String getPartNumber() {return part.getPart_number();}
 
     public String getCustomer() {return CustomerManager.getCustomer(part.getCustomer_id()).getCustomer_name();}
@@ -89,29 +88,65 @@ public class PartWrapper {
 
     public String getCategoryName() {return CategoryManager.getCategory(part.getCategory_id()).getCategory_name();}
 
-    public Short getRubberValue() {return part.getRubber();}
+    public String getRubberValue() {
+        if (part.getRubber() == null) return "";
+        return String.valueOf(part.getRubber()) + " ShA";
+    }
 
-    public Double getDiameterAT() {return part.getDiameter_AT();}
+    public String getDiameterAT() {
+        if (part.getDiameter_AT() == null) return "";
+        return "Ø " + part.getDiameter_AT();
+    }
 
-    public Double getLengthLAT() {return part.getLength_L_AT();}
+    public String getLengthLAT() {
+        if (part.getLength_L_AT() == null) return "";
+        return "Ø " + part.getLength_L_AT();
+    }
 
-    public Double getDiameterIT() {return part.getDiameter_IT();}
+    public String getDiameterIT() {
+        if (part.getDiameter_IT() == null) return "";
+        return "Ø " + part.getDiameter_IT();
+    }
 
-    public Double getLengthLIT() {return part.getLength_L_IT();}
+    public String getLengthLIT() {
+        if (part.getLength_L_IT() == null) return "";
+        return "Ø " + part.getLength_L_IT();
+    }
 
-    public Double getDiameterZT() {return part.getDiameter_ZT();}
+    public String getDiameterZT() {
+        if (part.getDiameter_ZT() == null) return "";
+        return "Ø " + part.getDiameter_ZT();
+    }
 
-    public Double getLengthLZT() {return part.getLength_L_ZT();}
+    public String getLengthLZT() {
+        if (part.getLength_L_ZT() == null) return "";
+        return "Ø " + part.getLength_L_ZT();
+    }
 
-    public Integer getCrSteg() {return part.getCr_steg();}
+    public String getCrSteg() {
+        if (part.getCr_steg() == null) return "";
+        return part.getCr_steg() + " N/mm";
+    }
 
-    public Short getCrNiere() {return part.getCr_niere();}
+    public String getCrNiere() {
+        if (part.getCr_niere() == null) return "";
+        return part.getCr_niere() + " N/mm";
+    }
 
-    public Short getCaValue() {return part.getCa();}
+    public String getCaValue() {
+        if (part.getCa() == null) return "";
+        return part.getCa() + " N/mm";
+    }
 
-    public Double getCtValue() {return part.getCt();}
+    public String getCtValue() {
+        if (part.getCt() == null) return "";
+        return part.getCt() + " Nm/°";
+    }
 
-    public Double getCkValue() {return part.getCk();}
+    public String getCkValue() {
+        if (part.getCk() == null) return "";
+        return part.getCk() + " Nm/°";
+    }
 
     public String getDiameterATTOL() {return part.getDiameter_AT_tol();}
 

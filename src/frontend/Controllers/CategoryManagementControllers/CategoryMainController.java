@@ -5,18 +5,24 @@ import backend.Managers.CategoryManager;
 import backend.Managers.PartManager;
 import backend.Models.Constants;
 import backend.Models.PartBasic;
+import backend.Sessions.SESSION;
 import frontend.CellClasses.CategoryCell;
 import frontend.CellClasses.PartCell;
 import frontend.Controllers.AbstractControllers.MainController;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -34,6 +40,23 @@ public class CategoryMainController implements Initializable {
     private int pages;
     private Integer selectedCategoryId;
     private ObservableList<PartBasic> parts;
+
+    public static void refreshCategories(){
+        try{
+            Platform.runLater(() -> {
+                FXMLLoader loader = new FXMLLoader(Class.class.getResource("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml"));
+                try {
+                    AnchorPane root = loader.load();
+                    SESSION.getCategoryTab().setContent(root);
+                } catch (IOException e) {
+                    MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+                }
+            });
+       }
+       catch (Exception e){
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+       }
+    }
 
     /**
      * Default Fxml initialization
