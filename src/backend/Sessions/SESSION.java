@@ -17,6 +17,8 @@ public class SESSION {
 
     private static Tab searchTab;
 
+    private static Tab categoryTab;
+
     //add other Tabs also here
 
     public static User getSession() {
@@ -58,6 +60,17 @@ public class SESSION {
 
     public static void setSearchTab(Tab searchTab) {
         SESSION.searchTab = searchTab;
+    }
+
+    public static Tab getCategoryTab() {
+        if (categoryTab == null) {
+            throw new IllegalStateException("categoryTab == null");
+        }
+        return categoryTab;
+    }
+
+    public static void setCategoryTab(Tab categoryTab) {
+        SESSION.categoryTab = categoryTab;
     }
 
     public static Criteria getCriteria() {
