@@ -7,7 +7,7 @@
             xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.AdminControllers.AdminMainController">
     <children>
-        <TabPane prefHeight="401.0" prefWidth="640.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
+        <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <tabs>
                 <Tab fx:id="searchTab" text="Search">
@@ -32,11 +32,12 @@
                 </Tab>
             </tabs>
         </TabPane>
-        <Button mnemonicParsing="false" text="Import" AnchorPane.rightAnchor="159.0" AnchorPane.topAnchor="3.0"
-                onAction="#importButton"/>
-        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Log off" AnchorPane.rightAnchor="3.0"
-                AnchorPane.topAnchor="3.0" onAction="#logoutUser"/>
-        <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Change Password"
-                AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="3.0" onAction="#changePassword"/>
+        <HBox prefHeight="27.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+            <children>
+                <Button mnemonicParsing="false" prefWidth="75.0" text="Import" onAction="#importButton"/>
+                <Button mnemonicParsing="false" prefWidth="75.0" text="Log out" onAction="#logoutUser"/>
+                <Button mnemonicParsing="false" prefWidth="120.0" text="Change Password" onAction="#changePassword"/>
+            </children>
+        </HBox>
     </children>
 </AnchorPane>

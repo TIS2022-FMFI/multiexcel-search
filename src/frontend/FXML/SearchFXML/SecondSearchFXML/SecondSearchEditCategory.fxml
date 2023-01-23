@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.161"
+            fx:controller="frontend.Controllers.SearchControllers.SecondSearchControllers.SecondSearchEditCategory">
+    <ScrollPane layoutX="100.0" layoutY="87.0" prefHeight="200.0" prefWidth="401.0">
+        <VBox fx:id="scrollParameterFilter" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="0.0"
+              minWidth="0.0"/>
+    </ScrollPane>
+    <Button layoutX="104.0" layoutY="345.0" mnemonicParsing="false" onAction="#onCancelAction" text="cancel"/>
+    <Button layoutX="449.0" layoutY="345.0" mnemonicParsing="false" onAction="#onConfirmAction" text="confirm"/>
+</AnchorPane>

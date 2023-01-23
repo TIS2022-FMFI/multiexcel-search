@@ -60,7 +60,7 @@ public class LoginController {
                 fxmlDocPath = "/frontend/FXML/AdminFXML/AdminMain.fxml";
             }
 
-            MainController.replaceStageByEvent(fxmlDocPath, Constants.WINDOW_TITLE_LOGGEDIN, event);
+            MainController.replaceStageByEvent(fxmlDocPath, Constants.WINDOW_TITLE_LOGGEDIN, event, false);
         } catch (Exception e) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
