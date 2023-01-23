@@ -123,7 +123,8 @@ public class FirstSearchManager {
                 part.setCa(check(r.getShort("ca")));
                 part.setCt(check(r.getDouble("ct")));
                 part.setCk(check(r.getDouble("ck")));
-                part.setRating(check(r.getInt("rating")));
+                part.setRating(r.getInt("rating"));
+                part.setInternal_rating(r.getInt("internal_rating"));
 
                 parts.add(part);
             }

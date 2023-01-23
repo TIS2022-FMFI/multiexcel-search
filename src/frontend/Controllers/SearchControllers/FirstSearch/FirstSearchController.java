@@ -405,6 +405,9 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     }
 
     @Override
+    public void updateTable() {}
+
+    @Override
     public List<? extends Filterable> getParameters(Class<?> type) {
         if (type.equals(Part_name.class))
             return partNames;
