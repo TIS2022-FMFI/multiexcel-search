@@ -32,7 +32,7 @@ public class Import {
     private static String checkCell(String cell) {
         if (cell == null || cell.equals("") || cell.equals("-"))
             return null;
-        return cell;
+        return cell.trim();
     }
 
     private static String nextString(DataFormatter dataFormatter, Iterator<Cell> it) {
