@@ -87,32 +87,28 @@ public class PartManager {
         }
     }
 
-    public static boolean AddCategoryToParts(List<Part> parts, BigInteger categoryId) {
-        try {
-            for (Part part : parts) {
-                part.setCategory_id(categoryId);
-                part.update();
-            }
-            return true;
-        } catch (SQLException e) {
-            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
-            return false;
-        }
-    }
-
-    public static boolean IncreaseRating(List<Part> parts) {
+    /**
+     * Increases rating of parts by one
+     *
+     * @param parts parts to increase rating
+     */
+    public static void IncreaseRating(List<Part> parts) {
         try {
             PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET rating = rating + 1 WHERE FIND_IN_SET( part_number, ? ) > 0");
             String arrString = parts.stream().map(Part::getPart_number).collect(Collectors.joining(","));
             s.setString(1, arrString);
             s.executeUpdate();
-            return true;
         } catch (SQLException e) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
-            return false;
         }
     }
 
+    /**
+     * Returns parts that belong to specified query id
+     *
+     * @param queryId query id
+     * @return list of parts that belong to the specified query id
+     */
     public static List<Part> GetPartsByQueryId(Integer queryId) {
         try {
             PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM parts p JOIN parts_queries pq ON p.part_number = pq.part_number WHERE pq.query_id = ?");
@@ -151,6 +147,14 @@ public class PartManager {
         }
     }
 
+    /**
+     * Returns Observable list of parts based on specified categoryID to be used in Category Manager
+     *
+     * @param categoryId categoryID
+     * @param limit      specifies how many parts to return for paging
+     * @param offset     specified offset of query for paging
+     * @return list of parts
+     */
     public static ObservableList<PartBasic> getPartsBasicByCategoryId(Integer categoryId, Integer limit, Integer offset) {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name, p.rating FROM parts p " +
                 "JOIN part_names pn ON p.part_name_id = pn.part_name_id " +
@@ -177,6 +181,12 @@ public class PartManager {
         }
     }
 
+    /**
+     * Returns the number of parts that belong to the specified category
+     *
+     * @param categoryId category ID
+     * @return number of parts belonging to category
+     */
     public static Integer getPartCountForCategoryId(Integer categoryId) {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT count(*) count FROM parts WHERE category_id = ?")) {
             s.setInt(1, categoryId);
@@ -192,6 +202,13 @@ public class PartManager {
         }
     }
 
+    /**
+     * Swaps ratings of two parts. Swaps their internal rating if they have the same rating
+     *
+     * @param partNumber1 part number of first part
+     * @param partNumber2 part number of second part
+     * @return True, if the swap was succesful
+     */
     public static boolean swapRatings(String partNumber1, String partNumber2) {
         try {
             DBS.getConnection().setAutoCommit(false);
@@ -229,6 +246,9 @@ public class PartManager {
         }
     }
 
+    /**
+     * Returns number of all parts in the database
+     */
     public static Integer getCount() {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT count(*) count FROM parts")) {
             ResultSet rs = s.executeQuery();
@@ -261,6 +281,11 @@ public class PartManager {
         return parts;
     }
 
+    /**
+     * Sets category ID of parts belonging to specified category to WITHOUT_CATEGORY
+     *
+     * @param categoryID specified category ID
+     */
     public static void setPartsOfCategoryToWithoutCategory(Integer categoryID) {
         try {
             DBS.getConnection().setAutoCommit(false);

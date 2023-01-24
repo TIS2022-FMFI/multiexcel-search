@@ -40,8 +40,8 @@ public class CategoryMainController implements Initializable {
     private Integer selectedCategoryId;
     private ObservableList<PartBasic> parts;
 
-    public static void refreshCategories(){
-        try{
+    public static void refreshCategories() {
+        try {
             Platform.runLater(() -> {
                 FXMLLoader loader = new FXMLLoader(Class.class.getResource("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml"));
                 try {
@@ -51,10 +51,9 @@ public class CategoryMainController implements Initializable {
                     MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
                 }
             });
-       }
-       catch (Exception e){
+        } catch (Exception e) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
-       }
+        }
     }
 
     /**
@@ -174,7 +173,7 @@ public class CategoryMainController implements Initializable {
             currentPage--;
         checkPageButtonsVisible();
 
-        if(!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())){
+        if (PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
             swapRatingFailedAlert();
             return;
         }
@@ -189,7 +188,7 @@ public class CategoryMainController implements Initializable {
             currentPage++;
         checkPageButtonsVisible();
 
-        if(!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())){
+        if (PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
             swapRatingFailedAlert();
             return;
         }

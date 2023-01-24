@@ -8,11 +8,9 @@ import backend.Models.Constants;
 import backend.Models.Filterable;
 import backend.Sessions.SESSION;
 import backend.Wrappers.PartWrapper;
-
 import frontend.Controllers.AbstractControllers.FilterController;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +20,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -136,7 +135,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
         if (resultOfFirstSearch != null) {
 
-            for (Part p: resultOfFirstSearch) {
+            for (Part p : resultOfFirstSearch) {
                 parts.add(new PartWrapper(p, this));
             }
         }
@@ -146,7 +145,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     public List<Part> selectedParts() {
         ArrayList<Part> selectedPartsList = new ArrayList<>();
 
-        for (PartWrapper partWrapper: parts) {
+        for (PartWrapper partWrapper : parts) {
             if (partWrapper.isChecked()) {
                 selectedPartsList.add(partWrapper.getPart());
             }
@@ -168,7 +167,9 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         MainController.switchTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
     }
 
-    public List<Category> getCategories() {return categories;}
+    public List<Category> getCategories() {
+        return categories;
+    }
 
     public void setVisiblePartNumber() {
         col_part_number.setVisible(!check_part_number.isSelected());
@@ -182,7 +183,9 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         col_part_name.setVisible(!check_part_name.isSelected());
     }
 
-    public void setVisibleCategory() {col_category.setVisible(!check_category.isSelected()); }
+    public void setVisibleCategory() {
+        col_category.setVisible(!check_category.isSelected());
+    }
 
     public void setVisibleDrawing() {
         col_drawing.setVisible(!check_drawing.isSelected());
@@ -204,7 +207,9 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         col_length_l_at.setVisible(!check_length_l_at.isSelected());
     }
 
-    public void setVisibleLengthLATTOL() {col_length_l_at_tol.setVisible(!check_length_l_at_tol.isSelected()); }
+    public void setVisibleLengthLATTOL() {
+        col_length_l_at_tol.setVisible(!check_length_l_at_tol.isSelected());
+    }
 
     public void setVisibleDiameterIT() {
         col_diameter_it.setVisible(!check_diameter_it.isSelected());
@@ -226,7 +231,9 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         col_diameter_zt.setVisible(!check_diameter_zt.isSelected());
     }
 
-    public void setVisibleDiameterZTTOL() {col_diameter_zt_tol.setVisible(!check_diameter_zt_tol.isSelected()); }
+    public void setVisibleDiameterZTTOL() {
+        col_diameter_zt_tol.setVisible(!check_diameter_zt_tol.isSelected());
+    }
 
     public void setVisibleLengthLZT() {
         col_length_l_zt.setVisible(!check_length_l_zt.isSelected());
@@ -293,7 +300,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-
         if (type.equals(Category.class)) {
             categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
 
@@ -307,7 +313,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         parts.retainAll();
 
         if (partsAfterFilter == null || partsAfterFilter.isEmpty()) {
-            for (Part p: resultOfFirstSearch) {
+            for (Part p : resultOfFirstSearch) {
                 parts.add(new PartWrapper(p, this));
             }
             table_parts.setItems(parts);
@@ -322,11 +328,11 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     }
 
 
-    public void refreshTable(){
+    public void refreshTable() {
 
         parts.retainAll();
 
-        for (Part p: partsAfterFilter) {
+        for (Part p : partsAfterFilter) {
             parts.add(new PartWrapper(p, this));
         }
 

@@ -37,6 +37,12 @@ public class FirstSearchManager {
         return i == 0 ? null : i;
     }
 
+    /**
+     * Returns list of parts from database that meet the criteria
+     *
+     * @param criteria Criteria
+     * @return list of parts from database
+     */
     public static List<Part> search(Criteria criteria) {
         try {
             StringBuilder statement = new StringBuilder("SELECT * FROM parts p LEFT JOIN part_names pn ON p.part_name_id = pn.part_name_id LEFT JOIN customers c ON p.customer_id = c.customer_id");

@@ -27,4 +27,9 @@ public class Constants {
 
     public static final String WITHOUT_CATEGORY = "Without category";
     public static final BigInteger WITHOUT_CATEGORY_ID = BigInteger.ONE;
+
+
+    public static final String CUSTOMER_NAME_NOT_FOUND = "<unknown_customer>";
+    public static final String CATEGORY_NAME_NOT_FOUND = "<unknown_category>";
+    public static final String PART_NAME_NOT_FOUND = "<unknown_part>";
 }

@@ -26,11 +26,9 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.util.*;
 
-public class HistoryDetailsController implements Initializable {
+import static backend.Models.Constants.*;
 
-    private final String CUSTOMER_NAME_NOT_FOUND = "<unknown_customer>";
-    private final String CATEGORY_NAME_NOT_FOUND = "<unknown_category>";
-    private final String PART_NAME_NOT_FOUND = "<unknown_part>";
+public class HistoryDetailsController implements Initializable {
     @FXML
     public TableView<Part> table_parts;
     @FXML

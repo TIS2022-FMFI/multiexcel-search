@@ -19,15 +19,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class SecondSearchConfirm implements Initializable {
-
-    private SecondSearchController secondSearchController;
     private List<Part> selectedParts;
 
     private List<Category> categories;
 
-    public void setSelectedParts(List<Part> selectedParts) {this.selectedParts = selectedParts;}
+    public void setSelectedParts(List<Part> selectedParts) {
+        this.selectedParts = selectedParts;
+    }
 
-    public void setCategories(List<Category> categories) {this.categories = categories;}
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
