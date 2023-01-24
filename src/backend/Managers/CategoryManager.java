@@ -50,7 +50,7 @@ public class CategoryManager {
      * @return List of all Categories
      */
     public static ObservableList<Category> getAllCategories() {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories ORDER BY category_name")) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories ORDER BY category_id")) {
             try (ResultSet r = s.executeQuery()) {
                 ObservableList<Category> categories = FXCollections.observableArrayList();
                 while (r.next()) {
@@ -152,6 +152,8 @@ public class CategoryManager {
      */
     public static boolean deleteCategory(Integer categoryId) {
         try {
+            PartManager.setPartsOfCategoryToWithoutCategory(categoryId);
+
             Category category = new Category();
             category.setCategory_id(categoryId);
             category.delete();

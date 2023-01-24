@@ -100,8 +100,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         categories = getAllCategories();
 
         initializeController();
-
-        System.out.println(parts);
     }
 
     private void initializeController() {

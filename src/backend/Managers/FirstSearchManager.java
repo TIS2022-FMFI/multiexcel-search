@@ -39,7 +39,7 @@ public class FirstSearchManager {
 
     public static List<Part> search(Criteria criteria) {
         try {
-            StringBuilder statement = new StringBuilder("SELECT * FROM parts p JOIN part_names pn ON p.part_name_id = pn.part_name_id JOIN customers c ON p.customer_id = c.customer_id");
+            StringBuilder statement = new StringBuilder("SELECT * FROM parts p LEFT JOIN part_names pn ON p.part_name_id = pn.part_name_id LEFT JOIN customers c ON p.customer_id = c.customer_id");
             List<String> subStatements = new ArrayList<>();
             List<Object> statementValues = new ArrayList<>();
             List<Pair<String, Integer>> orders = new ArrayList<>();

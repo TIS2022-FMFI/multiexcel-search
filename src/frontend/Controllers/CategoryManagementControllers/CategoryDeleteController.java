@@ -44,7 +44,6 @@ public class CategoryDeleteController implements Initializable {
      */
     @FXML
     public void deleteCategory() {
-
         if (!CategoryManager.deleteCategory(catoegiryIdToDelete)) {
             MainController.showAlert(Alert.AlertType.ERROR, "Failure", "Deleting category has failed");
             return;
