@@ -1,4 +1,5 @@
 package frontend.Wrappers;
+
 import backend.Entities.Category;
 import backend.Entities.Category_query;
 import backend.Entities.Query;
@@ -21,17 +22,17 @@ public class QueryWrapper {
 
     private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss");
 
-    public QueryWrapper(Query query, Map<Integer, String> userIdToName, Map<BigInteger, String> categoryIdToName){
+    public QueryWrapper(Query query, Map<Integer, String> userIdToName, Map<BigInteger, String> categoryIdToName) {
         this.query = query;
         this.userIdToName = userIdToName;
         this.categoryIdToName = categoryIdToName;
     }
 
-    public Query getQuery(){
+    public Query getQuery() {
         return query;
     }
 
-    public String getCategories(){
+    public String getCategories() {
         List<Category_query> category_queries = CategoryManager.getAllCategoriesByQueryId(query.getQuery_id());
 
         if (category_queries == null) {
@@ -39,7 +40,7 @@ public class QueryWrapper {
         }
 
         if (category_queries.size() == 0) {
-            return"<none>";
+            return "<none>";
         }
 
         List<String> displayedCategories = new ArrayList<>();
@@ -114,19 +115,19 @@ public class QueryWrapper {
         return query.getDate().toLocalDateTime().format(dateTimeFormat);
     }
 
-    public void setDateTimeFormat(DateTimeFormatter dateTimeFormat){
+    public void setDateTimeFormat(DateTimeFormatter dateTimeFormat) {
         this.dateTimeFormat = dateTimeFormat;
     }
 
-    private <K, T>String createInterval(K from, T to){
+    private <K, T> String createInterval(K from, T to) {
         if (from == null && to == null) {
             return "-";
-        }else if(from == null){
+        } else if (from == null) {
             return String.format("≤ %s", to);
-        }else if(to == null){
+        } else if (to == null) {
             return String.format("%s ≥", from);
-        }else{
-            if(from.equals(to)){
+        } else {
+            if (from.equals(to)) {
                 return from.toString();
             }
             return String.format("%s - %s", from, to);

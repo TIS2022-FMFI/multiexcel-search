@@ -50,7 +50,9 @@ public class SecondSearchEditCategory implements Initializable {
         }
     }
 
-    public void setFilterMasterController(FilterMasterController filterMasterController) {this.filterMasterController = filterMasterController;}
+    public void setFilterMasterController(FilterMasterController filterMasterController) {
+        this.filterMasterController = filterMasterController;
+    }
 
     public void onCancelAction(ActionEvent event) {
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
@@ -65,7 +67,7 @@ public class SecondSearchEditCategory implements Initializable {
             }
         }
 
-        if (selected > 1){
+        if (selected > 1) {
             return;
 
         } else if (selected == 0) {
@@ -73,7 +75,7 @@ public class SecondSearchEditCategory implements Initializable {
             part.update();
 
         } else {
-            for (CheckBox checkBox: checkBoxes) {
+            for (CheckBox checkBox : checkBoxes) {
                 if (checkBox.isSelected()) {
                     part.setCategory_id(CategoryManager.getCategoryId(checkBox.getText()));
                     part.update();
@@ -86,5 +88,6 @@ public class SecondSearchEditCategory implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 }

@@ -407,7 +407,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     }
 
     @Override
-    public void updateTable() {}
+    public void updateTable() {
+    }
 
     @Override
     public List<? extends Filterable> getParameters(Class<?> type) {

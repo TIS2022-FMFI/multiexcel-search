@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 import java.math.BigInteger;
-import java.util.Objects;
 
 import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
@@ -62,7 +61,7 @@ public class CategoryCell extends ListCell<Category> {
 
                 controller.init(categoryMainController, category.getCategory_id());
             });
-            if (BigInteger.valueOf(category.getCategory_id()).equals(WITHOUT_CATEGORY_ID)){
+            if (BigInteger.valueOf(category.getCategory_id()).equals(WITHOUT_CATEGORY_ID)) {
                 button.setVisible(false);
             }
         }

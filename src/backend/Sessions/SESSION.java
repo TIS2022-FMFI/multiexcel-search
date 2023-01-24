@@ -46,14 +46,13 @@ public class SESSION {
         return historyTab;
     }
 
-    public static boolean isAdmin() {
-        return user.getUser_name().equals("admin");
-    }
-
     public static void setHistoryTab(Tab historyTab) {
         SESSION.historyTab = historyTab;
     }
 
+    public static boolean isAdmin() {
+        return user.getUser_name().equals("admin");
+    }
 
     public static Tab getSearchTab() {
         if (searchTab == null) {
