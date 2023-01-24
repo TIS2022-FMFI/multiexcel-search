@@ -1,5 +1,7 @@
 package backend.Models;
 
+import java.math.BigInteger;
+
 public class Constants {
 
     public static final String WINDOW_TITLE_LOGIN = "Intelligent search - Login";
@@ -22,4 +24,7 @@ public class Constants {
     public static final Double WINDOW_LOGIN_HEIGHT = 300.0;
 
     public static final String CHOOSE_PRIORITY = "Choose priority";
+
+    public static final String WITHOUT_CATEGORY = "Without category";
+    public static final BigInteger WITHOUT_CATEGORY_ID = BigInteger.ONE;
 }

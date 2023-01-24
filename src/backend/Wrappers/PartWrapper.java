@@ -12,6 +12,10 @@ import frontend.Controllers.SearchControllers.SecondSearchControllers.SecondSear
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 
+import java.math.BigInteger;
+
+import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
+
 
 public class PartWrapper {
 
@@ -27,7 +31,7 @@ public class PartWrapper {
         this.part = part;
         this.button = new Button("+");
 
-        if (!SESSION.isAdmin() && part.getCategory_id() != null) {
+        if (!SESSION.isAdmin() && !part.getCategory_id().equals(WITHOUT_CATEGORY_ID)) {
             button.setDisable(true);
         }
         this.checkBox = new CheckBox();
@@ -43,8 +47,7 @@ public class PartWrapper {
                 secondSearchEditCategory.setFilterMasterController(filterMasterController);
 
             } else {
-
-                if (part.getCategory_id() == null) {
+                if (part.getCategory_id().equals(WITHOUT_CATEGORY_ID)) {
 
                     SecondSearchEditCategory secondSearchEditCategory = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchEditCategory.fxml", Constants.WINDOW_TITLE_EDIT_CATEGORY);
                     secondSearchEditCategory.setPart(part);
@@ -82,11 +85,19 @@ public class PartWrapper {
 
     public String getPartNumber() {return part.getPart_number();}
 
-    public String getCustomer() {return CustomerManager.getCustomer(part.getCustomer_id()).getCustomer_name();}
+    public String getCustomer() {
+        if (part.getCustomer_id() == null){
+            return "";
+        }
+        return CustomerManager.getCustomer(part.getCustomer_id()).getCustomer_name();}
 
-    public String getPartName() {return PartNameManager.getPartName(part.getPart_name_id()).getPart_name();}
+    public String getPartName() {
+        if (part.getPart_name_id() == null)
+            return "";
+        return PartNameManager.getPartName(part.getPart_name_id()).getPart_name();}
 
-    public String getCategoryName() {return CategoryManager.getCategory(part.getCategory_id()).getCategory_name();}
+    public String getCategoryName() {
+        return CategoryManager.getCategory(part.getCategory_id()).getCategory_name();}
 
     public String getRubberValue() {
         if (part.getRubber() == null) return "";

@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
+
 public class CategoryManager {
     /**
      * Returns id of category associated with input name if it exists in database
@@ -24,6 +26,8 @@ public class CategoryManager {
      * @return id of category
      */
     public static BigInteger getCategoryId(String categoryName) {
+        if (categoryName == null)
+            return WITHOUT_CATEGORY_ID;
 
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT category_id FROM categories WHERE category_name = ?")) {
             s.setString(1, categoryName);
@@ -50,7 +54,7 @@ public class CategoryManager {
      * @return List of all Categories
      */
     public static ObservableList<Category> getAllCategories() {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories ORDER BY category_name")) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories ORDER BY category_id")) {
             try (ResultSet r = s.executeQuery()) {
                 ObservableList<Category> categories = FXCollections.observableArrayList();
                 while (r.next()) {
@@ -152,6 +156,8 @@ public class CategoryManager {
      */
     public static boolean deleteCategory(Integer categoryId) {
         try {
+            PartManager.setPartsOfCategoryToWithoutCategory(categoryId);
+
             Category category = new Category();
             category.setCategory_id(categoryId);
             category.delete();

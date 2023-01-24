@@ -10,12 +10,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
 
+import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
+
 public class Part {
 
     private String part_number;
     private BigInteger customer_id;
     private BigInteger part_name_id;
-    private BigInteger category_id;
+    private BigInteger category_id = WITHOUT_CATEGORY_ID;
     private BigInteger drawing_id;
     private Short rubber = null;
     private Double diameter_AT = null;

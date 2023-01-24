@@ -15,7 +15,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -111,10 +110,14 @@ public class CategoryMainController implements Initializable {
             }
         }
 
-        parts = PartManager.getPartsBasicByCatogoryId(categoryId, itemCount, offset);
+        parts = PartManager.getPartsBasicByCategoryId(categoryId, itemCount, offset);
         if (parts == null) {
 
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", "Error in loading parts.");
+            return;
+        }
+        if (parts.isEmpty()) {
+            partList.setItems(FXCollections.observableArrayList());
             return;
         }
         ObservableList<PartBasic> showParts = FXCollections.observableArrayList();

@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
+
 public class PartManager {
     public static Integer count;
 
@@ -149,7 +151,7 @@ public class PartManager {
         }
     }
 
-    public static ObservableList<PartBasic> getPartsBasicByCatogoryId(Integer categoryId, Integer limit, Integer offset) {
+    public static ObservableList<PartBasic> getPartsBasicByCategoryId(Integer categoryId, Integer limit, Integer offset) {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT p.part_number, pn.part_name, p.rating FROM parts p " +
                 "JOIN part_names pn ON p.part_name_id = pn.part_name_id " +
                 "WHERE p.category_id = ? ORDER BY p.rating DESC, p.internal_rating " +
@@ -201,13 +203,12 @@ public class PartManager {
             Integer part1Rating = part1.getRating();
             Integer part2Rating = part2.getRating();
 
-            if(Objects.equals(part1Rating, part2Rating)){
+            if (Objects.equals(part1Rating, part2Rating)) {
                 Integer part1InternalRating = part1.getInternal_rating();
                 Integer part2InternalRating = part2.getInternal_rating();
                 setInternalRating(partNumber1, part2InternalRating);
                 setInternalRating(partNumber2, part1InternalRating);
-            }
-            else{
+            } else {
                 part1.setRating(part2Rating);
                 part2.setRating(part1Rating);
                 part1.update();
@@ -228,23 +229,55 @@ public class PartManager {
         }
     }
 
-    public static Integer getCount(){
+    public static Integer getCount() {
         try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT count(*) count FROM parts")) {
             ResultSet rs = s.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 return rs.getInt("count");
             }
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             return null;
         }
         return null;
     }
 
-    private static void setInternalRating(String partNumber, Integer internalRating) throws SQLException{
+    private static void setInternalRating(String partNumber, Integer internalRating) throws SQLException {
         PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET internal_rating = ? WHERE part_number = ?");
         s.setInt(1, internalRating);
         s.setString(2, partNumber);
         s.executeUpdate();
+    }
+
+
+    private static List<Part> getPartsByCategoryId(Integer categoryID) throws SQLException {
+        PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM parts p WHERE p.category_id = ?");
+        s.setInt(1, categoryID);
+        ResultSet rs = s.executeQuery();
+
+        List<Part> parts = new ArrayList<>();
+        while (rs.next()) {
+            parts.add(getPart(rs));
+        }
+        return parts;
+    }
+
+    public static void setPartsOfCategoryToWithoutCategory(Integer categoryID) {
+        try {
+            DBS.getConnection().setAutoCommit(false);
+            List<Part> parts = getPartsByCategoryId(categoryID);
+            for (Part part : parts) {
+                part.setCategory_id(WITHOUT_CATEGORY_ID);
+                part.update();
+            }
+            DBS.getConnection().commit();
+            DBS.getConnection().setAutoCommit(true);
+        } catch (SQLException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+            try {
+                DBS.getConnection().rollback();
+                DBS.getConnection().setAutoCommit(true);
+            } catch (SQLException ignored1) {
+            }
+        }
     }
 }
