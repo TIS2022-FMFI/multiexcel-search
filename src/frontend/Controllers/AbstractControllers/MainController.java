@@ -1,5 +1,6 @@
 package frontend.Controllers.AbstractControllers;
 
+import backend.Entities.Part;
 import backend.Models.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +20,11 @@ import java.util.Objects;
 
 public class MainController {
 
-    public static void setTab(String path, Tab tab) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Class.class.getResource(path)));
+    public static <T> T setTab(String path, Tab tab) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Class.class.getResource(path)));
+        Parent root = loader.load();
         tab.setContent(root);
+        return loader.getController();
     }
 
     public static <T> T setNewStage(String fxmlDocPath, String stageTitle) {
