@@ -30,7 +30,7 @@ import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 public class PartWrapper {
 
     private Part part;
-    private Button button;
+    private  Button button;
     private CheckBox checkBox;
 
     private FilterMasterController filterMasterController;
@@ -126,7 +126,6 @@ public class PartWrapper {
 
         }
         Drawing image = DrawingManager.getDrawing(part.getDrawing_id());
-        assert image != null;
         ByteArrayInputStream inStreambj = new ByteArrayInputStream(image.getDrawing());
 
         ImageView imageView = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(inStreambj), null));

@@ -10,6 +10,7 @@ import backend.Managers.PartManager;
 import backend.Managers.PartNameManager;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
+import backend.Wrappers.PartWrapper;
 import backend.XLSImportExport.Export;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -20,6 +21,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -40,7 +42,7 @@ public class HistoryDetailsController implements Initializable {
     @FXML
     private TableColumn<Part, String> col_category_name;
     @FXML
-    private TableColumn<Part, String> col_drawing;
+    private TableColumn<Part, ImageView> col_drawing;
     @FXML
     private TableColumn<Part, String> col_rubber;
     @FXML
@@ -112,7 +114,7 @@ public class HistoryDetailsController implements Initializable {
         col_customer_name.setCellValueFactory(f -> createCustomerNameWrapperFromCustomerID(f.getValue().getCustomer_id()));
         col_part_name.setCellValueFactory(f -> createPartNameWrapperFromPartNumber(f.getValue().getPart_name_id()));
         col_category_name.setCellValueFactory(f -> createCategoryNameWrapperFromCategoryID(f.getValue().getCategory_id()));
-        col_drawing.setCellValueFactory(new PropertyValueFactory<>("drawing_id"));
+        col_drawing.setCellValueFactory(new PropertyValueFactory<>("image"));
         col_rubber.setCellValueFactory(new PropertyValueFactory<>("rubber"));
         col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("diameter_AT"));
         col_diameter_at_tol.setCellValueFactory(new PropertyValueFactory<>("diameter_AT_tol"));

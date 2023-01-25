@@ -87,6 +87,8 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     public Button categoryFilter;
     public Button backButton;
     public Button confirmButton;
+    public Button filterByRatingButton;
+    public Button filterByPriorityButton;
 
 
     private List<Part> resultOfFirstSearch;
@@ -322,6 +324,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
             return;
         }
 
+        filterByPriorityButton.setStyle("-fx-background-color: #8a8f96");
         refreshTable();
     }
 
@@ -333,6 +336,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
             partsAfterFilter = SecondSearchManager.sortByRating(partsAfterFilter, categories);
         }
 
+        filterByRatingButton.setStyle("-fx-background-color: #8a8f96");
         refreshTable();
     }
 
