@@ -8,6 +8,7 @@ import frontend.Controllers.CategoryManagementControllers.CategoryMainController
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -54,7 +55,10 @@ public class CategoryCell extends ListCell<Category> {
         if (category != null && !empty) {
             label.setText(category.getCategory_name());
             setGraphic(hbox);
-            button.setText("Delete");
+
+            ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/deleteImage.png")).toExternalForm());
+            button.setGraphic(imageView);
+
             button.setOnAction(x -> {
                 String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryDelete.fxml";
 
