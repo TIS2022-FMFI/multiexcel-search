@@ -4,6 +4,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="300.0" prefWidth="900.0"
             xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.CategoryManagementControllers.CategoryAddController">
@@ -13,4 +14,5 @@
     <Button fx:id="closeButton" layoutX="681.0" layoutY="167.0" mnemonicParsing="false" onAction="#Close"
             prefHeight="80.0" prefWidth="150.0" text="Back"/>
     <Text layoutX="160.0" layoutY="154.0" text="Category name"/>
+    <Label fx:id="errorLabel" layoutX="140.0" layoutY="207.0" prefHeight="30.0" prefWidth="500.0" textFill="#ff0000"/>
 </AnchorPane>
