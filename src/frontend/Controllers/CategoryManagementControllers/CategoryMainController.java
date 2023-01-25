@@ -19,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -35,7 +36,6 @@ public class CategoryMainController implements Initializable {
     public Button prevPageButton;
     public Button nextPageButton;
     public Label pageLabel;
-    public Label noPartsLabel;
     private int currentPage = 1;
     private int pages;
     private Integer selectedCategoryId;
@@ -82,6 +82,10 @@ public class CategoryMainController implements Initializable {
             nextPageButton.setVisible(pages > 1);
             prevPageButton.setVisible(false);
         });
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/addImage.png")).toExternalForm());
+        addButton.setGraphic(imageView);
+
         updateCategoryList();
     }
 

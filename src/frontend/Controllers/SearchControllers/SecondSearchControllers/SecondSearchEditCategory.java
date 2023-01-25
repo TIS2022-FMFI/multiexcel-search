@@ -7,8 +7,7 @@ import frontend.Controllers.AbstractControllers.FilterMasterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,11 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
+
 public class SecondSearchEditCategory implements Initializable {
 
     @FXML
     public VBox scrollParameterFilter;
-    List<CheckBox> checkBoxes;
+    ToggleGroup group = new ToggleGroup();
     FilterMasterController filterMasterController;
     Part part;
 
@@ -31,20 +32,22 @@ public class SecondSearchEditCategory implements Initializable {
     public void setPart(Part part) {
 
         this.part = part;
-        checkBoxes = new ArrayList<>();
+
         List<Category> parameters = CategoryManager.getAllCategories();
 
         if (parameters != null) {
 
             for (Category c : parameters) {
 
-                CheckBox partNameCheckBox = new CheckBox();
-                partNameCheckBox.setText(c.getName());
+                RadioButton radioButton = new RadioButton();
+                radioButton.setText(c.getName());
+
                 if (BigInteger.valueOf(c.getCategory_id()).equals(part.getCategory_id())) {
-                    partNameCheckBox.setSelected(true);
+                    radioButton.setSelected(true);
                 }
-                checkBoxes.add(partNameCheckBox);
-                scrollParameterFilter.getChildren().add(partNameCheckBox);
+                radioButton.setToggleGroup(group);
+
+                scrollParameterFilter.getChildren().add(radioButton);
             }
 
         }
@@ -57,29 +60,10 @@ public class SecondSearchEditCategory implements Initializable {
     }
 
     public void onConfirmAction(ActionEvent event) throws SQLException {
-        int selected = 0;
 
-        for (CheckBox checkBox : checkBoxes) {
-            if (checkBox.isSelected()) {
-                selected++;
-            }
-        }
-
-        if (selected > 1){
-            return;
-
-        } else if (selected == 0) {
-            part.setCategory_id(null);
-            part.update();
-
-        } else {
-            for (CheckBox checkBox: checkBoxes) {
-                if (checkBox.isSelected()) {
-                    part.setCategory_id(CategoryManager.getCategoryId(checkBox.getText()));
-                    part.update();
-                }
-            }
-        }
+        RadioButton radioButton = (RadioButton) group.getSelectedToggle();
+        part.setCategory_id(CategoryManager.getCategoryId(radioButton.getText()));
+        part.update();
 
         filterMasterController.updateTable();
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
@@ -87,4 +71,5 @@ public class SecondSearchEditCategory implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {}
+
 }

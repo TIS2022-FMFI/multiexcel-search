@@ -68,6 +68,8 @@ public class CategoryCell extends ListCell<Category> {
                     controller.init(categoryMainController, category.getCategory_id());
             });
 
+            ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/deleteImage.png")).toExternalForm());
+            deleteButton.setGraphic(imageView);
             deleteButton.setText("Delete");
             deleteButton.setOnAction(x -> {
                 String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryDelete.fxml";

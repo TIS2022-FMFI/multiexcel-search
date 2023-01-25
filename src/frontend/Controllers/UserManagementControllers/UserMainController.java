@@ -8,9 +8,12 @@ import frontend.Controllers.AbstractControllers.MainController;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class UserMainController implements Initializable {
@@ -18,12 +21,18 @@ public class UserMainController implements Initializable {
     @FXML
     public ListView<User> enabledUserList;
     public ListView<User> suspendedUserList;
+    public Button addButton;
 
     /**
      * Default Fxml initialization
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/userAddImage.png")).toExternalForm());
+        addButton.setGraphic(imageView);
+
         updateList();
     }
 
