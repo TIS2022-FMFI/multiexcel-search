@@ -36,6 +36,8 @@ public class CategoryMainController implements Initializable {
     public Button prevPageButton;
     public Button nextPageButton;
     public Label pageLabel;
+    public Label noPartsLabel;
+    public Button addButton;
     private int currentPage = 1;
     private int pages;
     private Integer selectedCategoryId;

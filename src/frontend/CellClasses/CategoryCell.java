@@ -9,11 +9,13 @@ import frontend.Controllers.CategoryManagementControllers.CategoryMainController
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
@@ -58,7 +60,8 @@ public class CategoryCell extends ListCell<Category> {
             label.setText(category.getCategory_name());
             setGraphic(hbox);
 
-            editButton.setText("Edit");
+            ImageView editImageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/editImage.png")).toExternalForm());
+            editButton.setGraphic(editImageView);
             editButton.setOnAction(x -> {
                 String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryEdit.fxml";
 
@@ -68,9 +71,8 @@ public class CategoryCell extends ListCell<Category> {
                     controller.init(categoryMainController, category.getCategory_id());
             });
 
-            ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/deleteImage.png")).toExternalForm());
-            deleteButton.setGraphic(imageView);
-            deleteButton.setText("Delete");
+            ImageView deleteImageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/deleteImage.png")).toExternalForm());
+            deleteButton.setGraphic(deleteImageView);
             deleteButton.setOnAction(x -> {
                 String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryDelete.fxml";
 

@@ -4,8 +4,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="158.0" prefWidth="523.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controllers.CategoryManagementControllers.CategoryDeleteController">
+<AnchorPane prefHeight="158.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controllers.CategoryManagementControllers.CategoryDeleteController">
     <Text fx:id="deleteTextArea" layoutX="38.0" layoutY="56.0" text="Deleting a category will clear your search history. Do you wish to continue?" />
-    <Button fx:id="deleteButton" layoutX="303.0" layoutY="86.0" mnemonicParsing="false" onAction="#deleteCategory" prefHeight="30.0" prefWidth="130.0" text="Delete category" />
+    <Button fx:id="deleteButton" layoutX="434.0" layoutY="86.0" mnemonicParsing="false" onAction="#deleteCategory" prefHeight="30.0" prefWidth="130.0" text="Delete category" />
     <Button fx:id="closeButton" layoutX="38.0" layoutY="86.0" mnemonicParsing="false" onAction="#closeDeleteWindow" prefHeight="30.0" prefWidth="130.0" text="Back" />
 </AnchorPane>
