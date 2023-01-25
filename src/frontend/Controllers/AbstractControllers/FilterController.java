@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class FilterController<T extends Filterable> implements Initializable {
     @FXML
@@ -73,7 +74,7 @@ public abstract class FilterController<T extends Filterable> implements Initiali
     protected void preSelect() {
         List<T> parameters = (List<T>) masterController.getParameters(type);
         if (parameters == null || parameters.isEmpty()) {
-            onSelectAllAction();
+//            onSelectAllAction();
             return;
         }
 
@@ -87,6 +88,8 @@ public abstract class FilterController<T extends Filterable> implements Initiali
     }
 
     private List<T> collectCheckedParameters() {
+        if (checkBoxes.stream().noneMatch(CheckBox::isSelected))
+            return null;
         List<T> parameters = new ArrayList<>();
         for (CheckBox checkBox : checkBoxes) {
             if (checkBox.isSelected()) {

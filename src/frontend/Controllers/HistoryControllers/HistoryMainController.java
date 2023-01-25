@@ -437,14 +437,17 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-        if (parameters == null)
-            return;
         if (type.equals(User.class)) {
-            users = parameters.stream().map(x -> (User) x).collect(Collectors.toList());
-            setStyleBasedOnParameters(parameters, button_user_filter);
+            users = getConcreteParametersAndSetStyle(parameters, button_user_filter);
+//            if (parameters == null)
+//                users = null;
+//            else
+//                users = parameters.stream().map(x -> (User) x).collect(Collectors.toList());
+//            setStyleBasedOnParameters(parameters, button_user_filter);
         } else if (type.equals(Category.class)) {
-            categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
-            setStyleBasedOnParameters(parameters, button_category_filter);
+            categories = getConcreteParametersAndSetStyle(parameters, button_category_filter);
+//            categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
+//            setStyleBasedOnParameters(parameters, button_category_filter);
         }
         refreshTable();
     }
