@@ -382,8 +382,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
                 .forEach(x -> ((TextField) x).setText(""));
         getUndividableChildren(mainPane).filter(x -> x instanceof ChoiceBox<?>)
                 .forEach(x -> ((ChoiceBox<?>) x).getSelectionModel().selectFirst());
-        customers = new ArrayList<>();
-        partNames = new ArrayList<>();
+        customers = null;
+        partNames = null;
         setFilterStyle();
     }
 
@@ -395,15 +395,10 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-        if (parameters == null)
-            return;
-        if (type.equals(Part_name.class)) {
-            setStyleBasedOnParameters(parameters, partNameFilter);
-            partNames = parameters.stream().map(x -> (Part_name) x).collect(Collectors.toList());
-        } else if (type.equals(Customer.class)) {
-            setStyleBasedOnParameters(parameters, customerFilter);
-            customers = parameters.stream().map(x -> (Customer) x).collect(Collectors.toList());
-        }
+        if (type.equals(Part_name.class))
+            partNames = getConcreteParametersAndSetStyle(parameters, partNameFilter);
+         else if (type.equals(Customer.class))
+            customers = getConcreteParametersAndSetStyle(parameters, customerFilter);
     }
 
     @Override
