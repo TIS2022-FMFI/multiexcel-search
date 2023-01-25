@@ -8,8 +8,10 @@ import frontend.Controllers.AbstractControllers.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class LoginController {
     @FXML
@@ -23,6 +25,9 @@ public class LoginController {
 
     @FXML
     private void initialize() {
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/loginImage.png")).toExternalForm());
+        loginButton.setGraphic(imageView);
         // Initialize components and add event listeners
         loginButton.setOnAction(event -> {
             try {

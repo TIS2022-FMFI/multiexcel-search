@@ -9,7 +9,7 @@ public class Constants {
     public static final String WINDOW_TITLE_HISTORY_USER_FILTER = "Filter by users";
     public static final String WINDOW_TITLE_HISTORY_CATEGORY_FILTER = "Filter by category";
     public static final String WINDOW_TITLE_SEARCH_PART_NAME_FILTER = "Part Name";
-    public static final String WINDOW_TITLE_SEARCH_CUSTOMER_FILTER = "Part Name";
+    public static final String WINDOW_TITLE_SEARCH_CUSTOMER_FILTER = "Customer Name";
     public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_ADD = "Add category";
     public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE = "Delete category";
     public static final String WINDOW_TITLE_USER_MANAGMENT_ADD = "Add user";
