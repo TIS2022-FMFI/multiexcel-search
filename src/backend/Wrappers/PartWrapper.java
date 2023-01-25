@@ -1,7 +1,9 @@
 package backend.Wrappers;
 
+import backend.Entities.Drawing;
 import backend.Entities.Part;
 import backend.Managers.CustomerManager;
+import backend.Managers.DrawingManager;
 import backend.Managers.PartNameManager;
 import backend.Managers.CategoryManager;
 import backend.Models.Constants;
@@ -9,10 +11,18 @@ import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
 import frontend.Controllers.SearchControllers.SecondSearchControllers.SecondSearchEditCategory;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.image.ImageView;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Objects;
 
 import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
@@ -20,7 +30,7 @@ import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 public class PartWrapper {
 
     private Part part;
-    private Button button;
+    private  Button button;
     private CheckBox checkBox;
 
     private FilterMasterController filterMasterController;
@@ -28,8 +38,12 @@ public class PartWrapper {
     private boolean isChecked = false;
 
     public PartWrapper(Part part, FilterMasterController filterMasterController) {
+
         this.part = part;
-        this.button = new Button("+");
+
+        button = new Button();
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/editImage.png")).toExternalForm());
+        button.setGraphic(imageView);
 
         if (!SESSION.isAdmin() && !part.getCategory_id().equals(WITHOUT_CATEGORY_ID)) {
             button.setDisable(true);
@@ -98,6 +112,29 @@ public class PartWrapper {
 
     public String getCategoryName() {
         return CategoryManager.getCategory(part.getCategory_id()).getCategory_name();}
+
+
+    public ImageView getImage() throws IOException {
+        if (part.getDrawing_id() == null) {
+            ImageView imageView = new ImageView(SwingFXUtils.toFXImage(new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB), null));
+
+            imageView.setFitHeight(200);
+            imageView.setFitWidth(200);
+            imageView.setPreserveRatio(true);
+
+            return imageView;
+
+        }
+        Drawing image = DrawingManager.getDrawing(part.getDrawing_id());
+        ByteArrayInputStream inStreambj = new ByteArrayInputStream(image.getDrawing());
+
+        ImageView imageView = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(inStreambj), null));
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
+        imageView.setPreserveRatio(true);
+
+        return imageView;
+    }
 
     public String getRubberValue() {
         if (part.getRubber() == null) return "";

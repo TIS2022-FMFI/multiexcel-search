@@ -20,10 +20,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static backend.Managers.CategoryManager.getAllCategories;
@@ -73,8 +75,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     public TableColumn<PartWrapper, String> col_ct;
     public TableColumn<PartWrapper, String> col_ck;
     public TableColumn<PartWrapper, String> col_customer;
-    //TODO: pridanie zobrazenia obrazkov
-    public TableColumn<PartWrapper, String> col_drawing;
+    public TableColumn<PartWrapper, ImageView> col_drawing;
 
     public TableColumn<PartWrapper, String> col_diameter_at_tol;
     public TableColumn<PartWrapper, String> col_length_l_at_tol;
@@ -84,6 +85,10 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     public TableColumn<PartWrapper, String> col_length_l_zt_tol;
 
     public Button categoryFilter;
+    public Button backButton;
+    public Button confirmButton;
+    public Button filterByRatingButton;
+    public Button filterByPriorityButton;
 
 
     private List<Part> resultOfFirstSearch;
@@ -100,6 +105,13 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         resultOfFirstSearch = FirstSearchManager.search(SESSION.getCriteria());
         categories = getAllCategories();
 
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/backImage.png")).toExternalForm());
+        backButton.setGraphic(imageView);
+
+        ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/confirmImage.png")).toExternalForm());
+        confirmButton.setGraphic(imageView2);
+
+        initializeAlignment();
         initializeController();
     }
 
@@ -123,9 +135,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         col_ct.setCellValueFactory(new PropertyValueFactory<>("ctValue"));
         col_ck.setCellValueFactory(new PropertyValueFactory<>("ckValue"));
         col_customer.setCellValueFactory(new PropertyValueFactory<>("customer"));
-
-        //col_drawing.setCellValueFactory(new PropertyValueFactory<>());
-
+        col_drawing.setCellValueFactory(new PropertyValueFactory<>("image"));
         col_diameter_at_tol.setCellValueFactory(new PropertyValueFactory<>("diameterATTOL"));
         col_diameter_it_tol.setCellValueFactory(new PropertyValueFactory<>("diameterITTOL"));
         col_diameter_zt_tol.setCellValueFactory(new PropertyValueFactory<>("diameterZTTOL"));
@@ -144,6 +154,34 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         table_parts.setItems(parts);
     }
 
+    public void initializeAlignment() {
+
+        col_check_box.setStyle("-fx-alignment: CENTER");
+        col_button_add_cat.setStyle("-fx-alignment: CENTER");
+        col_part_number.setStyle("-fx-alignment: CENTER");
+        col_customer.setStyle("-fx-alignment: CENTER");
+        col_part_name.setStyle("-fx-alignment: CENTER");
+        col_category.setStyle("-fx-alignment: CENTER");
+        col_drawing.setStyle("-fx-alignment: CENTER");
+        col_rubber.setStyle("-fx-alignment: CENTER");
+        col_diameter_at.setStyle("-fx-alignment: CENTER");
+        col_diameter_at_tol.setStyle("-fx-alignment: CENTER");
+        col_length_l_at.setStyle("-fx-alignment: CENTER");
+        col_length_l_at_tol.setStyle("-fx-alignment: CENTER");
+        col_diameter_it.setStyle("-fx-alignment: CENTER");
+        col_diameter_it_tol.setStyle("-fx-alignment: CENTER");
+        col_length_l_it.setStyle("-fx-alignment: CENTER");
+        col_length_l_it_tol.setStyle("-fx-alignment: CENTER");
+        col_diameter_zt.setStyle("-fx-alignment: CENTER");
+        col_diameter_zt_tol.setStyle("-fx-alignment: CENTER");
+        col_length_l_zt.setStyle("-fx-alignment: CENTER");
+        col_length_l_zt_tol.setStyle("-fx-alignment: CENTER");
+        col_cr_steg.setStyle("-fx-alignment: CENTER");
+        col_cr_niere.setStyle("-fx-alignment: CENTER");
+        col_ca.setStyle("-fx-alignment: CENTER");
+        col_ct.setStyle("-fx-alignment: CENTER");
+        col_ck.setStyle("-fx-alignment: CENTER");
+    }
     public List<Part> selectedParts() {
         ArrayList<Part> selectedPartsList = new ArrayList<>();
 
@@ -174,95 +212,95 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     }
 
     public void setVisiblePartNumber() {
-        col_part_number.setVisible(!check_part_number.isSelected());
+        col_part_number.setVisible(check_part_number.isSelected());
     }
 
     public void setVisibleCustomer() {
-        col_customer.setVisible(!check_customer.isSelected());
+        col_customer.setVisible(check_customer.isSelected());
     }
 
     public void setVisiblePartName() {
-        col_part_name.setVisible(!check_part_name.isSelected());
+        col_part_name.setVisible(check_part_name.isSelected());
     }
 
     public void setVisibleCategory() {
-        col_category.setVisible(!check_category.isSelected());
+        col_category.setVisible(check_category.isSelected());
     }
 
     public void setVisibleDrawing() {
-        col_drawing.setVisible(!check_drawing.isSelected());
+        col_drawing.setVisible(check_drawing.isSelected());
     }
 
     public void setVisibleRubber() {
-        col_rubber.setVisible(!check_rubber.isSelected());
+        col_rubber.setVisible(check_rubber.isSelected());
     }
 
     public void setVisibleDiameterAT() {
-        col_diameter_at.setVisible(!check_diameter_at.isSelected());
+        col_diameter_at.setVisible(check_diameter_at.isSelected());
     }
 
     public void setVisibleDiameterATTOL() {
-        col_diameter_at_tol.setVisible(!check_diameter_at_tol.isSelected());
+        col_diameter_at_tol.setVisible(check_diameter_at_tol.isSelected());
     }
 
     public void setVisibleLengthLAT() {
-        col_length_l_at.setVisible(!check_length_l_at.isSelected());
+        col_length_l_at.setVisible(check_length_l_at.isSelected());
     }
 
     public void setVisibleLengthLATTOL() {
-        col_length_l_at_tol.setVisible(!check_length_l_at_tol.isSelected());
+        col_length_l_at_tol.setVisible(check_length_l_at_tol.isSelected());
     }
 
     public void setVisibleDiameterIT() {
-        col_diameter_it.setVisible(!check_diameter_it.isSelected());
+        col_diameter_it.setVisible(check_diameter_it.isSelected());
     }
 
     public void setVisibleDiameterITTOL() {
-        col_diameter_it_tol.setVisible(!check_diameter_it_tol.isSelected());
+        col_diameter_it_tol.setVisible(check_diameter_it_tol.isSelected());
     }
 
     public void setVisibleLengthLIT() {
-        col_length_l_it.setVisible(!check_length_l_it.isSelected());
+        col_length_l_it.setVisible(check_length_l_it.isSelected());
     }
 
     public void setVisibleLengthLITTOL() {
-        col_length_l_it_tol.setVisible(!check_length_l_it_tol.isSelected());
+        col_length_l_it_tol.setVisible(check_length_l_it_tol.isSelected());
     }
 
     public void setVisibleDiameterZT() {
-        col_diameter_zt.setVisible(!check_diameter_zt.isSelected());
+        col_diameter_zt.setVisible(check_diameter_zt.isSelected());
     }
 
     public void setVisibleDiameterZTTOL() {
-        col_diameter_zt_tol.setVisible(!check_diameter_zt_tol.isSelected());
+        col_diameter_zt_tol.setVisible(check_diameter_zt_tol.isSelected());
     }
 
     public void setVisibleLengthLZT() {
-        col_length_l_zt.setVisible(!check_length_l_zt.isSelected());
+        col_length_l_zt.setVisible(check_length_l_zt.isSelected());
     }
 
     public void setVisibleLengthLZTTOL() {
-        col_length_l_zt_tol.setVisible(!check_length_l_zt_tol.isSelected());
+        col_length_l_zt_tol.setVisible(check_length_l_zt_tol.isSelected());
     }
 
     public void setVisibleCrSteg() {
-        col_cr_steg.setVisible(!check_cr_steg.isSelected());
+        col_cr_steg.setVisible(check_cr_steg.isSelected());
     }
 
     public void setVisibleCrNiere() {
-        col_cr_niere.setVisible(!check_cr_niere.isSelected());
+        col_cr_niere.setVisible(check_cr_niere.isSelected());
     }
 
     public void setVisibleCa() {
-        col_ca.setVisible(!check_ca.isSelected());
+        col_ca.setVisible(check_ca.isSelected());
     }
 
     public void setVisibleCt() {
-        col_ct.setVisible(!check_ct.isSelected());
+        col_ct.setVisible(check_ct.isSelected());
     }
 
     public void setVisibleCk() {
-        col_ck.setVisible(!check_ck.isSelected());
+        col_ck.setVisible(check_ck.isSelected());
     }
 
     @FXML
@@ -286,6 +324,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
             return;
         }
 
+        filterByPriorityButton.setStyle("-fx-background-color: #8a8f96");
         refreshTable();
     }
 
@@ -297,6 +336,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
             partsAfterFilter = SecondSearchManager.sortByRating(partsAfterFilter, categories);
         }
 
+        filterByRatingButton.setStyle("-fx-background-color: #8a8f96");
         refreshTable();
     }
 
