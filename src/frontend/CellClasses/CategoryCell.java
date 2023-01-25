@@ -62,7 +62,7 @@ public class CategoryCell extends ListCell<Category> {
             editButton.setOnAction(x -> {
                 String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryEdit.fxml";
 
-                CategoryEditController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE);
+                CategoryEditController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_EDIT);
 
                 if(controller != null)
                     controller.init(categoryMainController, category.getCategory_id());
