@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
+
 public class SecondSearchEditCategory implements Initializable {
 
     @FXML
@@ -69,7 +71,7 @@ public class SecondSearchEditCategory implements Initializable {
             return;
 
         } else if (selected == 0) {
-            part.setCategory_id(null);
+            part.setCategory_id(WITHOUT_CATEGORY_ID);
             part.update();
 
         } else {
