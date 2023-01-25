@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
