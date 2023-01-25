@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -55,7 +56,10 @@ public class UserCell extends ListCell<User> {
                 return;
             }
             if (user.getSuspended()) {
-                button.setText("Enable");
+
+                ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/confirmImage.png")).toExternalForm());
+                button.setGraphic(imageView);
+
                 button.setOnAction(x -> {
                     if (!UserManager.enableAccount(user)) {
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -67,7 +71,9 @@ public class UserCell extends ListCell<User> {
                     userMainController.updateList();
                 });
             } else {
-                button.setText("Suspend");
+
+                ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/blockImage.png")).toExternalForm());
+                button.setGraphic(imageView);
                 button.setOnAction(x -> {
                     if (!UserManager.suspendAccount(user)) {
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
