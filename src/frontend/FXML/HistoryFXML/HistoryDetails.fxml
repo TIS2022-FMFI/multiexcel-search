@@ -5,7 +5,33 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="720.0" prefWidth="1800.0"
             xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.HistoryControllers.HistoryDetailsController">
-    <TableView fx:id="table_parts" editable="true" layoutX="14.0" layoutY="104.0" prefHeight="469.0" prefWidth="1783.0">
+
+    <CheckBox fx:id="check_customer" text="Customer" layoutX="100" layoutY="10" onAction="#setVisibleCustomer" selected="true"/>
+    <CheckBox fx:id="check_part_name" text="Part name" layoutX="250" layoutY="10" onAction="#setVisiblePartName" selected="true"/>
+    <CheckBox fx:id="check_category" text="Category" layoutX="400" layoutY="10" onAction="#setVisibleCategory" selected="true"/>
+    <CheckBox fx:id="check_drawing" text="Drawing" layoutX="550" layoutY="10" onAction="#setVisibleDrawing" selected="true"/>
+    <CheckBox fx:id="check_rubber" text="Rubber" layoutX="700" layoutY="10" onAction="#setVisibleRubber" selected="true"/>
+    <CheckBox fx:id="check_diameter_at" text="Diameter AT" layoutX="850" layoutY="10" onAction="#setVisibleDiameterAT" selected="true"/>
+    <CheckBox fx:id="check_diameter_at_tol" text="Diameter AT TOL" layoutX="1000" layoutY="10" onAction="#setVisibleDiameterATTOL" selected="true"/>
+    <CheckBox fx:id="check_length_l_at" text="Length L AT" layoutX="1150" layoutY="10" onAction="#setVisibleLengthLAT" selected="true"/>
+    <CheckBox fx:id="check_length_l_at_tol" text="Length L AT TOL" layoutX="1300" layoutY="10" onAction="#setVisibleLengthLATTOL" selected="true"/>
+    <CheckBox fx:id="check_diameter_it" text="Diameter IT" layoutX="1450" layoutY="10" onAction="#setVisibleDiameterIT" selected="true"/>
+    <CheckBox fx:id="check_diameter_it_tol" text="Diameter IT TOL" layoutX="1600" layoutY="10" onAction="#setVisibleDiameterITTOL" selected="true"/>
+
+    <CheckBox fx:id="check_length_l_it" text="Length L IT" layoutX="100" layoutY="40" onAction="#setVisibleLengthLIT" selected="true"/>
+    <CheckBox fx:id="check_length_l_it_tol" text="Length L IT TOL" layoutX="250" layoutY="40" onAction="#setVisibleLengthLITTOL" selected="true"/>
+    <CheckBox fx:id="check_diameter_zt" text="Diameter ZT" layoutX="400" layoutY="40" onAction="#setVisibleDiameterZT" selected="true"/>
+    <CheckBox fx:id="check_diameter_zt_tol" text="Diameter ZT TOL" layoutX="550" layoutY="40" onAction="#setVisibleDiameterZTTOL" selected="true"/>
+    <CheckBox fx:id="check_length_l_zt" text="Length L ZT" layoutX="700" layoutY="40" onAction="#setVisibleLengthLZT" selected="true"/>
+    <CheckBox fx:id="check_length_l_zt_tol" text="Length L ZT TOL" layoutX="850" layoutY="40" onAction="#setVisibleLengthLZTTOL" selected="true"/>
+    <CheckBox fx:id="check_cr_steg" text="Cr steg" layoutX="1000" layoutY="40" onAction="#setVisibleCrSteg" selected="true"/>
+    <CheckBox fx:id="check_cr_niere" text="Cr niere" layoutX="1150" layoutY="40" onAction="#setVisibleCrNiere" selected="true"/>
+    <CheckBox fx:id="check_ca" text="Ca" layoutX="1300" layoutY="40" onAction="#setVisibleCa" selected="true"/>
+    <CheckBox fx:id="check_ct" text="Ct" layoutX="1450" layoutY="40" onAction="#setVisibleCt" selected="true"/>
+    <CheckBox fx:id="check_ck" text="Ck" layoutX="1600" layoutY="40" onAction="#setVisibleCk" selected="true"/>
+
+
+    <TableView fx:id="table_parts" editable="true" layoutX="50.0" layoutY="110.0" prefHeight="800.0" prefWidth="1810.0">
         <columns>
             <TableColumn fx:id="col_customer_name" editable="false" prefWidth="69.99996948242188" sortable="false"
                          text="Customer"/>
@@ -41,9 +67,9 @@
             <!--TableColumn fx:id="col_rating" editable="false" prefWidth="75.0" sortable="false" text="Rating" /-->
         </columns>
     </TableView>
-    <Button layoutX="853.0" layoutY="616.0" mnemonicParsing="false" text="Export selection to Excel"
+    <Button layoutX="100.0" layoutY="70.0" mnemonicParsing="false" text="Export selection to Excel"
             onAction="#exportToExcel"/>
-    <Button layoutX="856.0" layoutY="585.0" mnemonicParsing="false" text="Export selection to PDF"
+    <Button layoutX="300.0" layoutY="70.0" mnemonicParsing="false" text="Export selection to PDF"
             onAction="#exportToPdf"/>
-    <Button layoutX="22.0" layoutY="35.0" onAction="#openHistoryFXML" mnemonicParsing="false" text="Back"/>
+    <Button fx:id="backButton" layoutX="10.0" layoutY="25.0" onAction="#openHistoryFXML" mnemonicParsing="false"/>
 </AnchorPane>
