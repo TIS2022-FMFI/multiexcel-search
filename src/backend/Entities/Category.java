@@ -10,14 +10,6 @@ import java.sql.Statement;
 import java.util.Objects;
 
 public class Category implements Filterable {
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Category category = (Category) o;
-        return Objects.equals(category_id, category.category_id) && Objects.equals(category_name, category.category_name);
-    }
-
     private Integer category_id;
     private String category_name;
 

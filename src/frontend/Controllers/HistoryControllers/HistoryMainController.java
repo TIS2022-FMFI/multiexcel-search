@@ -26,7 +26,6 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class HistoryMainController implements Initializable, FilterMasterController {
 
@@ -437,23 +436,17 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-        if (type.equals(User.class)) {
+        if (type.equals(User.class))
             users = getConcreteParametersAndSetStyle(parameters, button_user_filter);
-//            if (parameters == null)
-//                users = null;
-//            else
-//                users = parameters.stream().map(x -> (User) x).collect(Collectors.toList());
-//            setStyleBasedOnParameters(parameters, button_user_filter);
-        } else if (type.equals(Category.class)) {
+         else if (type.equals(Category.class))
             categories = getConcreteParametersAndSetStyle(parameters, button_category_filter);
-//            categories = parameters.stream().map(x -> (Category) x).collect(Collectors.toList());
-//            setStyleBasedOnParameters(parameters, button_category_filter);
-        }
+
         refreshTable();
     }
 
     @Override
-    public void updateTable() {}
+    public void updateTable() {
+    }
 
     @Override
     public List<? extends Filterable> getParameters(Class<?> type) {

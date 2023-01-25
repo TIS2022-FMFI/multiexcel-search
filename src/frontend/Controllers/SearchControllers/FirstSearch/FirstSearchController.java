@@ -395,21 +395,10 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-        if (type.equals(Part_name.class)) {
+        if (type.equals(Part_name.class))
             partNames = getConcreteParametersAndSetStyle(parameters, partNameFilter);
-//            setStyleBasedOnParameters(parameters, partNameFilter);
-//            if (parameters == null)
-//                partNames = null;
-//            else
-//                partNames = parameters.stream().map(x -> (Part_name) x).collect(Collectors.toList());
-        } else if (type.equals(Customer.class)) {
+         else if (type.equals(Customer.class))
             customers = getConcreteParametersAndSetStyle(parameters, customerFilter);
-//            setStyleBasedOnParameters(parameters, customerFilter);
-//            if (parameters == null)
-//                customers = null;
-//            else
-//                customers = parameters.stream().map(x -> (Customer) x).collect(Collectors.toList());
-        }
     }
 
     @Override

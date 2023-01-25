@@ -74,7 +74,6 @@ public abstract class FilterController<T extends Filterable> implements Initiali
     protected void preSelect() {
         List<T> parameters = (List<T>) masterController.getParameters(type);
         if (parameters == null || parameters.isEmpty()) {
-//            onSelectAllAction();
             return;
         }
 
