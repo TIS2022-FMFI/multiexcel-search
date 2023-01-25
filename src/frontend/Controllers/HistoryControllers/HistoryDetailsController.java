@@ -10,16 +10,16 @@ import backend.Managers.PartManager;
 import backend.Managers.PartNameManager;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
+import backend.Wrappers.PartWrapper;
 import backend.XLSImportExport.Export;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -31,6 +31,29 @@ import static backend.Models.Constants.*;
 public class HistoryDetailsController implements Initializable {
     @FXML
     public TableView<Part> table_parts;
+    public CheckBox check_customer;
+    public CheckBox check_part_name;
+    public CheckBox check_category;
+    public CheckBox check_drawing;
+    public CheckBox check_rubber;
+    public CheckBox check_diameter_at;
+    public CheckBox check_diameter_at_tol;
+    public CheckBox check_length_l_at;
+    public CheckBox check_length_l_at_tol;
+    public CheckBox check_diameter_it;
+    public CheckBox check_diameter_it_tol;
+    public CheckBox check_length_l_it;
+    public CheckBox check_length_l_it_tol;
+    public CheckBox check_diameter_zt;
+    public CheckBox check_diameter_zt_tol;
+    public CheckBox check_length_l_zt;
+    public CheckBox check_length_l_zt_tol;
+    public CheckBox check_cr_steg;
+    public CheckBox check_cr_niere;
+    public CheckBox check_ca;
+    public CheckBox check_ct;
+    public CheckBox check_ck;
+    public Button backButton;
     @FXML
     private TableColumn<Part, String> col_customer_name;
     @FXML
@@ -38,7 +61,7 @@ public class HistoryDetailsController implements Initializable {
     @FXML
     private TableColumn<Part, String> col_category_name;
     @FXML
-    private TableColumn<Part, String> col_drawing;
+    private TableColumn<Part, ImageView> col_drawing;
     @FXML
     private TableColumn<Part, String> col_rubber;
     @FXML
@@ -96,6 +119,11 @@ public class HistoryDetailsController implements Initializable {
             idToCategoryName.putAll(historySession.getCategoryIdToName());
         }
         table_parts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/backImage.png")).toExternalForm());
+        backButton.setGraphic(imageView);
+
+        initializeAlignment();
         initializeController();
         populateTable();
     }
@@ -105,12 +133,38 @@ public class HistoryDetailsController implements Initializable {
         MainController.switchTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", SESSION.getHistoryTab());
     }
 
+    public void initializeAlignment() {
+
+        col_customer_name.setStyle("-fx-alignment: CENTER");
+        col_part_name.setStyle("-fx-alignment: CENTER");
+        col_category_name.setStyle("-fx-alignment: CENTER");
+        col_drawing.setStyle("-fx-alignment: CENTER");
+        col_rubber.setStyle("-fx-alignment: CENTER");
+        col_diameter_at.setStyle("-fx-alignment: CENTER");
+        col_diameter_at_tol.setStyle("-fx-alignment: CENTER");
+        col_length_l_at.setStyle("-fx-alignment: CENTER");
+        col_length_l_at_tol.setStyle("-fx-alignment: CENTER");
+        col_diameter_it.setStyle("-fx-alignment: CENTER");
+        col_diameter_it_tol.setStyle("-fx-alignment: CENTER");
+        col_length_l_it.setStyle("-fx-alignment: CENTER");
+        col_length_l_it_tol.setStyle("-fx-alignment: CENTER");
+        col_diameter_zt.setStyle("-fx-alignment: CENTER");
+        col_diameter_zt_tol.setStyle("-fx-alignment: CENTER");
+        col_length_l_zt.setStyle("-fx-alignment: CENTER");
+        col_length_l_zt_tol.setStyle("-fx-alignment: CENTER");
+        col_cr_steg.setStyle("-fx-alignment: CENTER");
+        col_cr_niere.setStyle("-fx-alignment: CENTER");
+        col_ca.setStyle("-fx-alignment: CENTER");
+        col_ct.setStyle("-fx-alignment: CENTER");
+        col_ck.setStyle("-fx-alignment: CENTER");
+    }
+
     private void initializeController() {
 
         col_customer_name.setCellValueFactory(f -> createCustomerNameWrapperFromCustomerID(f.getValue().getCustomer_id()));
         col_part_name.setCellValueFactory(f -> createPartNameWrapperFromPartNumber(f.getValue().getPart_name_id()));
         col_category_name.setCellValueFactory(f -> createCategoryNameWrapperFromCategoryID(f.getValue().getCategory_id()));
-        col_drawing.setCellValueFactory(new PropertyValueFactory<>("drawing_id"));
+        col_drawing.setCellValueFactory(new PropertyValueFactory<>("image"));
         col_rubber.setCellValueFactory(new PropertyValueFactory<>("rubber"));
         col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("diameter_AT"));
         col_diameter_at_tol.setCellValueFactory(new PropertyValueFactory<>("diameter_AT_tol"));
@@ -209,5 +263,93 @@ public class HistoryDetailsController implements Initializable {
         File file = MainController.saveFile("PDF Files", "*.pdf");
         if (file != null)
             Export.exportPartsToPdf(parts, file.getAbsolutePath());
+    }
+
+    public void setVisibleCustomer() {
+        col_customer_name.setVisible(check_customer.isSelected());
+    }
+
+    public void setVisiblePartName() {
+        col_part_name.setVisible(check_part_name.isSelected());
+    }
+
+    public void setVisibleCategory() {
+        col_category_name.setVisible(check_category.isSelected());
+    }
+
+    public void setVisibleDrawing() {
+        col_drawing.setVisible(check_drawing.isSelected());
+    }
+
+    public void setVisibleRubber() {
+        col_rubber.setVisible(check_rubber.isSelected());
+    }
+
+    public void setVisibleDiameterAT() {
+        col_diameter_at.setVisible(check_diameter_at.isSelected());
+    }
+
+    public void setVisibleDiameterATTOL() {
+        col_diameter_at_tol.setVisible(check_diameter_at_tol.isSelected());
+    }
+
+    public void setVisibleLengthLAT() {
+        col_length_l_at.setVisible(check_length_l_at.isSelected());
+    }
+
+    public void setVisibleLengthLATTOL() {
+        col_length_l_at_tol.setVisible(check_length_l_at_tol.isSelected());
+    }
+
+    public void setVisibleDiameterIT() {
+        col_diameter_it.setVisible(check_diameter_it.isSelected());
+    }
+
+    public void setVisibleDiameterITTOL() {
+        col_diameter_it_tol.setVisible(check_diameter_it_tol.isSelected());
+    }
+
+    public void setVisibleLengthLIT() {
+        col_length_l_it.setVisible(check_length_l_it.isSelected());
+    }
+
+    public void setVisibleLengthLITTOL() {
+        col_length_l_it_tol.setVisible(check_length_l_it_tol.isSelected());
+    }
+
+    public void setVisibleDiameterZT() {
+        col_diameter_zt.setVisible(check_diameter_zt.isSelected());
+    }
+
+    public void setVisibleDiameterZTTOL() {
+        col_diameter_zt_tol.setVisible(check_diameter_zt_tol.isSelected());
+    }
+
+    public void setVisibleLengthLZT() {
+        col_length_l_zt.setVisible(check_length_l_zt.isSelected());
+    }
+
+    public void setVisibleLengthLZTTOL() {
+        col_length_l_zt_tol.setVisible(check_length_l_zt_tol.isSelected());
+    }
+
+    public void setVisibleCrSteg() {
+        col_cr_steg.setVisible(check_cr_steg.isSelected());
+    }
+
+    public void setVisibleCrNiere() {
+        col_cr_niere.setVisible(check_cr_niere.isSelected());
+    }
+
+    public void setVisibleCa() {
+        col_ca.setVisible(check_ca.isSelected());
+    }
+
+    public void setVisibleCt() {
+        col_ct.setVisible(check_ct.isSelected());
+    }
+
+    public void setVisibleCk() {
+        col_ck.setVisible(check_ck.isSelected());
     }
 }

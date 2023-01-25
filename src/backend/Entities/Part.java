@@ -1,8 +1,15 @@
 package backend.Entities;
 
+import backend.Managers.DrawingManager;
 import backend.Sessions.DBS;
 import backend.Sessions.PartCountSession;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.ImageView;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -238,6 +245,29 @@ public class Part {
 
     public void setInternal_rating(Integer internal_rating) {
         this.internal_rating = internal_rating;
+    }
+
+    public ImageView getImage() throws IOException {
+
+        if (drawing_id == null) {
+            ImageView imageView = new ImageView(SwingFXUtils.toFXImage(new BufferedImage(256, 256, BufferedImage.TYPE_INT_ARGB), null));
+
+            imageView.setFitHeight(200);
+            imageView.setFitWidth(200);
+            imageView.setPreserveRatio(true);
+
+            return imageView;
+        }
+
+        Drawing image = DrawingManager.getDrawing(drawing_id);
+        ByteArrayInputStream inStreambj = new ByteArrayInputStream(image.getDrawing());
+
+        ImageView imageView = new ImageView(SwingFXUtils.toFXImage(ImageIO.read(inStreambj), null));
+        imageView.setFitHeight(200);
+        imageView.setFitWidth(200);
+        imageView.setPreserveRatio(true);
+
+        return imageView;
     }
 
     public void insert() throws SQLException {

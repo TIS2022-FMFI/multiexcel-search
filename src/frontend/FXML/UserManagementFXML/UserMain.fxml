@@ -8,11 +8,11 @@
             xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.UserManagementControllers.UserMainController">
 
-    <Text layoutX="360.0" layoutY="61.0">Enabled:</Text>
-    <ListView fx:id="enabledUserList" layoutX="82.0" layoutY="72.0" prefHeight="850.0" prefWidth="600.0"/>
-    <Button layoutX="753.0" layoutY="25.0" mnemonicParsing="false" onAction="#addUser" prefHeight="44.0"
-            prefWidth="120.0" text="Add user"/>
-    <Text layoutX="1213.0" layoutY="60.0">Suspended:</Text>
-    <ListView fx:id="suspendedUserList" layoutX="936.0" layoutY="72.0" prefHeight="850.0" prefWidth="600.0"/>
+    <Text layoutX="425.0" layoutY="100.0">Enabled:</Text>
+    <ListView fx:id="enabledUserList" layoutX="50.0" layoutY="110.0" prefHeight="800.0" prefWidth="800.0"/>
+    <Button fx:id="addButton" layoutX="50.0" layoutY="25.0" mnemonicParsing="false" onAction="#addUser" prefHeight="44.0"
+            prefWidth="120.0"/>
+    <Text layoutX="1425.0" layoutY="100.0">Suspended:</Text>
+    <ListView fx:id="suspendedUserList" layoutX="1000.0" layoutY="110.0" prefHeight="800.0" prefWidth="870.0"/>
 
 </AnchorPane>
