@@ -21,7 +21,7 @@ public class CategoryDeleteController implements Initializable {
     public Button closeButton;
 
     private CategoryMainController mainController;
-    private Integer catoegiryIdToDelete;
+    private Integer categoryIdToDelete;
 
     /**
      * Default Fxml initialization
@@ -38,7 +38,7 @@ public class CategoryDeleteController implements Initializable {
      */
     public void init(CategoryMainController controller, Integer cateogryId) {
         mainController = controller;
-        catoegiryIdToDelete = cateogryId;
+        categoryIdToDelete = cateogryId;
     }
 
     /**
@@ -46,13 +46,14 @@ public class CategoryDeleteController implements Initializable {
      */
     @FXML
     public void deleteCategory() {
-        if (!CategoryManager.deleteCategory(catoegiryIdToDelete)) {
+        if (!CategoryManager.deleteCategory(categoryIdToDelete)) {
             MainController.showAlert(Alert.AlertType.ERROR, "Failure", "Deleting category has failed");
             return;
         }
         Stage stage = (Stage) deleteButton.getScene().getWindow();
         stage.close();
         mainController.updateCategoryList();
+        mainController.clearPartsList();
     }
 
     /**

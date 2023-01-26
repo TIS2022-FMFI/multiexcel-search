@@ -3,17 +3,23 @@ package frontend.Controllers.AdminControllers;
 import backend.Models.Constants;
 import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.MainController;
+import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
+import frontend.Controllers.HistoryControllers.HistoryMainController;
+import frontend.Controllers.UserManagementControllers.UserMainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminMainController implements Initializable {
+    @FXML
+    public TabPane mainTabPane;
     @FXML
     public Tab categoryTab;
     @FXML
@@ -26,18 +32,29 @@ public class AdminMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
+            HistoryMainController hmc = MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
-            MainController.setTab("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml", categoryTab);
+            CategoryMainController cmc = MainController.setTab("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml", categoryTab);
             SESSION.setCategoryTab(categoryTab);
 
             MainController.setTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
 
-            MainController.setTab("/frontend/FXML/UserManagementFXML/UserMain.fxml", userTab);
+            UserMainController umc = MainController.setTab("/frontend/FXML/UserManagementFXML/UserMain.fxml", userTab);
 
-
+            mainTabPane.getSelectionModel().selectedItemProperty().addListener(
+                    (o, oldTab, newTab) -> {
+                        if (newTab.equals(historyTab))
+                            hmc.refreshTable();
+                        if (newTab.equals(categoryTab)){
+                            cmc.updateCategoryList();
+                            cmc.clearPartsList();
+                        }
+                        if(newTab.equals(userTab))
+                            umc.updateList();
+                    }
+            );
         } catch (IOException e) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
