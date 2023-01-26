@@ -11,29 +11,9 @@
 
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controllers.SearchControllers.FirstSearch.FirstSearchController">
     <children>
-        <VBox alignment="TOP_CENTER" layoutX="100.0" layoutY="0.0" prefHeight="70.0" prefWidth="150.0">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Part Names" textAlignment="CENTER" wrappingWidth="148.13671875" visible="false">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></Text>
-              <Button fx:id="partNameFilter" mnemonicParsing="false" onAction="#onClickPartNameFilterButton" text="Filter by Part Name" />
-            </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-        </VBox> <!--part names-->
-        <VBox alignment="CENTER" layoutX="100.0" layoutY="30.0" prefHeight="70.0" prefWidth="150.0">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customers" textAlignment="CENTER" wrappingWidth="143.28515625" visible="false">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Text>
-              <Button fx:id="customerFilter" mnemonicParsing="false" onAction="#onClickCustomerFilterButton" text="Filter by Customer" />
-            </children>
-        </VBox> <!--customers-->
-        <Button fx:id="searchButton" layoutX="400.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClickSearchButton"/>
+        <Button fx:id="partNameFilter" layoutX="92.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClickPartNameFilterButton" text="Filter by part name" />
+        <Button fx:id="customerFilter" layoutX="94.0" layoutY="65.0" mnemonicParsing="false" onAction="#onClickCustomerFilterButton" text="Filter by customer" /> <!--customers-->
+        <Button fx:id="searchButton" layoutX="400.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClickSearchButton" />
         <VBox layoutX="75.0" layoutY="110.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diameter AT" textAlignment="CENTER" wrappingWidth="400" />
@@ -237,6 +217,6 @@
             </children>
         </VBox>
         <Text fx:id="errorMessage" fill="RED" layoutX="598.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-        <Button fx:id="clearAllButton" layoutX="300.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClearButton"/>
+        <Button fx:id="clearAllButton" layoutX="300.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClearButton" />
     </children>
 </AnchorPane>
