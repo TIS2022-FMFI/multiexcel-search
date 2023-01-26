@@ -46,8 +46,8 @@ public class CategoryMainController implements Initializable {
     /**
      * refreshing categories after import
      */
-    public static void refreshCategories(){
-        try{
+    public static void refreshCategories() {
+        try {
             Platform.runLater(() -> {
                 FXMLLoader loader = new FXMLLoader(Class.class.getResource("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml"));
                 try {
@@ -73,10 +73,9 @@ public class CategoryMainController implements Initializable {
             selectedCategoryId = categoryId;
             int partsCount = PartManager.getPartCountForCategoryId(categoryId);
             pages = partsCount / itemsPerPage + 1;
-            if(partsCount == 0){
+            if (partsCount == 0) {
                 noPartsInCategory(categoryList.getSelectionModel().getSelectedItem().getCategory_name());
-            }
-            else {
+            } else {
                 noPartsLabel.setVisible(false);
                 updatePartListAndPageLabel(categoryId);
             }
@@ -205,7 +204,7 @@ public class CategoryMainController implements Initializable {
             currentPage--;
         checkPageButtonsVisible();
 
-        if (PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
+        if (!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
             swapRatingFailedAlert();
             return;
         }
@@ -225,7 +224,7 @@ public class CategoryMainController implements Initializable {
             currentPage++;
         checkPageButtonsVisible();
 
-        if (PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
+        if (!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
             swapRatingFailedAlert();
             return;
         }
@@ -235,7 +234,7 @@ public class CategoryMainController implements Initializable {
     /**
      * clears partList
      */
-    public void clearPartsList(){
+    public void clearPartsList() {
         nextPageButton.setVisible(false);
         prevPageButton.setVisible(false);
         currentPage = 0;
@@ -266,7 +265,7 @@ public class CategoryMainController implements Initializable {
      *
      * @param categoryName - name of category
      */
-    private void noPartsInCategory(String categoryName){
+    private void noPartsInCategory(String categoryName) {
         noPartsLabel.setText("Category " + categoryName + " has no parts");
         noPartsLabel.setVisible(true);
         parts = FXCollections.observableArrayList();

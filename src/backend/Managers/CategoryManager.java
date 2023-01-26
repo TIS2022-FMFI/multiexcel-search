@@ -126,16 +126,15 @@ public class CategoryManager {
      * Renames category in database
      *
      * @param newCategoryName - new name of category
-     * @param categoryId - id of category to rename
+     * @param categoryId      - id of category to rename
      */
-    public static boolean renameCategory(String newCategoryName, BigInteger categoryId){
-        try{
+    public static boolean renameCategory(String newCategoryName, BigInteger categoryId) {
+        try {
             Category category = getCategory(categoryId);
             category.setCategory_name(newCategoryName);
             category.update();
             return true;
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return false;
         }

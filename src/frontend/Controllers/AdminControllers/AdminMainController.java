@@ -47,11 +47,11 @@ public class AdminMainController implements Initializable {
                     (o, oldTab, newTab) -> {
                         if (newTab.equals(historyTab))
                             hmc.refreshTable();
-                        if (newTab.equals(categoryTab)){
+                        if (newTab.equals(categoryTab)) {
                             cmc.updateCategoryList();
                             cmc.clearPartsList();
                         }
-                        if(newTab.equals(userTab))
+                        if (newTab.equals(userTab))
                             umc.updateList();
                     }
             );

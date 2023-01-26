@@ -454,7 +454,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
         if (type.equals(User.class))
             users = getConcreteParametersAndSetStyle(parameters, button_user_filter);
-         else if (type.equals(Category.class))
+        else if (type.equals(Category.class))
             categories = getConcreteParametersAndSetStyle(parameters, button_category_filter);
 
         refreshTable();

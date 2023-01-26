@@ -10,7 +10,6 @@ import backend.Managers.PartManager;
 import backend.Managers.PartNameManager;
 import backend.Sessions.HistorySession;
 import backend.Sessions.SESSION;
-import backend.Wrappers.PartWrapper;
 import backend.XLSImportExport.Export;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.beans.property.ReadOnlyStringWrapper;
