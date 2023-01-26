@@ -11,32 +11,12 @@
 
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controllers.SearchControllers.FirstSearch.FirstSearchController">
     <children>
-        <VBox alignment="TOP_CENTER" layoutX="600.0" layoutY="526.0" prefHeight="70.0" prefWidth="145.0">
+        <Button fx:id="partNameFilter" layoutX="92.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClickPartNameFilterButton" text="Filter by part name" />
+        <Button fx:id="customerFilter" layoutX="94.0" layoutY="65.0" mnemonicParsing="false" onAction="#onClickCustomerFilterButton" text="Filter by customer" /> <!--customers-->
+        <Button fx:id="searchButton" layoutX="400.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClickSearchButton" />
+        <VBox layoutX="75.0" layoutY="110.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Part Names" textAlignment="CENTER" wrappingWidth="148.13671875">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin></Text>
-              <Button fx:id="partNameFilter" mnemonicParsing="false" onAction="#onClickPartNameFilterButton" text="Part Name" />
-            </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-        </VBox> <!--part names-->
-        <VBox alignment="CENTER" layoutX="1320.0" layoutY="528.0" prefHeight="47.0" prefWidth="144.0">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customers" textAlignment="CENTER" wrappingWidth="143.28515625">
-               <VBox.margin>
-                  <Insets bottom="5.0" />
-               </VBox.margin>
-            </Text>
-              <Button fx:id="customerFilter" mnemonicParsing="false" onAction="#onClickCustomerFilterButton" text="Customer" />
-            </children>
-        </VBox> <!--customers-->
-        <Button layoutX="960.0" layoutY="621.0" mnemonicParsing="false" onAction="#onClickSearchButton" text="Search" />
-        <VBox layoutX="331.0" layoutY="153.0">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diameter AT" textAlignment="CENTER" wrappingWidth="306.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diameter AT" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="diameterATFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -46,14 +26,14 @@
                         </TextField>
                         <TextField fx:id="diameterATTo" promptText="To" />
 
-                        <ChoiceBox fx:id="diameterATPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="diameterATPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox> <!--diameter-->
-        <VBox layoutX="653.0" layoutY="153.0">
+        <VBox layoutX="525.0" layoutY="110.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Length L AT" textAlignment="CENTER" wrappingWidth="290.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Length L AT" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="lengthLATFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -63,14 +43,14 @@
                         </TextField>
                         <TextField fx:id="lengthLATTo" promptText="To" />
 
-                        <ChoiceBox fx:id="lengthLATPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="lengthLATPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox> <!-- length l at -->
-        <VBox layoutX="964.0" layoutY="153.0" prefHeight="89.0" prefWidth="296.0">
+        <VBox layoutX="975.0" layoutY="110.0" prefHeight="89.0" prefWidth="296.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rubber" textAlignment="CENTER" wrappingWidth="298.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rubber" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="rubberFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -79,14 +59,14 @@
                             </opaqueInsets>
                         </TextField>
                         <TextField fx:id="rubberTo" promptText="To" />
-                        <ChoiceBox fx:id="rubberPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="rubberPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox> <!-- rubber -->
-        <VBox layoutX="1288.0" layoutY="153.0">
+        <VBox layoutX="1425.0" layoutY="110.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diameter IT" textAlignment="CENTER" wrappingWidth="306.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diameter IT" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="diameterITFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -96,14 +76,14 @@
                         </TextField>
                         <TextField fx:id="diameterITTo" promptText="To" />
 
-                        <ChoiceBox fx:id="diameterITPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="diameterITPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="964.0" layoutY="414.0">
+        <VBox layoutX="75.0" layoutY="210.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ck" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="305.7431640625" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ck" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="ckFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -113,14 +93,14 @@
                         </TextField>
                         <TextField fx:id="ckTo" promptText="To" />
 
-                        <ChoiceBox fx:id="ckPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="ckPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="653.0" layoutY="414.0">
+        <VBox layoutX="525.0" layoutY="210.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ct" textAlignment="CENTER" wrappingWidth="308.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ct" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="ctFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -129,14 +109,14 @@
                             </opaqueInsets>
                         </TextField>
                         <TextField fx:id="ctTo" promptText="To" />
-                        <ChoiceBox fx:id="ctPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="ctPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="331.0" layoutY="414.0">
+        <VBox layoutX="975.0" layoutY="210.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cr Steg" textAlignment="CENTER" wrappingWidth="304.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cr Steg" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="crStegFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -146,14 +126,14 @@
                         </TextField>
                         <TextField fx:id="crStegTo" promptText="To" />
 
-                        <ChoiceBox fx:id="crStegPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="crStegPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="1288.0" layoutY="414.0">
+        <VBox layoutX="1425.0" layoutY="210.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ca" textAlignment="CENTER" wrappingWidth="308.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ca" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="caFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -163,14 +143,14 @@
                         </TextField>
                         <TextField fx:id="caTo" promptText="To" />
 
-                        <ChoiceBox fx:id="caPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="caPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="653.0" layoutY="284.0" prefHeight="125.0" prefWidth="174.0">
+        <VBox layoutX="75.0" layoutY="310.0" prefHeight="125.0" prefWidth="174.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cr Niere" textAlignment="CENTER" wrappingWidth="304.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cr Niere" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="crNiereFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -180,14 +160,14 @@
                         </TextField>
                         <TextField fx:id="crNiereTo" promptText="To" />
 
-                        <ChoiceBox fx:id="crNierePriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="crNierePriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="331.0" layoutY="284.0">
+        <VBox layoutX="525.0" layoutY="310.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Length L IT" textAlignment="CENTER" wrappingWidth="309.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Length L IT" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="lengthLITFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -197,14 +177,14 @@
                         </TextField>
                         <TextField fx:id="lengthLITTo" promptText="To" />
 
-                        <ChoiceBox fx:id="lengthLITPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="lengthLITPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="964.0" layoutY="284.0">
+        <VBox layoutX="975.0" layoutY="310.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diameter ZT" textAlignment="CENTER" wrappingWidth="304.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Diameter ZT" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="diameterZTFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -214,14 +194,14 @@
                         </TextField>
                         <TextField fx:id="diameterZTTo" promptText="To" />
 
-                        <ChoiceBox fx:id="diameterZTPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="diameterZTPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="1288.0" layoutY="284.0">
+        <VBox layoutX="1425.0" layoutY="310.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Length L ZT" textAlignment="CENTER" wrappingWidth="305.6708984375" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Length L ZT" textAlignment="CENTER" wrappingWidth="400" />
                 <HBox prefHeight="47.0" prefWidth="215.0">
                     <children>
                         <TextField fx:id="lengthLZTFrom" promptText="From" HBox.hgrow="SOMETIMES">
@@ -231,12 +211,12 @@
                         </TextField>
                         <TextField fx:id="lengthLZTTo" promptText="To" />
 
-                        <ChoiceBox fx:id="lengthLZTPriority" prefWidth="150.0" />
+                        <ChoiceBox fx:id="lengthLZTPriority" prefWidth="250.0" />
                     </children>
                 </HBox>
             </children>
         </VBox>
         <Text fx:id="errorMessage" fill="RED" layoutX="598.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-        <Button layoutX="960.0" layoutY="70.0" mnemonicParsing="false" onAction="#onClearButton" text="Clear All" />
+        <Button fx:id="clearAllButton" layoutX="300.0" layoutY="25.0" mnemonicParsing="false" onAction="#onClearButton" />
     </children>
 </AnchorPane>

@@ -8,8 +8,8 @@ public class Constants {
     public static final String WINDOW_TITLE_LOGGEDIN = "Intelligent search";
     public static final String WINDOW_TITLE_HISTORY_USER_FILTER = "Filter by users";
     public static final String WINDOW_TITLE_HISTORY_CATEGORY_FILTER = "Filter by category";
-    public static final String WINDOW_TITLE_SEARCH_PART_NAME_FILTER = "Part Name";
-    public static final String WINDOW_TITLE_SEARCH_CUSTOMER_FILTER = "Part Name";
+    public static final String WINDOW_TITLE_SEARCH_PART_NAME_FILTER = "Filter by part name";
+    public static final String WINDOW_TITLE_SEARCH_CUSTOMER_FILTER = "Filter by customer name";
     public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_ADD = "Add category";
     public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE = "Delete category";
     public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_EDIT = "Edit category";
@@ -21,8 +21,8 @@ public class Constants {
 
     public static final String WINDOW_TITLE_EDIT_CATEGORY = "Edit categories";
 
-    public static final Double WINDOW_LOGIN_WIDTH = 600.0;
-    public static final Double WINDOW_LOGIN_HEIGHT = 300.0;
+    public static final Double WINDOW_LOGIN_WIDTH = 500.0;
+    public static final Double WINDOW_LOGIN_HEIGHT = 200.0;
 
     public static final String CHOOSE_PRIORITY = "Choose priority";
 

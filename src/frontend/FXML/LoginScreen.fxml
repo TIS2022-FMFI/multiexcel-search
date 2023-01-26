@@ -2,17 +2,16 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="300" maxWidth="900" minHeight="300" minWidth="900"
-            prefHeight="300.0"
-            prefWidth="900.0" xmlns="http://javafx.com/fxml/8.0.161"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="250" maxWidth="400" minHeight="250" minWidth="400"
+            prefHeight="250.0"
+            prefWidth="400.0" xmlns="http://javafx.com/fxml/8.0.161"
             fx:controller="frontend.Controllers.LoginController">
     <children>
-        <Label layoutX="140.0" layoutY="50.0" text="LOGIN"/>
-        <Label layoutX="140.0" layoutY="120.0" text="Username:"/>
-        <TextField fx:id="usernameField" layoutX="240.0" layoutY="120.0"/>
-        <Label layoutX="140.0" layoutY="160.0" text="Password:"/>
-        <PasswordField fx:id="passwordField" layoutX="240.0" layoutY="160.0"/>
-        <Button fx:id="loginButton" layoutX="260.0" layoutY="200.0" mnemonicParsing="false" text="Login"/>
-        <Label fx:id="errorLabel" layoutX="200.0" layoutY="240.0" textFill="#ff0000"/>
+        <Label layoutX="50.0" layoutY="55.0" text="Username:"/>
+        <TextField fx:id="usernameField" layoutX="150.0" layoutY="50.0"/>
+        <Label layoutX="50.0" layoutY="105.0" text="Password:"/>
+        <PasswordField fx:id="passwordField" layoutX="150.0" layoutY="100.0"/>
+        <Button fx:id="loginButton" layoutX="370.0" layoutY="60.0" mnemonicParsing="false"/>
+        <Label fx:id="errorLabel" layoutX="120.0" layoutY="150.0" textFill="#ff0000"/>
     </children>
 </AnchorPane>

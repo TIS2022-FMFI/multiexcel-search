@@ -17,16 +17,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,6 +38,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     public Text errorMessage;
     public Button partNameFilter;
     public Button customerFilter;
+    public Button clearAllButton;
+    public Button searchButton;
     List<Part_name> partNames = new ArrayList<>();
     List<Customer> customers = new ArrayList<>();
 
@@ -298,6 +298,13 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/clearAllImage.png")).toExternalForm());
+        clearAllButton.setGraphic(imageView);
+
+        ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/searchImage.png")).toExternalForm());
+        searchButton.setGraphic(imageView2);
+
         setupHandlers();
         setupValues();
         setFilterStyle();

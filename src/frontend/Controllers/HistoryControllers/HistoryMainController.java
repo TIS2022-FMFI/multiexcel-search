@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 import java.math.BigInteger;
@@ -29,7 +30,7 @@ import java.util.*;
 
 public class HistoryMainController implements Initializable, FilterMasterController {
 
-    private final int itemsPerPage = 10;
+    private final int itemsPerPage = 24;
     private final List<Integer> currentSelectedIndexes = new ArrayList<>();
     @FXML
     public TableView<QueryWrapper> table_queries;
@@ -84,6 +85,8 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     @FXML
     public Button button_user_filter;
     public Button button_category_filter;
+    public Button refreshButton;
+    public Button clearAllButton;
     private boolean isAdmin;
     private ObservableList<QueryWrapper> queries;
     private int currentPageIndex = 0;
@@ -108,6 +111,19 @@ public class HistoryMainController implements Initializable, FilterMasterControl
             button_user_filter.setVisible(false);
         }
         historySession = HistorySession.getInstance();
+
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/refreshImage.png")).toExternalForm());
+        refreshButton.setGraphic(imageView);
+
+        ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/clearAllImage.png")).toExternalForm());
+        clearAllButton.setGraphic(imageView2);
+
+        ImageView imageView3 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/showMoreImage.png")).toExternalForm());
+        button_open_selected.setGraphic(imageView3);
+
+        ImageView imageView4 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/deleteImage.png")).toExternalForm());
+        button_delte_selected.setGraphic(imageView4);
+
         initializeController();
         setFilterStyle();
     }
