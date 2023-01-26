@@ -12,6 +12,7 @@ public class Constants {
     public static final String WINDOW_TITLE_SEARCH_CUSTOMER_FILTER = "Customer Name";
     public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_ADD = "Add category";
     public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE = "Delete category";
+    public static final String WINDOW_TITLE_CATEGORY_MANAGMENT_EDIT = "Edit category";
     public static final String WINDOW_TITLE_USER_MANAGMENT_ADD = "Add user";
     public static final String WINDOW_TITLE_CHANGE_PASSWORD = "Change password";
     public static final String WINDOW_TITLE_IMPORT = "Import";
