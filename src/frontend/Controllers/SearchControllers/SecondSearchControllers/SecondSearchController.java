@@ -182,6 +182,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         col_ct.setStyle("-fx-alignment: CENTER");
         col_ck.setStyle("-fx-alignment: CENTER");
     }
+
     public List<Part> selectedParts() {
         ArrayList<Part> selectedPartsList = new ArrayList<>();
 

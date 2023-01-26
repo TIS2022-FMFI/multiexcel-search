@@ -14,7 +14,7 @@ public interface FilterMasterController {
 
     List<? extends Filterable> getParameters(Class<?> type);
 
-     default void setStyleBasedOnParameters(List<?> parameters, Button button) {
+    default void setStyleBasedOnParameters(List<?> parameters, Button button) {
         if (parameters == null || parameters.isEmpty())
             button.setStyle("");
         else

@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 public class QueryWrapper {
-    private Query query;
+    private final Query query;
 
     //refs to HistoryMainController maps
-    private Map<Integer, String> userIdToName;
-    private Map<BigInteger, String> categoryIdToName;
+    private final Map<Integer, String> userIdToName;
+    private final Map<BigInteger, String> categoryIdToName;
 
     private DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss");
 

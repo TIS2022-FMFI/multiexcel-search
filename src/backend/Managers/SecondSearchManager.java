@@ -30,7 +30,7 @@ public class SecondSearchManager {
      * @param categories selected categories to filter by
      * @return list of filtered parts
      */
-    public static List<Part> filterByCategories(List<Part> parts, List<Category> categories) {
+    public static List<Part>filterByCategories(List<Part> parts, List<Category> categories) {
         List<Integer> categoriesId = categories.stream().map(Category::getCategory_id).collect(Collectors.toList());
         List<Part> matchingCategories = parts.stream().filter(x -> categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());
 
@@ -69,7 +69,7 @@ public class SecondSearchManager {
      * @param criteria   criteria with priorities to order by
      * @return ordered parts
      */
-    public static List<Part> sortByPriority(List<Part> parts, List<Category> categories, Criteria criteria) {
+    public static List<Part> sortByPriority(List<Part> parts, List<Category> categories, Criteria criteria){
         List<Integer> categoriesId = categories.stream().map(Category::getCategory_id).collect(Collectors.toList());
         List<Part> matchingCategories = parts.stream().filter(x -> categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());
         List<Part> notMatchingCategories = parts.stream().filter(x -> !categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());

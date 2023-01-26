@@ -67,7 +67,7 @@ public class CategoryCell extends ListCell<Category> {
 
                 CategoryEditController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_EDIT);
 
-                if(controller != null)
+                if (controller != null)
                     controller.init(categoryMainController, category.getCategory_id());
             });
 
@@ -78,10 +78,10 @@ public class CategoryCell extends ListCell<Category> {
 
                 CategoryDeleteController controller = MainController.setNewStage(fxmlDocPath, Constants.WINDOW_TITLE_CATEGORY_MANAGMENT_DELETE);
 
-                if(controller != null)
+                if (controller != null)
                     controller.init(categoryMainController, category.getCategory_id());
             });
-            if (BigInteger.valueOf(category.getCategory_id()).equals(WITHOUT_CATEGORY_ID)){
+            if (BigInteger.valueOf(category.getCategory_id()).equals(WITHOUT_CATEGORY_ID)) {
                 deleteButton.setVisible(false);
                 editButton.setVisible(false);
             }

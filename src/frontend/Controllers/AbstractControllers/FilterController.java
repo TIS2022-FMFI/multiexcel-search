@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class FilterController<T extends Filterable> implements Initializable {
     @FXML

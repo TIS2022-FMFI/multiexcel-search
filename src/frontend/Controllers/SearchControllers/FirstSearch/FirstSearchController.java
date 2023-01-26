@@ -26,7 +26,6 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import java.net.URL;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static backend.Models.Constants.CHOOSE_PRIORITY;
@@ -404,7 +403,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
         if (type.equals(Part_name.class))
             partNames = getConcreteParametersAndSetStyle(parameters, partNameFilter);
-         else if (type.equals(Customer.class))
+        else if (type.equals(Customer.class))
             customers = getConcreteParametersAndSetStyle(parameters, customerFilter);
     }
 

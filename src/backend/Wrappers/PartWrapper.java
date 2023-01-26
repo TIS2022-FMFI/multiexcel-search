@@ -17,11 +17,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.Objects;
 
 import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
@@ -30,10 +28,10 @@ import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 public class PartWrapper {
 
     private Part part;
-    private  Button button;
-    private CheckBox checkBox;
+    private final Button button;
+    private final CheckBox checkBox;
 
-    private FilterMasterController filterMasterController;
+    private final FilterMasterController filterMasterController;
 
     private boolean isChecked = false;
 
@@ -150,7 +148,7 @@ public class PartWrapper {
 
     public String getRubberValue() {
         if (part.getRubber() == null) return "";
-        return String.valueOf(part.getRubber()) + " ShA";
+        return part.getRubber() + " ShA";
     }
 
     public String getDiameterAT() {

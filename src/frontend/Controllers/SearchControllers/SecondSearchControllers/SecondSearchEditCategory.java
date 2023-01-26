@@ -7,18 +7,17 @@ import frontend.Controllers.AbstractControllers.FilterMasterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
 public class SecondSearchEditCategory implements Initializable {
 
@@ -72,6 +71,7 @@ public class SecondSearchEditCategory implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 
 }
