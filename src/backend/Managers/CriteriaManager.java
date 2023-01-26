@@ -76,7 +76,12 @@ public class CriteriaManager {
         return checkIfInRange(value, Short.MIN_VALUE, Short.MAX_VALUE);
     }
 
-    // Ak to vie niekto lepsie tak mi to povedzte
+    /**
+     * Converts Criteria from Search into Query to save into database
+     *
+     * @param criteria Criteria
+     * @return Query made from criteria
+     */
     public static Query convertCriteriaToQuery(Criteria criteria) {
         Query query = new Query();
 

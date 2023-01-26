@@ -53,7 +53,9 @@ public class SecondSearchEditCategory implements Initializable {
         }
     }
 
-    public void setFilterMasterController(FilterMasterController filterMasterController) {this.filterMasterController = filterMasterController;}
+    public void setFilterMasterController(FilterMasterController filterMasterController) {
+        this.filterMasterController = filterMasterController;
+    }
 
     public void onCancelAction(ActionEvent event) {
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();

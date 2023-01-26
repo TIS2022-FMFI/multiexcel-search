@@ -10,15 +10,15 @@ public class PartCountSession {
 
     public static void initPartCount() throws SQLException {
         partCount = PartManager.getCount();
-        if(partCount == null)
+        if (partCount == null)
             throw new SQLException("Parts count init failed");
     }
 
-    public static Integer getPartCount(){
+    public static Integer getPartCount() {
         return partCount;
     }
 
-    public static void incrememntPartCount(){
+    public static void incrememntPartCount() {
         partCount++;
     }
 }

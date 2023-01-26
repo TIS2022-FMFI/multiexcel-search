@@ -8,7 +8,8 @@
             fx:controller="frontend.Controllers.AdminControllers.AdminMainController">
     <children>
         <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" fx:id="mainTabPane">
+                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
+                 fx:id="mainTabPane">
             <tabs>
                 <Tab fx:id="searchTab" text="Search">
                     <content>

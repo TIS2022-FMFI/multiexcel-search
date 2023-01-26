@@ -2,10 +2,10 @@ package backend.Wrappers;
 
 import backend.Entities.Drawing;
 import backend.Entities.Part;
+import backend.Managers.CategoryManager;
 import backend.Managers.CustomerManager;
 import backend.Managers.DrawingManager;
 import backend.Managers.PartNameManager;
-import backend.Managers.CategoryManager;
 import backend.Models.Constants;
 import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
@@ -54,7 +54,7 @@ public class PartWrapper {
         button.setOnAction(event -> {
 
             //admin can change and set
-            if (SESSION.isAdmin()){
+            if (SESSION.isAdmin()) {
 
                 SecondSearchEditCategory secondSearchEditCategory = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchEditCategory.fxml", Constants.WINDOW_TITLE_EDIT_CATEGORY);
                 secondSearchEditCategory.setPart(part);
@@ -75,43 +75,55 @@ public class PartWrapper {
 
         checkBox.setOnAction(event -> {
 
-            if (checkBox.isSelected()){
+            if (checkBox.isSelected()) {
                 isChecked = true;
             }
 
-            if (!checkBox.isSelected()){
+            if (!checkBox.isSelected()) {
                 isChecked = false;
             }
         });
 
 
-
     }
 
-    public Part getPart() {return part;}
+    public Part getPart() {
+        return part;
+    }
 
-    public void setPart(Part part) {this.part = part;}
+    public void setPart(Part part) {
+        this.part = part;
+    }
 
-    public CheckBox getCheckBox() {return checkBox;}
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
 
-    public Button getButton() {return button;}
+    public Button getButton() {
+        return button;
+    }
 
 
-    public String getPartNumber() {return part.getPart_number();}
+    public String getPartNumber() {
+        return part.getPart_number();
+    }
 
     public String getCustomer() {
-        if (part.getCustomer_id() == null){
+        if (part.getCustomer_id() == null) {
             return "";
         }
-        return CustomerManager.getCustomer(part.getCustomer_id()).getCustomer_name();}
+        return CustomerManager.getCustomer(part.getCustomer_id()).getCustomer_name();
+    }
 
     public String getPartName() {
         if (part.getPart_name_id() == null)
             return "";
-        return PartNameManager.getPartName(part.getPart_name_id()).getPart_name();}
+        return PartNameManager.getPartName(part.getPart_name_id()).getPart_name();
+    }
 
     public String getCategoryName() {
-        return CategoryManager.getCategory(part.getCategory_id()).getCategory_name();}
+        return CategoryManager.getCategory(part.getCategory_id()).getCategory_name();
+    }
 
 
     public ImageView getImage() throws IOException {
@@ -196,17 +208,29 @@ public class PartWrapper {
         return part.getCk() + " Nm/°";
     }
 
-    public String getDiameterATTOL() {return part.getDiameter_AT_tol();}
+    public String getDiameterATTOL() {
+        return part.getDiameter_AT_tol();
+    }
 
-    public String getDiameterITTOL() {return part.getDiameter_IT_tol();}
+    public String getDiameterITTOL() {
+        return part.getDiameter_IT_tol();
+    }
 
-    public String getDiameterZTTOL() {return part.getDiameter_ZT_tol();}
+    public String getDiameterZTTOL() {
+        return part.getDiameter_ZT_tol();
+    }
 
-    public String getLengthLATTOL() {return part.getLength_L_AT_tol();}
+    public String getLengthLATTOL() {
+        return part.getLength_L_AT_tol();
+    }
 
-    public String getLengthLITTOL() {return part.getLength_L_IT_tol();}
+    public String getLengthLITTOL() {
+        return part.getLength_L_IT_tol();
+    }
 
-    public String getLengthLZTTOL() {return part.getLength_L_ZT_tol();}
+    public String getLengthLZTTOL() {
+        return part.getLength_L_ZT_tol();
+    }
 
     public boolean isChecked() {
         return isChecked;

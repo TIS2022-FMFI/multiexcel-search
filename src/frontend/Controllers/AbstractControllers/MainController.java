@@ -1,6 +1,5 @@
 package frontend.Controllers.AbstractControllers;
 
-import backend.Entities.Part;
 import backend.Models.Constants;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -12,21 +11,33 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 public class MainController {
-
-    public static <T> T setTab(String path, Tab tab) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Class.class.getResource(path)));
+    /**
+     * Loads specified FXML into tab and returns controller
+     *
+     * @param fxmlDocPath fxml path to load FXML from
+     * @param tab         tab to set fxml into
+     * @return controller of fxml
+     */
+    public static <T> T setTab(String fxmlDocPath, Tab tab) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
         Parent root = loader.load();
         tab.setContent(root);
         return loader.getController();
     }
 
+    /**
+     * Loads new stage with stageTitle from specified FXML
+     *
+     * @param fxmlDocPath fxml path to load FXML from
+     * @param stageTitle  title of stage
+     * @return controller of fxml
+     */
     public static <T> T setNewStage(String fxmlDocPath, String stageTitle) {
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
@@ -45,6 +56,12 @@ public class MainController {
         }
     }
 
+    /**
+     * Switches tab to specified FXML
+     *
+     * @param fxmlDocPath fxml path to load FXML from
+     * @param tab         tab to set fxml into
+     */
     public static void switchTab(String fxmlDocPath, Tab tab) {
         try {
             AnchorPane root = FXMLLoader.load(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
@@ -56,6 +73,13 @@ public class MainController {
         }
     }
 
+    /**
+     * Displays error via ALert
+     *
+     * @param type  Type of Alert
+     * @param title Title of Alert
+     * @param text  text of ALert
+     */
     public static void showAlert(Alert.AlertType type, String title, String text) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -63,22 +87,14 @@ public class MainController {
         alert.showAndWait();
     }
 
-    public static void replaceStageByEvent(String fxmlDocPath, String stageTitle, ActionEvent event) {
-        try {
-            AnchorPane root = FXMLLoader.load(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
-
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            if (!stageTitle.equals("")) {
-                stage.setTitle(stageTitle);
-            }
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
-        }
-    }
-
+    /**
+     * Replaces Stage of event to specified FXML and updates stage title
+     *
+     * @param fxmlDocPath fxml path to load FXML from
+     * @param stageTitle  title of stage
+     * @param event       event to get stage from
+     * @param login       boolean specifying if replacing login stage
+     */
     public static void replaceStageByEvent(String fxmlDocPath, String stageTitle, ActionEvent event, boolean login) {
         try {
             AnchorPane root = FXMLLoader.load(Objects.requireNonNull(Class.class.getResource(fxmlDocPath)));
@@ -91,11 +107,11 @@ public class MainController {
             stage.setResizable(!login);
             stage.setScene(scene);
             stage.show();
-            if(login){
+            if (login) {
                 clearMinMaxWH(stage);
                 stage.setMaximized(false);
                 setMaxMinCurWH(stage, Constants.WINDOW_LOGIN_WIDTH, Constants.WINDOW_LOGIN_HEIGHT);
-            }else{
+            } else {
                 clearMinMaxWH(stage);
                 stage.setMaximized(true);
                 setMaxMinCurWH(stage, stage.getWidth(), stage.getHeight());
@@ -107,13 +123,14 @@ public class MainController {
         }
     }
 
-    private static void clearMinMaxWH(Stage s){
+    private static void clearMinMaxWH(Stage s) {
         s.setMinWidth(0);
         s.setMinHeight(0);
         s.setMaxWidth(Double.MAX_VALUE);
         s.setMaxHeight(Double.MAX_VALUE);
     }
-    private static void setMaxMinCurWH(Stage s, Double w, Double h){
+
+    private static void setMaxMinCurWH(Stage s, Double w, Double h) {
         s.setMinWidth(w);
         s.setMinHeight(h);
         s.setWidth(w);
@@ -122,6 +139,13 @@ public class MainController {
         s.setMaxHeight(h);
     }
 
+    /**
+     * Loads file for saving via FileChooser
+     *
+     * @param description description of file extension
+     * @param extension   file extension to load
+     * @return loaded file from FileChooser
+     */
     public static File saveFile(String description, String extension) {
         FileChooser fc = new FileChooser();
         fc.setTitle("Save");

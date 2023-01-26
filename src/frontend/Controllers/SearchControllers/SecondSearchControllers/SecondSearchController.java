@@ -342,7 +342,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-
         if (type.equals(Category.class)) {
             List<Category> concreteCategories = getConcreteParametersAndSetStyle(parameters, categoryFilter);
             if (concreteCategories == null)
