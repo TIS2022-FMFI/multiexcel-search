@@ -35,8 +35,8 @@
         <HBox prefHeight="27.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
             <children>
                 <Button mnemonicParsing="false" prefWidth="75.0" text="Import" onAction="#importButton"/>
-                <Button mnemonicParsing="false" prefWidth="75.0" text="Log out" onAction="#logoutUser"/>
                 <Button mnemonicParsing="false" prefWidth="120.0" text="Change Password" onAction="#changePassword"/>
+                <Button mnemonicParsing="false" prefWidth="75.0" text="Log out" onAction="#logoutUser"/>
             </children>
         </HBox>
     </children>
