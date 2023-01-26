@@ -32,8 +32,13 @@ public class SecondSearchManager {
      */
     public static List<Part> filterByCategories(List<Part> parts, List<Category> categories) {
         List<Integer> categoriesId = categories.stream().map(Category::getCategory_id).collect(Collectors.toList());
+        List<Part> matchingCategories = parts.stream().filter(x -> categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());
 
-        return parts.stream().filter(x -> categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());
+        // optional
+        List<Part> notMatchingCategories = parts.stream().filter(x -> !categoriesId.contains(x.getCategory_id().intValue())).collect(Collectors.toList());
+        matchingCategories.addAll(notMatchingCategories);
+
+        return matchingCategories;
     }
 
     /**

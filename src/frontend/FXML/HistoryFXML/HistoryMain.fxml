@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.Controllers.HistoryControllers.HistoryMainController">
-    <TableView fx:id="table_queries" layoutX="101.0" layoutY="146.0" onMouseClicked="#getSelected" prefHeight="724.0" prefWidth="1519.0">
+    <TableView fx:id="table_queries" layoutX="50.0" layoutY="110.0" onMouseClicked="#getSelected" prefHeight="750.0" prefWidth="1851.0">
         <columns>
             <TableColumn fx:id="col_username" editable="false" prefWidth="101" sortable="false" style="-fx-alignment: CENTER;" text="User" />
-            <TableColumn fx:id="col_categories" editable="false" prefWidth="101" sortable="false" style="-fx-alignment: CENTER;" text="Categories" />
+            <TableColumn fx:id="col_categories" editable="false" prefWidth="382" sortable="false" style="-fx-alignment: CENTER;" text="Categories" />
             <TableColumn fx:id="col_rubber" editable="false" prefWidth="101" sortable="false" style="-fx-alignment: CENTER;" text="Rubber" />
             <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="101.0" sortable="false" style="-fx-alignment: CENTER;" text="Diameter AT" />
             <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="101.0" sortable="false" style="-fx-alignment: CENTER;" text="Length L AT" />
@@ -24,20 +24,25 @@
             <TableColumn fx:id="col_ca" editable="false" prefWidth="101.0" sortable="false" style="-fx-alignment: CENTER;" text="Ca" />
             <TableColumn fx:id="col_ct" editable="false" prefWidth="101" sortable="false" style="-fx-alignment: CENTER;" text="Ct" />
             <TableColumn fx:id="col_ck" editable="false" prefWidth="101" sortable="false" style="-fx-alignment: CENTER;" text="Ck" />
-            <TableColumn fx:id="col_date" editable="false" prefWidth="101" sortable="false" style="-fx-alignment: CENTER;" text="Date" />
+            <TableColumn fx:id="col_date" editable="false" prefWidth="155.0" sortable="false" style="-fx-alignment: CENTER;" text="Date" />
         </columns>
     </TableView>
-    <Button fx:id="button_previous_page" layoutX="123.0" layoutY="900.0" mnemonicParsing="false" onAction="#onPreviousPageButtonClick" text="previous page" />
-    <Button fx:id="button_next_page" layoutX="1541.0" layoutY="900.0" mnemonicParsing="false" onAction="#onNextPageButtonClick" text="next page" />
-    <Label fx:id="label_page_index" contentDisplay="CENTER" layoutX="847.0" layoutY="900.0" text="Page 0 / 100" textAlignment="CENTER" textOverrun="CLIP" />
-    <DatePicker fx:id="date_picker_to" layoutX="1097.0" layoutY="84.0" promptText="to" />
-    <DatePicker fx:id="date_picker_from" layoutX="755.0" layoutY="81.0" promptText="from" />
-    <Button fx:id="button_date_from_clear" layoutX="936.0" layoutY="83.0" mnemonicParsing="false" onAction="#onClearDateFromClick" text="Clear" />
-    <Button fx:id="button_date_to_clear" layoutX="1277.0" layoutY="84.0" mnemonicParsing="false" onAction="#onClearDateToClick" text="Clear" />
-    <Button fx:id="button_user_filter" layoutX="594.0" layoutY="80.0" mnemonicParsing="false" onAction="#onClickUserFilterButton" text="Filter by users" />
-    <Button layoutX="112.0" layoutY="90.0" mnemonicParsing="false" onAction="#refreshTable" text="Refresh" />
-    <Button layoutX="1526.0" layoutY="80.0" mnemonicParsing="false" onAction="#clearAllFiltersAndRefreshTable" text="Clear filters" />
-    <Button fx:id="button_open_selected" disable="true" layoutX="1740.0" layoutY="432.0" mnemonicParsing="false" onAction="#openSelectedQuery" text="Open" />
-    <Button fx:id="button_category_filter" layoutX="438.0" layoutY="80.0" mnemonicParsing="false" onAction="#onClickCategoryFilterButton" text="Filter by category" />
-    <Button fx:id="button_delte_selected" layoutX="1714.0" layoutY="524.0" mnemonicParsing="false" onAction="#deleteSelectedQueries" text="Delete selected" />
+    <Button fx:id="button_previous_page" layoutX="100.0" layoutY="870.0" mnemonicParsing="false" onAction="#onPreviousPageButtonClick" prefHeight="55.0" prefWidth="55.0" text="&lt;" />
+    <Button fx:id="button_next_page" layoutX="1799.0" layoutY="870.0" mnemonicParsing="false" onAction="#onNextPageButtonClick" prefHeight="55.0" prefWidth="55.0" text="&gt;" />
+    <Label fx:id="label_page_index" contentDisplay="CENTER" layoutX="935.0" layoutY="870.0" textAlignment="CENTER" textOverrun="CLIP" />
+
+    <DatePicker fx:id="date_picker_to" layoutX="300.0" layoutY="70.0" promptText="to" />
+    <DatePicker fx:id="date_picker_from" layoutX="300.0" layoutY="20.0" promptText="from" />
+
+    <Button fx:id="button_date_from_clear" layoutX="550.0" layoutY="20.0" mnemonicParsing="false" onAction="#onClearDateFromClick" text="Clear" />
+    <Button fx:id="button_date_to_clear" layoutX="550.0" layoutY="70.0" mnemonicParsing="false" onAction="#onClearDateToClick" text="Clear" />
+
+    <Button fx:id="button_user_filter" layoutX="150.0" layoutY="70.0" mnemonicParsing="false" onAction="#onClickUserFilterButton" text="Filter by users" />
+    <Button fx:id="refreshButton" layoutX="50.0" layoutY="25.0" mnemonicParsing="false" onAction="#refreshTable" />
+
+    <Button fx:id="clearAllButton" layoutX="650.0" layoutY="25.0" mnemonicParsing="false" onAction="#clearAllFiltersAndRefreshTable" />
+
+    <Button fx:id="button_open_selected" disable="true" layoutX="750.0" layoutY="25.0" mnemonicParsing="false" onAction="#openSelectedQuery" />
+    <Button fx:id="button_category_filter" layoutX="150.0" layoutY="20.0" mnemonicParsing="false" onAction="#onClickCategoryFilterButton" text="Filter by category" />
+    <Button fx:id="button_delte_selected" layoutX="850.0" layoutY="25.0" mnemonicParsing="false" onAction="#deleteSelectedQueries" />
 </AnchorPane>

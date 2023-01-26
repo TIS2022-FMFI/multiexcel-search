@@ -5,6 +5,7 @@ import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.MainController;
 import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
 import frontend.Controllers.HistoryControllers.HistoryMainController;
+import frontend.Controllers.UserManagementControllers.UserMainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,15 +41,18 @@ public class AdminMainController implements Initializable {
             MainController.setTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
             SESSION.setSearchTab(searchTab);
 
-            MainController.setTab("/frontend/FXML/UserManagementFXML/UserMain.fxml", userTab);
+            UserMainController umc = MainController.setTab("/frontend/FXML/UserManagementFXML/UserMain.fxml", userTab);
 
             mainTabPane.getSelectionModel().selectedItemProperty().addListener(
                     (o, oldTab, newTab) -> {
                         if (newTab.equals(historyTab))
                             hmc.refreshTable();
-                        if (newTab.equals(categoryTab))
+                        if (newTab.equals(categoryTab)){
                             cmc.updateCategoryList();
-
+                            cmc.clearPartsList();
+                        }
+                        if(newTab.equals(userTab))
+                            umc.updateList();
                     }
             );
         } catch (IOException e) {

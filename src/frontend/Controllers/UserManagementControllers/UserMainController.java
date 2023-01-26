@@ -29,7 +29,6 @@ public class UserMainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/userAddImage.png")).toExternalForm());
         addButton.setGraphic(imageView);
 

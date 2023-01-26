@@ -26,6 +26,11 @@ public class PartCell extends ListCell<PartBasic> {
 
     /**
      * constructor
+     *
+     * @param categoryMainController - refference to categoryMainController
+     * @param firstPage - if current page is first
+     * @param lastPage - if current page is last
+     * @param listSize - number of parts to show
      */
     public PartCell(CategoryMainController categoryMainController, Boolean firstPage, Boolean lastPage, Integer listSize) {
         super();

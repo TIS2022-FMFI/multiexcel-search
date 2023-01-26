@@ -108,7 +108,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/backImage.png")).toExternalForm());
         backButton.setGraphic(imageView);
 
-        ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/confirmImage.png")).toExternalForm());
+        ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/saveImage.png")).toExternalForm());
         confirmButton.setGraphic(imageView2);
 
         initializeAlignment();

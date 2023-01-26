@@ -36,14 +36,18 @@ public class CategoryMainController implements Initializable {
     public Button prevPageButton;
     public Button nextPageButton;
     public Label pageLabel;
+    public Label noPartsLabel;
     public Button addButton;
     private int currentPage = 1;
     private int pages;
     private Integer selectedCategoryId;
     private ObservableList<PartBasic> parts;
 
-    public static void refreshCategories() {
-        try {
+    /**
+     * refreshing categories after import
+     */
+    public static void refreshCategories(){
+        try{
             Platform.runLater(() -> {
                 FXMLLoader loader = new FXMLLoader(Class.class.getResource("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml"));
                 try {
@@ -67,11 +71,17 @@ public class CategoryMainController implements Initializable {
             currentPage = 1;
             Integer categoryId = categoryList.getSelectionModel().getSelectedItem().getCategory_id();
             selectedCategoryId = categoryId;
-            updatePartListAndPageLabel(categoryId);
-            pages = PartManager.getPartCountForCategoryId(categoryId) / itemsPerPage + 1;
-            if (pages > 1) {
-                nextPageButton.setVisible(true);
+            int partsCount = PartManager.getPartCountForCategoryId(categoryId);
+            pages = partsCount / itemsPerPage + 1;
+            if(partsCount == 0){
+                noPartsInCategory(categoryList.getSelectionModel().getSelectedItem().getCategory_name());
             }
+            else {
+                noPartsLabel.setVisible(false);
+                updatePartListAndPageLabel(categoryId);
+            }
+            nextPageButton.setVisible(pages > 1);
+            prevPageButton.setVisible(false);
         });
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/addImage.png")).toExternalForm());
@@ -92,6 +102,11 @@ public class CategoryMainController implements Initializable {
         categoryList.setCellFactory(x -> new CategoryCell(this));
     }
 
+    /**
+     * Updates parts ListView from database and pages
+     *
+     * @param categoryId - id of category
+     */
     public void updatePartListAndPageLabel(Integer categoryId) {
         pageLabel.setText(String.valueOf(currentPage));
 
@@ -103,7 +118,7 @@ public class CategoryMainController implements Initializable {
             if (currentPage == 1) {
                 itemCount++;
                 to--;
-            } else if (currentPage > 1 && currentPage < pages - 1) {
+            } else if (currentPage > 1 && currentPage < pages) {
                 offset--;
                 itemCount += 2;
                 from++;
@@ -143,6 +158,9 @@ public class CategoryMainController implements Initializable {
             controller.init(CategoryMainController.this);
     }
 
+    /**
+     * previous page of parts
+     */
     @FXML
     public void prevPage() {
         if (selectedCategoryId == null)
@@ -157,6 +175,9 @@ public class CategoryMainController implements Initializable {
         }
     }
 
+    /**
+     * next page of parts
+     */
     @FXML
     public void nextPage() {
         if (selectedCategoryId == null)
@@ -171,6 +192,11 @@ public class CategoryMainController implements Initializable {
         }
     }
 
+    /**
+     * increases rating of part
+     *
+     * @param part - part to increase
+     */
     public void onIncerasePartRating(PartBasic part) {
         int index = parts.indexOf(part);
         PartBasic part2 = parts.get(index - 1);
@@ -186,6 +212,11 @@ public class CategoryMainController implements Initializable {
         updatePartListAndPageLabel(selectedCategoryId);
     }
 
+    /**
+     * decreases rating of part
+     *
+     * @param part - part to decrease
+     */
     public void onDecreasePartRating(PartBasic part) {
         int index = parts.indexOf(part);
         PartBasic part2 = parts.get(index + 1);
@@ -201,14 +232,45 @@ public class CategoryMainController implements Initializable {
         updatePartListAndPageLabel(selectedCategoryId);
     }
 
+    /**
+     * clears partList
+     */
+    public void clearPartsList(){
+        nextPageButton.setVisible(false);
+        prevPageButton.setVisible(false);
+        currentPage = 0;
+        selectedCategoryId = null;
+        parts = FXCollections.observableArrayList();
+        partList.setItems(parts);
+        pages = 0;
+        pageLabel.setText("");
+    }
+
+    /**
+     * checks if prev page button and next page button are visible
+     */
     private void checkPageButtonsVisible() {
         prevPageButton.setVisible(currentPage != 1);
         nextPageButton.setVisible(currentPage != pages);
     }
 
-
+    /**
+     * swap of rating failed
+     */
     private void swapRatingFailedAlert() {
         MainController.showAlert(Alert.AlertType.INFORMATION, "INFO", "Swap ratings failed");
     }
 
+    /**
+     * shows if category has no parts
+     *
+     * @param categoryName - name of category
+     */
+    private void noPartsInCategory(String categoryName){
+        noPartsLabel.setText("Category " + categoryName + " has no parts");
+        noPartsLabel.setVisible(true);
+        parts = FXCollections.observableArrayList();
+        partList.setItems(parts);
+        pageLabel.setText("");
+    }
 }
