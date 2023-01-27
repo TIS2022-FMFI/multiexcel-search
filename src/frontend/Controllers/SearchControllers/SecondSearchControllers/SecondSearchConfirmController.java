@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SecondSearchConfirm implements Initializable {
+public class SecondSearchConfirmController implements Initializable {
     private List<Part> selectedParts;
 
 

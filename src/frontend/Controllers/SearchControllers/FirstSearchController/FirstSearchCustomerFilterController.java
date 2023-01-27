@@ -1,4 +1,4 @@
-package frontend.Controllers.SearchControllers.FirstSearch;
+package frontend.Controllers.SearchControllers.FirstSearchController;
 
 import backend.Entities.Customer;
 import backend.Managers.CustomerManager;

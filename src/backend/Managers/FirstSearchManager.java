@@ -78,7 +78,8 @@ public class FirstSearchManager {
                         subStatements.add("p." + propertyName + " BETWEEN ? AND ?");
                         statementValues.add(property.first);
                         statementValues.add(property.second);
-                        orders.add(new Pair<>("p." + propertyName, property.third));
+                        if (property.third != Integer.MAX_VALUE)
+                            orders.add(new Pair<>("p." + propertyName, property.third));
                     }
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.getMessage());
