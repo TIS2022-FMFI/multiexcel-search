@@ -51,7 +51,7 @@ public class UserAddController implements Initializable {
         String userName = userNameField.getText();
         String password = passwordField.getText();
 
-        ObservableList<User> allUsers = UserManager.getUsers(false);
+        ObservableList<User> allUsers = UserManager.getAllUsers(false);
 
         if (Objects.equals(userName, "")) {
             errorLabel.setText("Please enter user name");

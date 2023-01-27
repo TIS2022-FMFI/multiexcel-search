@@ -39,7 +39,7 @@ public class UserMainController implements Initializable {
      * Updates users ListView from database
      */
     public void updateList() {
-        ObservableList<User> enabledUsers = UserManager.getUsers(true);
+        ObservableList<User> enabledUsers = UserManager.getAllUsers(true);
         ObservableList<User> suspendedUsers = UserManager.getSuspendedUsers();
 
         if (enabledUsers != null) {
