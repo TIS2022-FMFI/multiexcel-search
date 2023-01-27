@@ -1,6 +1,7 @@
 package frontend.Controllers.AdminControllers;
 
 import backend.Models.MutablePair;
+import backend.Models.Triple;
 import backend.XLSImportExport.Import;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,13 +58,14 @@ public class ImportController implements Initializable {
         message.setText("Importing...");
 
         Thread t = new Thread(() -> {
-            MutablePair insertUpdate = new MutablePair(0, 0);
+            Triple<Integer, Integer, Integer> readInsertUpdate = new Triple<>(0,0,0);
             for (int i = 0; i < filesToImport.size(); i++) {
                 try {
                     XSSFWorkbook workbook = new XSSFWorkbook(filesToImport.get(i));
-                    MutablePair inUp = Import.uploadXLStoDBS(workbook);
-                    insertUpdate.first += inUp.first;
-                    insertUpdate.second += inUp.second;
+                    Triple<Integer, Integer, Integer> readInUp = Import.uploadXLStoDBS(workbook);
+                    readInsertUpdate.first += readInUp.first;
+                    readInsertUpdate.second += readInUp.second;
+                    readInsertUpdate.third += readInUp.third;
                     textsOfFiles.get(i).setFill(Color.GREEN);
                     textsOfFiles.get(i).setText(textsOfFiles.get(i).getText() + " - File imported correctly!");
                 } catch (IOException | InvalidFormatException e) {
@@ -74,7 +76,7 @@ public class ImportController implements Initializable {
                     textsOfFiles.get(i).setText(textsOfFiles.get(i).getText() + " - " + e.getMessage());
                 }
             }
-            message.setText("Parts inserted: " + insertUpdate.first + " Parts updated: " + insertUpdate.second);
+            message.setText("Parts read: " + readInsertUpdate.first + " Parts inserted: " + readInsertUpdate.second + " Parts updated: " + readInsertUpdate.third);
         });
         t.start();
     }
