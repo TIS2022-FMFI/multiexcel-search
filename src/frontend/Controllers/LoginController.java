@@ -7,13 +7,19 @@ import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class LoginController {
+    @FXML
+    private AnchorPane anchorPane;
     @FXML
     private TextField usernameField;
     @FXML
@@ -25,7 +31,7 @@ public class LoginController {
 
     @FXML
     private void initialize() {
-
+        setGlobalEventHandler(anchorPane);
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/loginImage.png")).toExternalForm());
         loginButton.setGraphic(imageView);
         // Initialize components and add event listeners
@@ -34,6 +40,15 @@ public class LoginController {
                 login(event);
             } catch (SQLException e) {
                 MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+            }
+        });
+    }
+
+    private void setGlobalEventHandler(Node root) {
+        root.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginButton.fire();
+                event.consume();
             }
         });
     }
