@@ -7,7 +7,7 @@ import backend.Managers.SecondSearchManager;
 import backend.Models.Constants;
 import backend.Models.Filterable;
 import backend.Sessions.SESSION;
-import backend.Wrappers.PartWrapper;
+import frontend.Wrappers.PartWrapper;
 import frontend.Controllers.AbstractControllers.FilterController;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;

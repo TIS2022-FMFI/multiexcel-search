@@ -19,6 +19,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 
 import java.math.BigInteger;
@@ -343,6 +344,14 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         currentSelectedIndexes.addAll(selectedIndexes);
         updateDeleteButton();
         System.out.printf("Selected indexes size %d. Selected indexes: %s%n", selectedIndexes.size(), selectedIndexes);
+    }
+
+    @FXML
+    public void openWithDoubleClick(MouseEvent event){
+        if (event.isPrimaryButtonDown() && event.getClickCount() == 2 && currentSelectedIndexes.size() == 1) {
+            openSelectedQuery();
+            System.out.printf("Doubleclicked: %s ; Selected indexes size %d. Selected indexes: %s%n", queries.get(currentSelectedIndex).getQuery().getQuery_id(), currentSelectedIndexes.size(), currentSelectedIndexes);
+        }
     }
 
     @FXML
