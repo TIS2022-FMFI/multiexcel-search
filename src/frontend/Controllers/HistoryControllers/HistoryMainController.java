@@ -469,9 +469,6 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         refreshTable();
     }
 
-    @Override
-    public void updateTable() {
-    }
 
     @Override
     public List<? extends Filterable> getParameters(Class<?> type) {

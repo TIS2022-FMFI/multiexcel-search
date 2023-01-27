@@ -24,7 +24,7 @@ public class SecondSearchEditCategory implements Initializable {
     @FXML
     public VBox scrollParameterFilter;
     ToggleGroup group = new ToggleGroup();
-    FilterMasterController filterMasterController;
+    SecondSearchController secondSearchController;
     Part part;
 
 
@@ -52,8 +52,8 @@ public class SecondSearchEditCategory implements Initializable {
         }
     }
 
-    public void setFilterMasterController(FilterMasterController filterMasterController) {
-        this.filterMasterController = filterMasterController;
+    public void setSecondSearchController(SecondSearchController secondSearchController) {
+        this.secondSearchController = secondSearchController;
     }
 
     public void onCancelAction(ActionEvent event) {
@@ -66,7 +66,7 @@ public class SecondSearchEditCategory implements Initializable {
         part.setCategory_id(CategoryManager.getCategoryId(radioButton.getText()));
         part.update();
 
-        filterMasterController.updateTable();
+        secondSearchController.updateTable();
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
