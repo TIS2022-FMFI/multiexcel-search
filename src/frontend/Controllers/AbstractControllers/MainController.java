@@ -131,7 +131,6 @@ public class MainController {
                 setMaxMinCurWH(stage, stage.getWidth(), stage.getHeight());
             }
             stage.centerOnScreen();
-            //System.err.printf("WxH = %f, %f %n",stage.getWidth(), stage.getHeight());
         } catch (IOException e) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }

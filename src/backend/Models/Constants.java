@@ -22,11 +22,10 @@ public class Constants {
     public static final String WINDOW_TITLE_EDIT_CATEGORY = "Edit categories";
 
     public static final Double WINDOW_LOGIN_WIDTH = 500.0;
-    public static final Double WINDOW_LOGIN_HEIGHT = 200.0;
+    public static final Double WINDOW_LOGIN_HEIGHT = 220.0;
 
     public static final String CHOOSE_PRIORITY = "Choose priority";
 
-    public static final String WITHOUT_CATEGORY = "Without category";
     public static final BigInteger WITHOUT_CATEGORY_ID = BigInteger.ONE;
 
 
