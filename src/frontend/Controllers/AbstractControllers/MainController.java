@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -49,6 +50,7 @@ public class MainController {
             Stage stage = new Stage();
             stage.setResizable(false);
             stage.setTitle(stageTitle);
+            setIcon(stage);
             stage.setScene(scene);
             stage.initOwner(SESSION.getHistoryTab().getContent().getScene().getWindow()); //SESSION.getHistoryTab().getContent().getScene().getWindow() will return main window, ok to use
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -58,6 +60,10 @@ public class MainController {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
             return null;
         }
+    }
+
+    public static void setIcon(Stage stage){
+        stage.getIcons().add(new Image(Objects.requireNonNull(Class.class.getResource("/frontend/Images/logo.png")).toExternalForm()));
     }
 
     /**
