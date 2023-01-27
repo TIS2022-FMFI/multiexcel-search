@@ -12,7 +12,7 @@ public class HistoryUserFilterController extends FilterController<User> {
 
     @Override
     protected List<User> getParameters() {
-        return UserManager.getUsers(false);
+        return UserManager.getAllUsers(false);
     }
 
     @Override

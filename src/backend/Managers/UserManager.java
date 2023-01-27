@@ -77,9 +77,9 @@ public class UserManager {
      * @param onlyActive set to True if you want only active accounts. False if all
      * @return List if succeeded otherwise returns NULL
      */
-    public static ObservableList<User> getUsers(boolean onlyActive) {
+    public static ObservableList<User> getAllUsers(boolean onlyActive) {
         try (
-                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users");
+                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users ORDER BY user_name");
                 ResultSet r = s.executeQuery()
         ) {
             ObservableList<User> allUsers = FXCollections.observableArrayList();

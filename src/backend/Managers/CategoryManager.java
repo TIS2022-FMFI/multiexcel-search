@@ -70,7 +70,7 @@ public class CategoryManager {
      * @return List of all Categories
      */
     public static ObservableList<Category> getAllCategories() {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories ORDER BY category_id")) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.categories ORDER BY category_name")) {
             try (ResultSet r = s.executeQuery()) {
                 ObservableList<Category> categories = FXCollections.observableArrayList();
                 while (r.next()) {
