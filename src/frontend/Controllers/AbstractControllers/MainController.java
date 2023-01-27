@@ -1,6 +1,7 @@
 package frontend.Controllers.AbstractControllers;
 
 import backend.Models.Constants;
+import backend.Sessions.SESSION;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -32,7 +34,7 @@ public class MainController {
     }
 
     /**
-     * Loads new stage with stageTitle from specified FXML
+     * Loads new stage with stageTitle from specified FXML (as modal window)
      *
      * @param fxmlDocPath fxml path to load FXML from
      * @param stageTitle  title of stage
@@ -48,6 +50,8 @@ public class MainController {
             stage.setResizable(false);
             stage.setTitle(stageTitle);
             stage.setScene(scene);
+            stage.initOwner(SESSION.getHistoryTab().getContent().getScene().getWindow()); //SESSION.getHistoryTab().getContent().getScene().getWindow() will return main window, ok to use
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
             return loader.getController();
         } catch (IOException e) {
