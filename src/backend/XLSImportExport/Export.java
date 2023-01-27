@@ -11,20 +11,25 @@ import backend.Managers.DrawingManager;
 import backend.Managers.PartNameManager;
 import frontend.Controllers.AbstractControllers.MainController;
 import javafx.scene.control.Alert;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Export {
     private final static short COLUMN_SIZE = 10000;
@@ -71,9 +76,8 @@ public class Export {
      */
     public static void exportPartsToXLS(List<Part> parts, String path) {
         try {
-            File tempalateXLS = new File(Objects.requireNonNull(Class.class.getResource(TEMPLATE_PATH)).toURI());
             File newXLS = new File(path);
-            Files.copy(tempalateXLS.toPath(), newXLS.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            FileUtils.copyInputStreamToFile(Objects.requireNonNull(Class.class.getResourceAsStream(TEMPLATE_PATH)), newXLS);
             XSSFWorkbook workbook = new XSSFWorkbook(Files.newInputStream(Paths.get(path)));
 
             int index = 1;
@@ -235,9 +239,10 @@ public class Export {
     private static void convertXLSToPdf(String inputPath, String outputPath) {
         try {
             Path tempScript = Files.createTempFile("script", ".vbs");
-            List<String> script = Files.readAllLines(Paths.get(Objects
-                    .requireNonNull(Class.class.getResource(PDF_CONVERT_SCRIPT_PATH))
-                    .toURI()));
+            List<String> script = new BufferedReader(new InputStreamReader(Objects.requireNonNull(
+                    Class.class.getResourceAsStream(PDF_CONVERT_SCRIPT_PATH)), StandardCharsets.UTF_8))
+                    .lines().collect(Collectors.toList());
+
 
             String origPath = Paths.get(inputPath).toAbsolutePath().toString();
             origPath = origPath.replace("\\", "\\\\");

@@ -1,7 +1,3 @@
-src/backend/testData.xlsx
-src/backend/export.pdf
-src/backend/export.xlsx
-
 /out/
 
 *.class
