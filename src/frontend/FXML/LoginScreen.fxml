@@ -5,7 +5,8 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="250" maxWidth="400" minHeight="250" minWidth="400"
             prefHeight="250.0"
             prefWidth="400.0" xmlns="http://javafx.com/fxml/8.0.161"
-            fx:controller="frontend.Controllers.LoginController">
+            fx:controller="frontend.Controllers.LoginController"
+            fx:id="anchorPane">
     <children>
         <Label layoutX="50.0" layoutY="55.0" text="Username:"/>
         <TextField fx:id="usernameField" layoutX="150.0" layoutY="50.0"/>
