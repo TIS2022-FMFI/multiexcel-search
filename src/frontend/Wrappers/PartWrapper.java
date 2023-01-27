@@ -8,8 +8,8 @@ import backend.Managers.DrawingManager;
 import backend.Managers.PartNameManager;
 import backend.Models.Constants;
 import backend.Sessions.SESSION;
-import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
+import frontend.Controllers.SearchControllers.SecondSearchControllers.SecondSearchController;
 import frontend.Controllers.SearchControllers.SecondSearchControllers.SecondSearchEditCategory;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.Button;
@@ -27,15 +27,13 @@ import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
 public class PartWrapper {
 
-    private Part part;
     private final Button button;
     private final CheckBox checkBox;
-
-    private final FilterMasterController filterMasterController;
-
+    private final SecondSearchController secondSearchController;
+    private Part part;
     private boolean isChecked = false;
 
-    public PartWrapper(Part part, FilterMasterController filterMasterController) {
+    public PartWrapper(Part part, SecondSearchController secondSearchController) {
 
         this.part = part;
 
@@ -47,7 +45,7 @@ public class PartWrapper {
             button.setDisable(true);
         }
         this.checkBox = new CheckBox();
-        this.filterMasterController = filterMasterController;
+        this.secondSearchController = secondSearchController;
 
         button.setOnAction(event -> {
 
@@ -56,14 +54,14 @@ public class PartWrapper {
 
                 SecondSearchEditCategory secondSearchEditCategory = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchEditCategory.fxml", Constants.WINDOW_TITLE_EDIT_CATEGORY);
                 secondSearchEditCategory.setPart(part);
-                secondSearchEditCategory.setFilterMasterController(filterMasterController);
+                secondSearchEditCategory.setSecondSearchController(secondSearchController);
 
             } else {
                 if (part.getCategory_id().equals(WITHOUT_CATEGORY_ID)) {
 
                     SecondSearchEditCategory secondSearchEditCategory = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchEditCategory.fxml", Constants.WINDOW_TITLE_EDIT_CATEGORY);
                     secondSearchEditCategory.setPart(part);
-                    secondSearchEditCategory.setFilterMasterController(filterMasterController);
+                    secondSearchEditCategory.setSecondSearchController(secondSearchController);
 
                 } else {
                     System.out.println("Zmena nie je mozna");

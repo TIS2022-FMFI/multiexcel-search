@@ -1,5 +1,6 @@
 package frontend.Controllers.SearchControllers.FirstSearchController;
 
+import backend.Entities.Category;
 import backend.Entities.Customer;
 import backend.Entities.Part_name;
 import backend.Managers.CriteriaManager;
@@ -37,10 +38,12 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     public Text errorMessage;
     public Button partNameFilter;
     public Button customerFilter;
+    public Button categoryFilter;
     public Button clearAllButton;
     public Button searchButton;
     List<Part_name> partNames = new ArrayList<>();
     List<Customer> customers = new ArrayList<>();
+    List<Category> categories = new ArrayList<>();
 
     @FXML
     private TextField diameterATFrom;
@@ -268,6 +271,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
         customers = criteria.getCustomers();
         partNames = criteria.getPartNames();
+        categories = criteria.getCategories();
 
         setDoubleTriple(criteria.getDiameter_AT(), diameterATFrom, diameterATTo, diameterATPriority);
         setDoubleTriple(criteria.getLength_L_AT(), lengthLATFrom, lengthLATTo, lengthLATPriority);
@@ -324,6 +328,14 @@ public class FirstSearchController implements Initializable, FilterMasterControl
                 Constants.WINDOW_TITLE_SEARCH_CUSTOMER_FILTER);
     }
 
+    @FXML
+    public void onClickCategoryFilterButton() {
+        FilterController.onClickFilterButton("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchCategoryFilter.fxml",
+                this,
+                Constants.WINDOW_TITLE_HISTORY_CATEGORY_FILTER);
+    }
+
+
     private Triple<Double, Double, Integer> getDoubleTripleFromUI(TextField from, TextField to, ChoiceBox<String> priority) {
         try {
             return CriteriaManager.getDoubleTriple(from.getText(), to.getText(), priority.getValue());
@@ -359,6 +371,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
         criteria.setCustomers(customers);
         criteria.setPartNames(partNames);
+        criteria.setCategories(categories);
 
         criteria.setDiameter_AT(getDoubleTripleFromUI(diameterATFrom, diameterATTo, diameterATPriority));
         criteria.setLength_L_AT(getDoubleTripleFromUI(lengthLATFrom, lengthLATTo, lengthLATPriority));
@@ -390,6 +403,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
                 .forEach(x -> ((ChoiceBox<?>) x).getSelectionModel().selectFirst());
         customers = null;
         partNames = null;
+        categories = null;
         setFilterStyle();
     }
 
@@ -397,6 +411,7 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     private void setFilterStyle() {
         setStyleBasedOnParameters(partNames, partNameFilter);
         setStyleBasedOnParameters(customers, customerFilter);
+        setStyleBasedOnParameters(categories, categoryFilter);
     }
 
     @Override
@@ -405,10 +420,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
             partNames = getConcreteParametersAndSetStyle(parameters, partNameFilter);
         else if (type.equals(Customer.class))
             customers = getConcreteParametersAndSetStyle(parameters, customerFilter);
-    }
-
-    @Override
-    public void updateTable() {
+        else if (type.equals(Category.class))
+            categories = getConcreteParametersAndSetStyle(parameters, categoryFilter);
     }
 
     @Override
@@ -417,6 +430,8 @@ public class FirstSearchController implements Initializable, FilterMasterControl
             return partNames;
         if (type.equals(Customer.class))
             return customers;
+        if (type.equals(Category.class))
+            return categories;
         return null;
     }
 }

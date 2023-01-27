@@ -347,7 +347,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     }
 
     @FXML
-    public void openWithDoubleClick(MouseEvent event){
+    public void openWithDoubleClick(MouseEvent event) {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2 && currentSelectedIndexes.size() == 1) {
             openSelectedQuery();
             System.out.printf("Doubleclicked: %s ; Selected indexes size %d. Selected indexes: %s%n", queries.get(currentSelectedIndex).getQuery().getQuery_id(), currentSelectedIndexes.size(), currentSelectedIndexes);
@@ -469,9 +469,6 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         refreshTable();
     }
 
-    @Override
-    public void updateTable() {
-    }
 
     @Override
     public List<? extends Filterable> getParameters(Class<?> type) {

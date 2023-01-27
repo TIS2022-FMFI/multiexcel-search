@@ -1,6 +1,5 @@
 package frontend.Controllers.SearchControllers.SecondSearchControllers;
 
-import backend.Entities.Category;
 import backend.Entities.Part;
 import backend.Managers.HistoryManager;
 import backend.Managers.PartManager;
@@ -21,15 +20,11 @@ import java.util.ResourceBundle;
 public class SecondSearchConfirmController implements Initializable {
     private List<Part> selectedParts;
 
-    private List<Category> categories;
 
     public void setSelectedParts(List<Part> selectedParts) {
         this.selectedParts = selectedParts;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -42,7 +37,7 @@ public class SecondSearchConfirmController implements Initializable {
 
     @FXML
     public void onClickConfirm(ActionEvent event) {
-        HistoryManager.saveSearchToHistory(SESSION.getCriteria(), selectedParts, categories);
+        HistoryManager.saveSearchToHistory(SESSION.getCriteria(), selectedParts);
         PartManager.IncreaseRating(selectedParts);
         SESSION.clearCriteria();
 

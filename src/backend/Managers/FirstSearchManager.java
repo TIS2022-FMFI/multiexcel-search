@@ -45,27 +45,33 @@ public class FirstSearchManager {
      */
     public static List<Part> search(Criteria criteria) {
         try {
-            StringBuilder statement = new StringBuilder("SELECT * FROM parts p LEFT JOIN part_names pn ON p.part_name_id = pn.part_name_id LEFT JOIN customers c ON p.customer_id = c.customer_id");
+            StringBuilder statement = new StringBuilder("SELECT * FROM parts p LEFT JOIN part_names pn ON p.part_name_id = pn.part_name_id LEFT JOIN customers c ON p.customer_id = c.customer_id LEFT JOIN categories ca ON p.category_id = ca.category_id");
             List<String> subStatements = new ArrayList<>();
             List<Object> statementValues = new ArrayList<>();
             List<Pair<String, Integer>> orders = new ArrayList<>();
 
             if (criteria.getPartNamesStrings() != null) {
                 subStatements.add("FIND_IN_SET( pn.part_name, ? ) > 0");
-                statementValues.add(String.join(", ", criteria.getPartNamesStrings()));
+                statementValues.add(String.join(",", criteria.getPartNamesStrings()));
             }
 
 
             if (criteria.getCustomersStrings() != null) {
                 subStatements.add("FIND_IN_SET( c.customer_name, ? ) > 0");
-                statementValues.add(String.join(", ", criteria.getCustomersStrings()));
+                statementValues.add(String.join(",", criteria.getCustomersStrings()));
+            }
+
+
+            if (criteria.getCategoriesStrings() != null) {
+                subStatements.add("FIND_IN_SET( ca.category_name, ? ) > 0");
+                statementValues.add(String.join(",", criteria.getCategoriesStrings()));
             }
 
             BeanInfo beanInfo = Introspector.getBeanInfo(Criteria.class);
             for (PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {
                 String propertyName = propertyDesc.getName();
                 try {
-                    if (Arrays.asList("partNames", "partNamesStrings", "customers", "customersStrings").contains(propertyName))
+                    if (Arrays.asList("partNames", "partNamesStrings", "customers", "customersStrings", "categories", "categoriesStrings").contains(propertyName))
                         continue;
                     if (BeanUtils.getProperty(criteria, propertyName) != null) {
                         Triple<Object, Object, Integer> property = (Triple<Object, Object, Integer>) PropertyUtils.getProperty(criteria, propertyName);
