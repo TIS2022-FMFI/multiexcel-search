@@ -97,8 +97,6 @@
     <Button fx:id="confirmButton" layoutX="1750.0" layoutY="15.0" mnemonicParsing="false"
             onAction="#onClickConfirmButton"/>
 
-    <Button layoutX="250.0" layoutY="70.0" mnemonicParsing="false" onAction="#onClickFilterByCategory"
-            text="Filter by Category" fx:id="categoryFilter"/>
     <Button fx:id="filterByPriorityButton" layoutX="400.0" layoutY="70.0" mnemonicParsing="false"
             onAction="#onClickFilterByPriority" text="Filter by Priority"/>
     <Button fx:id="filterByRatingButton" layoutX="550.0" layoutY="70.0" mnemonicParsing="false"

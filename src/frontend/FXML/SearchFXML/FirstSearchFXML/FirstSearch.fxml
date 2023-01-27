@@ -4,16 +4,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.161"
-            xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
+            xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.SearchControllers.FirstSearch.FirstSearchController">
     <children>
         <Button fx:id="partNameFilter" layoutX="418.0" layoutY="68.0" mnemonicParsing="false"
                 onAction="#onClickPartNameFilterButton" text="Filter by part name"/>
         <Button fx:id="customerFilter" layoutX="884.0" layoutY="68.0" mnemonicParsing="false"
                 onAction="#onClickCustomerFilterButton" text="Filter by customer"/>
-        <Button layoutX="1330.0" layoutY="68.0" mnemonicParsing="false" text="Filter by category"/> <!--customers-->
+        <Button fx:id="categoryFilter" layoutX="1330.0" layoutY="68.0" mnemonicParsing="false" text="Filter by category"
+                onAction="#onClickCategoryFilterButton"/> <!--customers-->
         <Button fx:id="searchButton" layoutX="1758.0" layoutY="52.0" mnemonicParsing="false"
                 onAction="#onClickSearchButton"/>
         <Button fx:id="clearAllButton" layoutX="75.0" layoutY="52.0" mnemonicParsing="false" onAction="#onClearButton"/>

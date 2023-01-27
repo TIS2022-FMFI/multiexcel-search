@@ -1,4 +1,4 @@
-package frontend.Controllers.SearchControllers.SecondSearchControllers;
+package frontend.Controllers.SearchControllers.FirstSearch;
 
 import backend.Entities.Category;
 import backend.Managers.CategoryManager;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SecondSearchFilterCategoryController extends FilterController<Category> {
+public class FirstSearchFilterCategoryController extends FilterController<Category> {
     @Override
     protected List<Category> getParameters() {
         return CategoryManager.getAllCategories();

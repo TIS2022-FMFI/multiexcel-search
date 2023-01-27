@@ -27,12 +27,10 @@ import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
 public class PartWrapper {
 
-    private Part part;
     private final Button button;
     private final CheckBox checkBox;
-
     private final FilterMasterController filterMasterController;
-
+    private Part part;
     private boolean isChecked = false;
 
     public PartWrapper(Part part, FilterMasterController filterMasterController) {

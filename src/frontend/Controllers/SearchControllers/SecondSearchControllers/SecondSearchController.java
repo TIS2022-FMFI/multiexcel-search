@@ -1,16 +1,14 @@
 package frontend.Controllers.SearchControllers.SecondSearchControllers;
 
-import backend.Entities.Category;
 import backend.Entities.Part;
 import backend.Managers.FirstSearchManager;
 import backend.Managers.SecondSearchManager;
 import backend.Models.Constants;
 import backend.Models.Filterable;
 import backend.Sessions.SESSION;
-import frontend.Wrappers.PartWrapper;
-import frontend.Controllers.AbstractControllers.FilterController;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
+import frontend.Wrappers.PartWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-
-import static backend.Managers.CategoryManager.getAllCategories;
 
 public class SecondSearchController implements Initializable, FilterMasterController {
 
@@ -84,7 +80,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     public TableColumn<PartWrapper, String> col_diameter_zt_tol;
     public TableColumn<PartWrapper, String> col_length_l_zt_tol;
 
-    public Button categoryFilter;
     public Button backButton;
     public Button confirmButton;
     public Button filterByRatingButton;
@@ -92,10 +87,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
 
     private List<Part> resultOfFirstSearch;
-    private List<Category> categories;
-    private List<Category> categoriesFromFilter;
 
-    private List<Part> partsAfterFilter;
     private ObservableList<PartWrapper> parts;
 
 
@@ -103,7 +95,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     public void initialize(URL location, ResourceBundle resources) {
 
         resultOfFirstSearch = FirstSearchManager.search(SESSION.getCriteria());
-        categories = getAllCategories();
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/backImage.png")).toExternalForm());
         backButton.setGraphic(imageView);
@@ -200,7 +191,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         SecondSearchConfirm secondSearchConfirm = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
         assert secondSearchConfirm != null;
         secondSearchConfirm.setSelectedParts(selectedParts());
-        secondSearchConfirm.setCategories(getCategories());
     }
 
     @FXML
@@ -208,9 +198,6 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         MainController.switchTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", SESSION.getSearchTab());
     }
 
-    public List<Category> getCategories() {
-        return categories;
-    }
 
     public void setVisiblePartNumber() {
         col_part_number.setVisible(check_part_number.isSelected());
@@ -305,25 +292,8 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     }
 
     @FXML
-    public void onClickFilterByCategory() {
-        FilterController.onClickFilterButton("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchCategoryFilter.fxml",
-                this,
-                Constants.WINDOW_TITLE_HISTORY_CATEGORY_FILTER);
-    }
-
-    @FXML
     public void onClickFilterByPriority() {
-
-        if (partsAfterFilter == null || partsAfterFilter.isEmpty()) {
-            partsAfterFilter = SecondSearchManager.sortByPriority(resultOfFirstSearch, categories, SESSION.getCriteria());
-        } else {
-            partsAfterFilter = SecondSearchManager.sortByPriority(partsAfterFilter, categories, SESSION.getCriteria());
-        }
-
-        if (partsAfterFilter == null) {
-            System.out.println("NULL");
-            return;
-        }
+        SecondSearchManager.sortByPriority(resultOfFirstSearch, SESSION.getCriteria());
 
         filterByPriorityButton.setStyle("-fx-background-color: #8a8f96");
         refreshTable();
@@ -331,11 +301,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
     @FXML
     public void onClickFilterByRating() {
-        if (partsAfterFilter == null || partsAfterFilter.isEmpty()) {
-            partsAfterFilter = SecondSearchManager.sortByRating(resultOfFirstSearch, categories);
-        } else {
-            partsAfterFilter = SecondSearchManager.sortByRating(partsAfterFilter, categories);
-        }
+        SecondSearchManager.sortByRating(resultOfFirstSearch);
 
         filterByRatingButton.setStyle("-fx-background-color: #8a8f96");
         refreshTable();
@@ -343,37 +309,18 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
     @Override
     public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-        if (type.equals(Category.class)) {
-            List<Category> concreteCategories = getConcreteParametersAndSetStyle(parameters, categoryFilter);
-            if (concreteCategories == null)
-                categories = getAllCategories();
-            else
-                categories = concreteCategories;
-
-            categoriesFromFilter = concreteCategories;
-
-            partsAfterFilter = SecondSearchManager.filterByCategories(resultOfFirstSearch, categories);
-            refreshTable();
-        }
     }
 
     @Override
     public void updateTable() {
         parts.retainAll();
 
-        if (partsAfterFilter == null || partsAfterFilter.isEmpty()) {
-            for (Part p : resultOfFirstSearch) {
-                parts.add(new PartWrapper(p, this));
-            }
-            table_parts.setItems(parts);
-        } else {
-            refreshTable();
-        }
+        refreshTable();
     }
 
     @Override
     public List<? extends Filterable> getParameters(Class<?> type) {
-        return categoriesFromFilter;
+        return null;
     }
 
 
@@ -381,7 +328,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
 
         parts.retainAll();
 
-        for (Part p : partsAfterFilter) {
+        for (Part p : resultOfFirstSearch) {
             parts.add(new PartWrapper(p, this));
         }
 
