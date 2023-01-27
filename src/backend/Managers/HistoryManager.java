@@ -34,11 +34,10 @@ public class HistoryManager {
     /**
      * Add search and selected parts to History
      *
-     * @param criteria   criteria by which the first search was commenced
-     * @param parts      selected parts
-     * @param categories categories by which the results where filtered
+     * @param criteria criteria by which the first search was commenced
+     * @param parts    selected parts
      */
-    public static void saveSearchToHistory(Criteria criteria, List<Part> parts, List<Category> categories) {
+    public static void saveSearchToHistory(Criteria criteria, List<Part> parts) {
         try {
             DBS.getConnection().setAutoCommit(false);
 
@@ -56,13 +55,16 @@ public class HistoryManager {
                 partQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
                 partQuery.insert();
             }
-
-            for (Category category : categories) {
-                Category_query categoryQuery = new Category_query();
-                categoryQuery.setCategory_id(BigInteger.valueOf(category.getCategory_id()));
-                categoryQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
-                categoryQuery.insert();
+            
+            if (criteria.getCategories() != null){
+                for (Category category : criteria.getCategories()) {
+                    Category_query categoryQuery = new Category_query();
+                    categoryQuery.setCategory_id(BigInteger.valueOf(category.getCategory_id()));
+                    categoryQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
+                    categoryQuery.insert();
+                }
             }
+
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);
         } catch (SQLException e) {

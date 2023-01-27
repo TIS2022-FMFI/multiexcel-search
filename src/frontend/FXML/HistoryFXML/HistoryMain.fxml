@@ -5,7 +5,8 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="1080.0" prefWidth="1920.0"
             xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.HistoryControllers.HistoryMainController">
-    <TableView fx:id="table_queries" layoutX="50.0" layoutY="110.0" onMouseClicked="#getSelected" onMousePressed="#openWithDoubleClick" prefHeight="750.0"
+    <TableView fx:id="table_queries" layoutX="50.0" layoutY="110.0" onMouseClicked="#getSelected"
+               onMousePressed="#openWithDoubleClick" prefHeight="750.0"
                prefWidth="1851.0">
         <columns>
             <TableColumn fx:id="col_username" editable="false" prefWidth="101" sortable="false"
