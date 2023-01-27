@@ -35,7 +35,7 @@ public class SESSION {
         SESSION.user = user;
     }
 
-    public static void clear() {
+    public static void clearUser() {
         user = null;
     }
 
@@ -88,7 +88,8 @@ public class SESSION {
 
     public static void logout(ActionEvent event) {
         MainController.replaceStageByEvent("/frontend/FXML/LoginScreen.fxml", Constants.WINDOW_TITLE_LOGIN, event, true);
-        clear();
+        clearUser();
+        clearCriteria();
     }
 
 }

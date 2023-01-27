@@ -197,7 +197,7 @@ public class SecondSearchController implements Initializable, FilterMasterContro
     @FXML
     public void onClickConfirmButton() {
 
-        SecondSearchConfirm secondSearchConfirm = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
+        SecondSearchConfirmController secondSearchConfirm = MainController.setNewStage("/frontend/FXML/SearchFXML/SecondSearchFXML/SecondSearchConfirm.fxml", Constants.WINDOW_TITLE_CONFIRM_SEARCH);
         assert secondSearchConfirm != null;
         secondSearchConfirm.setSelectedParts(selectedParts());
         secondSearchConfirm.setCategories(getCategories());
