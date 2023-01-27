@@ -1,4 +1,4 @@
-package frontend.Controllers.SearchControllers.FirstSearchController;
+package frontend.Controllers.FilterControllers;
 
 import backend.Entities.Customer;
 import backend.Managers.CustomerManager;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class
-FirstSearchCustomerFilterController extends FilterController<Customer> {
+CustomerFilterController extends FilterController<Customer> {
     @Override
     protected List<Customer> getParameters() {
         return CustomerManager.getAllCustomers();

@@ -1,4 +1,4 @@
-package frontend.Controllers.HistoryControllers;
+package frontend.Controllers.FilterControllers;
 
 import backend.Entities.User;
 import backend.Managers.UserManager;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class HistoryUserFilterController extends FilterController<User> {
+public class UserFilterController extends FilterController<User> {
 
     @Override
     protected List<User> getParameters() {
