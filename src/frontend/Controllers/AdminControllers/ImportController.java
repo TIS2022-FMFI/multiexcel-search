@@ -1,6 +1,5 @@
 package frontend.Controllers.AdminControllers;
 
-import backend.Models.MutablePair;
 import backend.Models.Triple;
 import backend.XLSImportExport.Import;
 import javafx.fxml.FXML;
@@ -58,7 +57,7 @@ public class ImportController implements Initializable {
         message.setText("Importing...");
 
         Thread t = new Thread(() -> {
-            Triple<Integer, Integer, Integer> readInsertUpdate = new Triple<>(0,0,0);
+            Triple<Integer, Integer, Integer> readInsertUpdate = new Triple<>(0, 0, 0);
             for (int i = 0; i < filesToImport.size(); i++) {
                 try {
                     XSSFWorkbook workbook = new XSSFWorkbook(filesToImport.get(i));

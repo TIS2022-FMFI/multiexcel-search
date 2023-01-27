@@ -1,5 +1,6 @@
 package backend.Models;
 
+import backend.Entities.Category;
 import backend.Entities.Customer;
 import backend.Entities.Part_name;
 
@@ -10,6 +11,9 @@ public class Criteria {
 
     private List<Part_name> partNames;
     private List<Customer> customers;
+
+
+    private List<Category> categories;
     private Triple<Short, Short, Integer> rubber = null;
     private Triple<Double, Double, Integer> diameter_AT = null;
     private Triple<Double, Double, Integer> length_L_AT = null;
@@ -51,6 +55,20 @@ public class Criteria {
             return null;
         return partNames.stream().map(Part_name::getPart_name).collect(Collectors.toList());
 
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public List<String> getCategoriesStrings() {
+        if (categories == null)
+            return null;
+        return categories.stream().map(Category::getCategory_name).collect(Collectors.toList());
     }
 
     public Triple<Short, Short, Integer> getRubber() {
