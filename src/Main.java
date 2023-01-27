@@ -4,7 +4,6 @@ import frontend.Controllers.AbstractControllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -28,7 +27,7 @@ public class Main extends Application {
                     prop.getProperty("password"));
             DBS.setConnection(connection);
         } catch (SQLException | IOException e) {
-            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+            throw new RuntimeException(e);
         }
         Application.launch();
     }
@@ -42,8 +41,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.setWidth(Constants.WINDOW_LOGIN_WIDTH);
         stage.setHeight(Constants.WINDOW_LOGIN_HEIGHT);
+        MainController.setIcon(stage);
         stage.setResizable(false);
-        //stage.setOnCloseRequest(event -> Platform.exit());
         stage.setTitle(Constants.WINDOW_TITLE_LOGIN);
         stage.show();
     }
