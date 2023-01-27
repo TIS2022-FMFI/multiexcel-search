@@ -47,6 +47,22 @@ public class CategoryManager {
         }
 
     }
+    /**
+     * Returns total amount of categories from database //(Without category excluded)
+     *
+     * @return total amount of categories //(Without category excluded i.e. -1)
+     */
+    public static Integer getCount() {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT count(*) count FROM categories")) {
+            ResultSet rs = s.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");//-1;// Wihtout category doesn't count
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+        return null;
+    }
 
     /**
      * Returns all categories from database
