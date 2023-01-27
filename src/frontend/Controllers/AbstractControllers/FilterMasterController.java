@@ -10,7 +10,6 @@ public interface FilterMasterController {
 
     void setParameters(List<? extends Filterable> parameters, Class<?> type);
 
-    void updateTable();
 
     List<? extends Filterable> getParameters(Class<?> type);
 

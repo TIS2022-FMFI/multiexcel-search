@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class SecondSearchController implements Initializable, FilterMasterController {
+public class SecondSearchController implements Initializable {
 
     public CheckBox check_part_number;
     public CheckBox check_customer;
@@ -307,20 +307,10 @@ public class SecondSearchController implements Initializable, FilterMasterContro
         refreshTable();
     }
 
-    @Override
-    public void setParameters(List<? extends Filterable> parameters, Class<?> type) {
-    }
-
-    @Override
     public void updateTable() {
         parts.retainAll();
 
         refreshTable();
-    }
-
-    @Override
-    public List<? extends Filterable> getParameters(Class<?> type) {
-        return null;
     }
 
 
