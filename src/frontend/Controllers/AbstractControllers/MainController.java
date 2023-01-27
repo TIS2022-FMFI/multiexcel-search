@@ -62,6 +62,10 @@ public class MainController {
         }
     }
 
+    /**
+     * Sets logo to stage
+     * @param stage specified stage
+     */
     public static void setIcon(Stage stage){
         stage.getIcons().add(new Image(Objects.requireNonNull(Class.class.getResource("/frontend/Images/logo.png")).toExternalForm()));
     }
