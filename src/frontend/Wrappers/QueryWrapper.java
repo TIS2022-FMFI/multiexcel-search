@@ -1,4 +1,4 @@
-package backend.Wrappers;
+package frontend.Wrappers;
 
 import backend.Entities.Category;
 import backend.Entities.Category_query;

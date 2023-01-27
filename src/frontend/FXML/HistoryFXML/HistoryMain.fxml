@@ -10,7 +10,7 @@
         <columns>
             <TableColumn fx:id="col_username" editable="false" prefWidth="101" sortable="false"
                          style="-fx-alignment: CENTER;" text="User"/>
-            <TableColumn fx:id="col_categories" editable="false" prefWidth="382" sortable="false"
+            <TableColumn fx:id="col_categories" editable="false" prefWidth="380" sortable="false"
                          style="-fx-alignment: CENTER;" text="Categories"/>
             <TableColumn fx:id="col_rubber" editable="false" prefWidth="101" sortable="false"
                          style="-fx-alignment: CENTER;" text="Rubber"/>

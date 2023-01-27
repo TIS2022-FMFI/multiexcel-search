@@ -11,7 +11,7 @@ import backend.Sessions.SESSION;
 import frontend.Controllers.AbstractControllers.FilterController;
 import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
-import backend.Wrappers.QueryWrapper;
+import frontend.Wrappers.QueryWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
