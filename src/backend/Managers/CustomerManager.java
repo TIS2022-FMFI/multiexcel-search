@@ -73,7 +73,7 @@ public class CustomerManager {
      * @return List of all Customers
      */
     public static List<Customer> getAllCustomers() {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.customers")) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.customers ORDER BY customer_name")) {
             try (ResultSet r = s.executeQuery()) {
                 List<Customer> customers = new ArrayList<>();
                 while (r.next()) {

@@ -79,7 +79,7 @@ public class UserManager {
      */
     public static ObservableList<User> getUsers(boolean onlyActive) {
         try (
-                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users");
+                PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.users ORDER BY user_name");
                 ResultSet r = s.executeQuery()
         ) {
             ObservableList<User> allUsers = FXCollections.observableArrayList();

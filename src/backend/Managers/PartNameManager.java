@@ -77,7 +77,7 @@ public class PartNameManager {
      * @return List of all Part names
      */
     public static List<Part_name> getAllPartNames() {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.part_names")) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM multiexcel.part_names ORDER BY part_name")) {
             try (ResultSet r = s.executeQuery()) {
                 List<Part_name> partNames = new ArrayList<>();
                 while (r.next()) {
