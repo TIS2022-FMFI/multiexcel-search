@@ -7,7 +7,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
             minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0"
             xmlns="http://javafx.com/javafx/8.0.161"
-            fx:controller="frontend.Controllers.SearchControllers.FirstSearch.FirstSearchController">
+            fx:controller="frontend.Controllers.SearchControllers.FirstSearchController.FirstSearchController">
     <children>
         <Button fx:id="partNameFilter" layoutX="418.0" layoutY="68.0" mnemonicParsing="false"
                 onAction="#onClickPartNameFilterButton" text="Filter by part name"/>
