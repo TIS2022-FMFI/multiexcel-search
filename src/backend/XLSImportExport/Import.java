@@ -3,7 +3,7 @@ package backend.XLSImportExport;
 
 import backend.Entities.Part;
 import backend.Managers.*;
-import backend.Models.MutablePair;
+import backend.Models.Triple;
 import backend.Sessions.DBS;
 import backend.Sessions.PartCountSession;
 import frontend.Controllers.AbstractControllers.MainController;
@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Import {
-    final static int PASSED = -1;
 
     private static String checkCell(String cell) {
         if (cell == null || cell.equals("") || cell.equals("-"))
@@ -105,7 +104,7 @@ public class Import {
      * @return number of Parts that were inserted and updated
      * @throws RuntimeException - throws exception with line on which the reading of the document failed
      */
-    public static MutablePair uploadXLStoDBS(XSSFWorkbook XLSFile) throws RuntimeException {
+    public static Triple<Integer, Integer, Integer> uploadXLStoDBS(XSSFWorkbook XLSFile) throws RuntimeException {
         XSSFSheet sheet = XLSFile.getSheetAt(0);
         DataFormatter dataFormatter = new DataFormatter();
         XSSFDrawing dp = sheet.createDrawingPatriarch();
@@ -113,8 +112,8 @@ public class Import {
 
         Iterator<Row> rowIterator = sheet.rowIterator();
         rowIterator.next();
-        int index = 0;
-        MutablePair insertUpdate = new MutablePair(0, 0);
+        int index = 1;
+        Triple<Integer, Integer, Integer> readInsertUpdate = new Triple<>(0, 0, 0);
         try {
             DBS.getConnection().setAutoCommit(false);
 
@@ -239,15 +238,17 @@ public class Import {
 
                     if (partInDatabse == null || !PartManager.getPartByPartNumber(part.getPart_number()).equals(part))
                         if (part.upsert()) {
-                            insertUpdate.second++;
+                            readInsertUpdate.third++;
                         } else {
-                            insertUpdate.first++;
+                            readInsertUpdate.second++;
                         }
+                    readInsertUpdate.first++;
                 } catch (SQLException ignored) {
                     DBS.getConnection().rollback();
                     DBS.getConnection().setAutoCommit(true);
                     throw new RuntimeException("Database error at line: " + index);
                 } catch (Exception ignored) {
+                    DBS.getConnection().rollback();
                     DBS.getConnection().setAutoCommit(true);
                     throw new RuntimeException("Error at line: " + index);
                 }
@@ -260,6 +261,6 @@ public class Import {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
         }
 
-        return insertUpdate;
+        return readInsertUpdate;
     }
 }
