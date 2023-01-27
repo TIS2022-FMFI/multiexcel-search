@@ -40,7 +40,7 @@ public class QueryWrapper {
         }
 
         if (category_queries.size() == 0) {
-            return "<none>";
+            return "-";
         }
 
         List<String> displayedCategories = new ArrayList<>();
@@ -55,6 +55,11 @@ public class QueryWrapper {
             }
             displayedCategories.add(categoryIdToName.get(cq.getCategory_id()));
         }
+
+        if(CategoryManager.getCount() == displayedCategories.size()){
+            return "All categories";
+        }
+
         return String.join(", ", displayedCategories);
     }
 
