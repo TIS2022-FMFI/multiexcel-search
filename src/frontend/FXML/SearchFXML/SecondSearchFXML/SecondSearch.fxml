@@ -85,8 +85,8 @@
             <TableColumn fx:id="col_length_l_zt_tol" editable="false" prefWidth="130.0" sortable="false"
                          text="Length L ZT TOL"/>
 
-            <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="90.0" sortable="false" text="Cr steg"/>
-            <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="90.0" sortable="false" text="Cr niere"/>
+            <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="100.0" sortable="false" text="Cr steg"/>
+            <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="100.0" sortable="false" text="Cr niere"/>
             <TableColumn fx:id="col_ca" editable="false" prefWidth="90.0" sortable="false" text="Ca"/>
             <TableColumn fx:id="col_ct" editable="false" prefWidth="90.0" sortable="false" text="Ct"/>
             <TableColumn fx:id="col_ck" editable="false" prefWidth="90.0" sortable="false" text="Ck"/>
