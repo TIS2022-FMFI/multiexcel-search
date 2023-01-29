@@ -86,9 +86,9 @@
             <!--TableColumn fx:id="col_rating" editable="false" prefWidth="75.0" sortable="false" text="Rating" /-->
         </columns>
     </TableView>
-    <Button layoutX="100.0" layoutY="70.0" mnemonicParsing="false" text="Export selection to Excel"
+    <Button layoutX="100.0" layoutY="70.0" mnemonicParsing="false" text="Export to Excel"
             onAction="#exportToExcel"/>
-    <Button layoutX="300.0" layoutY="70.0" mnemonicParsing="false" text="Export selection to PDF"
+    <Button layoutX="300.0" layoutY="70.0" mnemonicParsing="false" text="Export to PDF"
             onAction="#exportToPdf"/>
     <Button fx:id="backButton" layoutX="10.0" layoutY="25.0" onAction="#openHistoryFXML" mnemonicParsing="false"/>
 </AnchorPane>

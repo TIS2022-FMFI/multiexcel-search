@@ -11,10 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
@@ -97,6 +94,7 @@ public class SecondSearchController implements Initializable {
 
         ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/saveImage.png")).toExternalForm());
         confirmButton.setGraphic(imageView2);
+        confirmButton.setTooltip(new Tooltip("Save selected parts"));
 
         initializeAlignment();
         initializeController();
@@ -365,4 +363,18 @@ public class SecondSearchController implements Initializable {
 
         table_parts.setItems(parts);
     }
+
+    public void enableConfirmButton() {
+
+        int counter = selectedParts().size();
+
+        if (counter == 0) {
+            confirmButton.setDisable(true);
+            return;
+        }
+        
+        confirmButton.setDisable(false);
+    }
 }
+
+

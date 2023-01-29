@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -302,11 +303,13 @@ public class FirstSearchController implements Initializable, FilterMasterControl
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/clearAllImage.png")).toExternalForm());
+        ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/mopImage.png")).toExternalForm());
         clearAllButton.setGraphic(imageView);
+        clearAllButton.setTooltip(new Tooltip("Clear all filters"));
 
         ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/searchImage.png")).toExternalForm());
         searchButton.setGraphic(imageView2);
+        searchButton.setTooltip(new Tooltip("Search"));
 
         setupHandlers();
         setupValues();

@@ -15,10 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
@@ -79,12 +76,13 @@ public class CategoryMainController implements Initializable {
                 noPartsLabel.setVisible(false);
                 updatePartListAndPageLabel(categoryId);
             }
-            nextPageButton.setVisible(pages > 1);
-            prevPageButton.setVisible(false);
+            nextPageButton.setDisable(pages <= 1);
+            prevPageButton.setDisable(true);
         });
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/addImage.png")).toExternalForm());
         addButton.setGraphic(imageView);
+        addButton.setTooltip(new Tooltip("Add new category"));
 
         updateCategoryList();
     }
@@ -107,7 +105,7 @@ public class CategoryMainController implements Initializable {
      * @param categoryId - id of category
      */
     public void updatePartListAndPageLabel(Integer categoryId) {
-        pageLabel.setText(String.valueOf(currentPage));
+        pageLabel.setText("Page " + currentPage + " / " + pages);
 
         int offset = (currentPage - 1) * itemsPerPage;
         int itemCount = itemsPerPage;
@@ -166,12 +164,7 @@ public class CategoryMainController implements Initializable {
             return;
         currentPage--;
         updatePartListAndPageLabel(selectedCategoryId);
-
         checkPageButtonsVisible();
-
-        if (Objects.equals(currentPage, pages - 1)) {
-            nextPageButton.setVisible(true);
-        }
     }
 
     /**
@@ -183,12 +176,7 @@ public class CategoryMainController implements Initializable {
             return;
         currentPage++;
         updatePartListAndPageLabel(selectedCategoryId);
-
         checkPageButtonsVisible();
-
-        if (Objects.equals(currentPage, pages)) {
-            nextPageButton.setVisible(false);
-        }
     }
 
     /**
@@ -233,22 +221,23 @@ public class CategoryMainController implements Initializable {
      * clears partList
      */
     public void clearPartsList() {
-        nextPageButton.setVisible(false);
-        prevPageButton.setVisible(false);
+        nextPageButton.setDisable(true);
+        prevPageButton.setDisable(true);
         currentPage = 0;
         selectedCategoryId = null;
         parts = FXCollections.observableArrayList();
         partList.setItems(parts);
         pages = 0;
-        pageLabel.setText("");
+        pageLabel.setText("Page 0 / 0");
+        noPartsLabel.setText("");
     }
 
     /**
      * checks if prev page button and next page button are visible
      */
     private void checkPageButtonsVisible() {
-        prevPageButton.setVisible(currentPage != 1);
-        nextPageButton.setVisible(currentPage != pages);
+        prevPageButton.setDisable(currentPage == 1);
+        nextPageButton.setDisable(currentPage == pages);
     }
 
     /**
@@ -261,6 +250,6 @@ public class CategoryMainController implements Initializable {
         noPartsLabel.setVisible(true);
         parts = FXCollections.observableArrayList();
         partList.setItems(parts);
-        pageLabel.setText("");
+        pageLabel.setText("Page 0 / 0");
     }
 }

@@ -78,6 +78,8 @@ public class PartWrapper {
             if (!checkBox.isSelected()) {
                 isChecked = false;
             }
+
+            secondSearchController.enableConfirmButton();
         });
 
 
