@@ -164,24 +164,24 @@ public class HistoryDetailsController implements Initializable {
         col_part_name.setCellValueFactory(f -> createPartNameWrapperFromPartNumber(f.getValue().getPart_name_id()));
         col_category_name.setCellValueFactory(f -> createCategoryNameWrapperFromCategoryID(f.getValue().getCategory_id()));
         col_drawing.setCellValueFactory(new PropertyValueFactory<>("image"));
-        col_rubber.setCellValueFactory(new PropertyValueFactory<>("rubber"));
-        col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("diameter_AT"));
+        col_rubber.setCellValueFactory(new PropertyValueFactory<>("RubberString"));
+        col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("DiameterATString"));
         col_diameter_at_tol.setCellValueFactory(new PropertyValueFactory<>("diameter_AT_tol"));
-        col_length_l_at.setCellValueFactory(new PropertyValueFactory<>("length_L_AT"));
+        col_length_l_at.setCellValueFactory(new PropertyValueFactory<>("LengthLATString"));
         col_length_l_at_tol.setCellValueFactory(new PropertyValueFactory<>("length_L_AT_tol"));
-        col_diameter_it.setCellValueFactory(new PropertyValueFactory<>("diameter_IT"));
+        col_diameter_it.setCellValueFactory(new PropertyValueFactory<>("DiameterITString"));
         col_diameter_it_tol.setCellValueFactory(new PropertyValueFactory<>("diameter_IT_tol"));
-        col_length_l_it.setCellValueFactory(new PropertyValueFactory<>("length_L_IT"));
+        col_length_l_it.setCellValueFactory(new PropertyValueFactory<>("LengthLITString"));
         col_length_l_it_tol.setCellValueFactory(new PropertyValueFactory<>("length_L_IT_tol"));
-        col_diameter_zt.setCellValueFactory(new PropertyValueFactory<>("diameter_ZT"));
+        col_diameter_zt.setCellValueFactory(new PropertyValueFactory<>("DiameterZTString"));
         col_diameter_zt_tol.setCellValueFactory(new PropertyValueFactory<>("diameter_ZT_tol"));
-        col_length_l_zt.setCellValueFactory(new PropertyValueFactory<>("length_L_ZT"));
+        col_length_l_zt.setCellValueFactory(new PropertyValueFactory<>("LengthLZTString"));
         col_length_l_zt_tol.setCellValueFactory(new PropertyValueFactory<>("length_L_ZT_tol"));
-        col_cr_steg.setCellValueFactory(new PropertyValueFactory<>("cr_steg"));
-        col_cr_niere.setCellValueFactory(new PropertyValueFactory<>("cr_niere"));
-        col_ca.setCellValueFactory(new PropertyValueFactory<>("ca"));
-        col_ct.setCellValueFactory(new PropertyValueFactory<>("ct"));
-        col_ck.setCellValueFactory(new PropertyValueFactory<>("ck"));
+        col_cr_steg.setCellValueFactory(new PropertyValueFactory<>("CrStegString"));
+        col_cr_niere.setCellValueFactory(new PropertyValueFactory<>("CrNiereString"));
+        col_ca.setCellValueFactory(new PropertyValueFactory<>("CaValueString"));
+        col_ct.setCellValueFactory(new PropertyValueFactory<>("CtValueString"));
+        col_ck.setCellValueFactory(new PropertyValueFactory<>("CkValueString"));
     }
 
     private void populateTable() {
