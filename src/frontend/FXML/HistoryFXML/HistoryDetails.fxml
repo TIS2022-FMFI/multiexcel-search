@@ -62,24 +62,30 @@
             <TableColumn fx:id="col_drawing" editable="false" prefWidth="200.0" sortable="false" text="Drawing"/>
             <TableColumn fx:id="col_rubber" editable="false" prefWidth="75.0" sortable="false" text="Rubber"/>
 
-            <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="100.0" sortable="false" text="Diameter AT"/>
+            <TableColumn fx:id="col_diameter_at" editable="false" prefWidth="100.0" sortable="false"
+                         text="Diameter AT"/>
             <TableColumn fx:id="col_diameter_at_tol" editable="false" prefWidth="140.0" sortable="false"
                          text="Diameter AT TOL"/>
-            <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="100.0" sortable="false" text="Length L AT"/>
+            <TableColumn fx:id="col_length_l_at" editable="false" prefWidth="100.0" sortable="false"
+                         text="Length L AT"/>
             <TableColumn fx:id="col_length_l_at_tol" editable="false" prefWidth="130.0" sortable="false"
                          text="Length L AT TOL"/>
 
-            <TableColumn fx:id="col_diameter_it" editable="false" prefWidth="100.0" sortable="false" text="Diameter IT"/>
+            <TableColumn fx:id="col_diameter_it" editable="false" prefWidth="100.0" sortable="false"
+                         text="Diameter IT"/>
             <TableColumn fx:id="col_diameter_it_tol" editable="false" prefWidth="130.0" sortable="false"
                          text="Diameter IT TOL"/>
-            <TableColumn fx:id="col_length_l_it" editable="false" prefWidth="100.0" sortable="false" text="Length L IT"/>
+            <TableColumn fx:id="col_length_l_it" editable="false" prefWidth="100.0" sortable="false"
+                         text="Length L IT"/>
             <TableColumn fx:id="col_length_l_it_tol" editable="false" prefWidth="130.0" sortable="false"
                          text="Length L IT TOL"/>
 
-            <TableColumn fx:id="col_diameter_zt" editable="false" prefWidth="100.0" sortable="false" text="Diameter ZT"/>
+            <TableColumn fx:id="col_diameter_zt" editable="false" prefWidth="100.0" sortable="false"
+                         text="Diameter ZT"/>
             <TableColumn fx:id="col_diameter_zt_tol" editable="false" prefWidth="130.0" sortable="false"
                          text="Diameter ZT TOL"/>
-            <TableColumn fx:id="col_length_l_zt" editable="false" prefWidth="100.0" sortable="false" text="Length L ZT"/>
+            <TableColumn fx:id="col_length_l_zt" editable="false" prefWidth="100.0" sortable="false"
+                         text="Length L ZT"/>
             <TableColumn fx:id="col_length_l_zt_tol" editable="false" prefWidth="130.0" sortable="false"
                          text="Length L ZT TOL"/>
 

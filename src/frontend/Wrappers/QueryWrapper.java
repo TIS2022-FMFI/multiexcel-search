@@ -56,7 +56,7 @@ public class QueryWrapper {
             displayedCategories.add(categoryIdToName.get(cq.getCategory_id()));
         }
 
-        if(CategoryManager.getCount() == displayedCategories.size()){
+        if (CategoryManager.getCount() == displayedCategories.size()) {
             return "All categories";
         }
 

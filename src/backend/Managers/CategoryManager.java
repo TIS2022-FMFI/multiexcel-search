@@ -47,6 +47,7 @@ public class CategoryManager {
         }
 
     }
+
     /**
      * Returns total amount of categories from database //(Without category excluded)
      *

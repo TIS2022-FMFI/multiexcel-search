@@ -55,8 +55,8 @@ public class HistoryManager {
                 partQuery.setQuery_id(BigInteger.valueOf(query.getQuery_id()));
                 partQuery.insert();
             }
-            
-            if (criteria.getCategories() != null){
+
+            if (criteria.getCategories() != null) {
                 for (Category category : criteria.getCategories()) {
                     Category_query categoryQuery = new Category_query();
                     categoryQuery.setCategory_id(BigInteger.valueOf(category.getCategory_id()));

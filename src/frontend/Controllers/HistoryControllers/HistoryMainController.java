@@ -106,6 +106,19 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     private HistorySession historySession;
     private boolean ignorePageCalculation = false;
 
+    public static void refreshTab() {
+        try {
+            FXMLLoader loader = new FXMLLoader(Class.class.getResource("/frontend/FXML/HistoryFXML/HistoryMain.fxml"));
+
+            AnchorPane root = loader.load();
+            SESSION.getHistoryTab().setContent(root);
+            HistoryMainController hmc = loader.getController();
+            hmc.refreshTable();
+        } catch (IOException e) {
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         isAdmin = SESSION.getSession().getUser_name().equals("admin");
@@ -220,7 +233,6 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     private boolean isNextValidIndexForward() {
         return (currentPageIndex + 1 < maxPagesIndex);
     }
-
 
     private boolean isNextValidIndexBackward() {
         return (currentPageIndex - 1 >= 0);
@@ -428,19 +440,6 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         calculatePageIndexesAndUpdate();
         updatePageButtonsDisabledStatus();
         //System.out.println("Performed table refresh!");
-    }
-
-    public static void refreshTab(){
-        try {
-            FXMLLoader loader = new FXMLLoader(Class.class.getResource("/frontend/FXML/HistoryFXML/HistoryMain.fxml"));
-
-            AnchorPane root = loader.load();
-            SESSION.getHistoryTab().setContent(root);
-            HistoryMainController hmc = loader.getController();
-            hmc.refreshTable();
-        } catch (IOException e){
-            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
-        }
     }
 
     @FXML

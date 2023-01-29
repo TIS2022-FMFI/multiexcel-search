@@ -86,11 +86,11 @@ public class SecondSearchManager {
                 try {
                     Object val1 = PropertyUtils.getProperty(o1, order.getKey());
                     Object val2 = PropertyUtils.getProperty(o2, order.getKey());
-                    if(Objects.equals(val1, val2))
+                    if (Objects.equals(val1, val2))
                         return 0;
-                    else if(val2 != null && val1 == null)
+                    else if (val2 != null && val1 == null)
                         return 1;
-                    else if(val2 == null)
+                    else if (val2 == null)
                         return -1;
                     else {
                         if (val1 instanceof Integer) {
