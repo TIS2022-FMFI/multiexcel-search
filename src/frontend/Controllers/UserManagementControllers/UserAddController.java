@@ -18,10 +18,11 @@ import java.util.ResourceBundle;
 public class UserAddController implements Initializable {
 
     public TextField userNameField;
-    public PasswordField passwordField;
     public Button addButton;
     public Button closeButton;
     public Label errorLabel;
+    public PasswordField passwordField1;
+    public PasswordField passwordField2;
 
     private UserMainController mainController;
 
@@ -49,7 +50,8 @@ public class UserAddController implements Initializable {
     @FXML
     private void addUser() {
         String userName = userNameField.getText();
-        String password = passwordField.getText();
+        String password1 = passwordField1.getText();
+        String password2 = passwordField2.getText();
 
         ObservableList<User> allUsers = UserManager.getAllUsers(false);
 
@@ -58,8 +60,13 @@ public class UserAddController implements Initializable {
             return;
         }
 
-        if (Objects.equals(password, "")) {
+        if (Objects.equals(password1, "") || Objects.equals(password2, "")) {
             errorLabel.setText("Please enter password");
+            return;
+        }
+
+        if (!Objects.equals(password1, password2)) {
+            errorLabel.setText("Passwords do not match");
             return;
         }
 
@@ -72,7 +79,7 @@ public class UserAddController implements Initializable {
             }
         }
 
-        if (!UserManager.addUser(userName, password, false)) {
+        if (!UserManager.addUser(userName, password1, false)) {
             errorLabel.setText("Adding user has failed");
             return;
         }
