@@ -14,14 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static backend.Models.Constants.WITHOUT_CATEGORY_ID;
 
 public class PartManager {
-    public static Integer count;
-
     private static Double check(Double d) {
         return d == 0 ? null : d;
     }

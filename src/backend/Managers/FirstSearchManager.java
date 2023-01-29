@@ -91,7 +91,7 @@ public class FirstSearchManager {
 
             if (!orders.isEmpty()) {
                 statement.append(" ORDER BY");
-                orders.sort(Collections.reverseOrder(Comparator.comparingInt(Pair::getValue)));
+                orders.sort(Comparator.comparingInt(Pair::getValue));
                 for (Pair<String, Integer> order : orders) {
                     statement.append(" ").append(order.getKey()).append(" DESC");
                     if (order != orders.get(orders.size() - 1))

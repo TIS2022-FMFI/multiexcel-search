@@ -52,7 +52,7 @@ public class SecondSearchManager {
                 } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException ignored) {
                 }
             }
-            orders.sort(Collections.reverseOrder(Comparator.comparingInt(Pair::getValue)));
+            orders.sort(Comparator.comparingInt(Pair::getValue));
 
             PriorityComparator priorityComparator = new PriorityComparator();
             parts.sort(priorityComparator);
