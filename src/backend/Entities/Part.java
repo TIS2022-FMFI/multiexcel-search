@@ -344,4 +344,66 @@ public class Part {
         Part part = (Part) o;
         return Objects.equals(part_number, part.part_number) && Objects.equals(customer_id, part.customer_id) && Objects.equals(part_name_id, part.part_name_id) && Objects.equals(category_id, part.category_id) && Objects.equals(drawing_id, part.drawing_id) && Objects.equals(rubber, part.rubber) && Objects.equals(diameter_AT, part.diameter_AT) && Objects.equals(diameter_AT_tol, part.diameter_AT_tol) && Objects.equals(length_L_AT, part.length_L_AT) && Objects.equals(length_L_AT_tol, part.length_L_AT_tol) && Objects.equals(diameter_IT, part.diameter_IT) && Objects.equals(diameter_IT_tol, part.diameter_IT_tol) && Objects.equals(length_L_IT, part.length_L_IT) && Objects.equals(length_L_IT_tol, part.length_L_IT_tol) && Objects.equals(diameter_ZT, part.diameter_ZT) && Objects.equals(diameter_ZT_tol, part.diameter_ZT_tol) && Objects.equals(length_L_ZT, part.length_L_ZT) && Objects.equals(length_L_ZT_tol, part.length_L_ZT_tol) && Objects.equals(cr_steg, part.cr_steg) && Objects.equals(cr_niere, part.cr_niere) && Objects.equals(ca, part.ca) && Objects.equals(ct, part.ct) && Objects.equals(ck, part.ck);
     }
+
+    public String getRubberString() {
+        if (getRubber() == null) return "";
+        return getRubber() + " ShA";
+    }
+
+    public String getDiameterATString() {
+        if (getDiameter_AT() == null) return "";
+        return "Ø " + getDiameter_AT();
+    }
+
+    public String getLengthLATString() {
+        if (getLength_L_AT() == null) return "";
+        return "Ø " + getLength_L_AT();
+    }
+
+    public String getDiameterITString() {
+        if (getDiameter_IT() == null) return "";
+        return "Ø " + getDiameter_IT();
+    }
+
+    public String getLengthLITString() {
+        if (getLength_L_IT() == null) return "";
+        return "Ø " + getLength_L_IT();
+    }
+
+    public String getDiameterZTString() {
+        if (getDiameter_ZT() == null) return "";
+        return "Ø " + getDiameter_ZT();
+    }
+
+    public String getLengthLZTString() {
+        if (getLength_L_ZT() == null) return "";
+        return "Ø " + getLength_L_ZT();
+    }
+
+    public String getCrStegString() {
+        if (getCr_steg() == null) return "";
+        return getCr_steg() + " N/mm";
+    }
+
+    public String getCrNiereString() {
+        if (getCr_niere() == null) return "";
+        return getCr_niere() + " N/mm";
+    }
+
+    public String getCaValueString() {
+        if (getCa() == null) return "";
+        return getCa() + " N/mm";
+    }
+
+    public String getCtValueString() {
+        if (getCt() == null) return "";
+        return getCt() + " Nm/°";
+    }
+
+    public String getCkValueString() {
+        if (getCk() == null) return "";
+        return getCk() + " Nm/°";
+    }
+
+
 }
