@@ -26,16 +26,16 @@ public class BasicMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            HistoryMainController hmc = MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
+            MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
             MainController.setTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
-            SESSION.setSearchTab(searchTab);
+            user
 
             mainTabPane.getSelectionModel().selectedItemProperty().addListener(
                     (o, oldTab, newTab) -> {
                         if (newTab.equals(historyTab))
-                            hmc.refreshTable();
+                            HistoryMainController.refreshTab();
                     }
             );
         } catch (IOException e) {

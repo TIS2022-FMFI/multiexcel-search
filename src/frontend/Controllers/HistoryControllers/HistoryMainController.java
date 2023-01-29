@@ -15,13 +15,16 @@ import frontend.Wrappers.QueryWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Date;
@@ -423,6 +426,19 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         calculatePageIndexesAndUpdate();
         updatePageButtonsDisabledStatus();
         System.out.println("Performed table refresh!");
+    }
+
+    public static void refreshTab(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Class.class.getResource("/frontend/FXML/HistoryFXML/HistoryMain.fxml"));
+
+            AnchorPane root = loader.load();
+            SESSION.getHistoryTab().setContent(root);
+            HistoryMainController hmc = loader.getController();
+            hmc.refreshTable();
+        } catch (IOException e){
+            MainController.showAlert(Alert.AlertType.ERROR, "ERROR", e.toString());
+        }
     }
 
     @FXML
