@@ -472,7 +472,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
             }
         } catch (SQLException sqlException) {
             MainController.showAlert(Alert.AlertType.ERROR, "ERROR", sqlException.toString());
-            System.err.printf("Error occured during selection removeal in HistoryMainController::deleteSelectionConfirmed()%n.Tried deleting items from: %s", queries);
+//            System.err.printf("Error occured during selection removeal in HistoryMainController::deleteSelectionConfirmed()%n.Tried deleting items from: %s", queries);
         }
     }
 
