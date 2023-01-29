@@ -196,7 +196,7 @@ public class HistoryManager {
 
         sqlString += String.format("ORDER BY date DESC LIMIT %d, %d", pageNumber * itemsPerPage, itemsPerPage);
         //sqlString+= "ORDER BY date ASC LIMIT " + pageNumber * itemsPerPage + ", " + itemsPerPage;
-        System.out.println("Filtered List Query: " + sqlString);
+        //System.out.println("Filtered List Query: " + sqlString);
         try (
                 PreparedStatement s = DBS.getConnection().prepareStatement(sqlString);
                 ResultSet r = s.executeQuery()
@@ -254,7 +254,7 @@ public class HistoryManager {
         String sqlString = "";
         sqlString += createQueryString(categories, dateFromTo, users);
 
-        System.out.println("Filtered Count Query: " + sqlString);
+        //System.out.println("Filtered Count Query: " + sqlString);
         try (
                 PreparedStatement s = DBS.getConnection().prepareStatement(sqlString);
                 ResultSet r = s.executeQuery()

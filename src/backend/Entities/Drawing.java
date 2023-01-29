@@ -36,8 +36,8 @@ public class Drawing {
             try (ResultSet r = s.getGeneratedKeys()) {
                 r.next();
                 drawing_id = r.getInt(1);
-                if (drawing_id == 129)
-                    System.out.println();
+//                if (drawing_id == 129)
+//                    System.out.println();
             }
         }
     }

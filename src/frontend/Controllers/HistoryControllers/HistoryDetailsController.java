@@ -191,7 +191,7 @@ public class HistoryDetailsController implements Initializable {
     private void populateTable() {
         initializeParts();
         table_parts.setItems(FXCollections.observableArrayList(parts));
-        System.out.println("Populated table!");
+        //System.out.println("Populated table!");
     }
 
     private ReadOnlyStringWrapper createCustomerNameWrapperFromCustomerID(BigInteger customerId) {
@@ -240,7 +240,7 @@ public class HistoryDetailsController implements Initializable {
     private void initializeParts() {
         parts = new ArrayList<>();
         if (historySession.getSelectedQuery() == null) {
-            System.err.println("Passed query is null, cannot recover id. HistoryDetailsController::initializeParts()");
+            //System.err.println("Passed query is null, cannot recover id. HistoryDetailsController::initializeParts()");
             return;
         }
         int queryId = historySession.getSelectedQuery().getQuery_id();
@@ -248,10 +248,11 @@ public class HistoryDetailsController implements Initializable {
         List<Part> queryParts = PartManager.GetPartsByQueryId(queryId);
         if (queryParts != null) {
             parts = queryParts;
-            System.out.printf("Requested parts associated with queryId = %d.%n Parts size: %d.%n Parts: [ %s ]", queryId, queryParts.size(), queryParts);
-        } else {
-            System.err.println("requested parts returned null");
+            //System.out.printf("Requested parts associated with queryId = %d.%n Parts size: %d.%n Parts: [ %s ]", queryId, queryParts.size(), queryParts);
         }
+//        else {
+//            System.err.println("requested parts returned null");
+//        }
     }
 
     @FXML

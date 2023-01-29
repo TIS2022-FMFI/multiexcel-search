@@ -64,9 +64,10 @@ public abstract class FilterController<T extends Filterable> implements Initiali
     void onConfirmAction(ActionEvent event) {
         if (masterController != null) {
             masterController.setParameters(collectCheckedParameters(), type);
-        } else {
-            System.err.println("historyMainController == null");
         }
+//        else {
+//            System.err.println("historyMainController == null");
+//        }
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 
