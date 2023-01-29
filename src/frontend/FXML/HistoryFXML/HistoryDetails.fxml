@@ -54,6 +54,8 @@
         <columns>
             <TableColumn fx:id="col_customer_name" editable="false" prefWidth="100.0" sortable="false"
                          text="Customer"/>
+            <TableColumn fx:id="col_part_number" editable="false" prefWidth="150.0" sortable="false"
+                         text="Part number"/>
             <TableColumn fx:id="col_part_name" editable="false" prefWidth="180.0" sortable="false"
                          text="Part"/>
             <TableColumn fx:id="col_category_name" editable="false" prefWidth="180.0" sortable="false" text="Category"/>

@@ -54,6 +54,8 @@ public class HistoryDetailsController implements Initializable {
     public CheckBox check_ck;
     public Button backButton;
     @FXML
+    public TableColumn<Part, String> col_part_number;
+    @FXML
     private TableColumn<Part, String> col_customer_name;
     @FXML
     private TableColumn<Part, String> col_part_name;
@@ -135,6 +137,7 @@ public class HistoryDetailsController implements Initializable {
     public void initializeAlignment() {
 
         col_customer_name.setStyle("-fx-alignment: CENTER");
+        col_part_number.setStyle("-fx-alignment: CENTER");
         col_part_name.setStyle("-fx-alignment: CENTER");
         col_category_name.setStyle("-fx-alignment: CENTER");
         col_drawing.setStyle("-fx-alignment: CENTER");
@@ -165,6 +168,7 @@ public class HistoryDetailsController implements Initializable {
         col_category_name.setCellValueFactory(f -> createCategoryNameWrapperFromCategoryID(f.getValue().getCategory_id()));
         col_drawing.setCellValueFactory(new PropertyValueFactory<>("image"));
         col_rubber.setCellValueFactory(new PropertyValueFactory<>("RubberString"));
+        col_part_number.setCellValueFactory(new PropertyValueFactory<>("part_number"));
         col_diameter_at.setCellValueFactory(new PropertyValueFactory<>("DiameterATString"));
         col_diameter_at_tol.setCellValueFactory(new PropertyValueFactory<>("diameter_AT_tol"));
         col_length_l_at.setCellValueFactory(new PropertyValueFactory<>("LengthLATString"));
