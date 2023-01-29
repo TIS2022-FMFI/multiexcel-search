@@ -63,9 +63,10 @@ public class PartWrapper {
                     secondSearchEditCategory.setPart(part);
                     secondSearchEditCategory.setSecondSearchController(secondSearchController);
 
-                } else {
-                    System.out.println("Zmena nie je mozna");
                 }
+//                else {
+//                    System.out.println("Zmena nie je mozna");
+//                }
             }
         });
 

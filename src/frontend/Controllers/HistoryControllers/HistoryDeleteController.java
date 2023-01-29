@@ -27,9 +27,10 @@ public class HistoryDeleteController implements Initializable {
         if (historyMainController != null) {
             historyMainController.deleteSelectionConfirmed();
             historyMainController.refreshTable();
-        } else {
-            System.err.println("historyMainController == null");
         }
+//        else {
+//            System.err.println("historyMainController == null");
+//        }
         ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
     }
 

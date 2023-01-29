@@ -163,18 +163,18 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
         refreshTable();
 
-        System.out.println("Current page index: " + currentPageIndex + ". Max page index: " + maxPagesIndex);
+        //System.out.println("Current page index: " + currentPageIndex + ". Max page index: " + maxPagesIndex);
 
         date_picker_from.setOnAction(event -> {
             if (date_picker_from.getValue() != null) {
-                System.out.printf("Selected from date: %s%n", Date.valueOf(date_picker_from.getValue()));
+                //System.out.printf("Selected from date: %s%n", Date.valueOf(date_picker_from.getValue()));
                 filter();
             }
         });
 
         date_picker_to.setOnAction(event -> {
             if (date_picker_to.getValue() != null) {
-                System.out.printf("Selected TO date: %s%n", Date.valueOf(date_picker_to.getValue()));
+                //System.out.printf("Selected TO date: %s%n", Date.valueOf(date_picker_to.getValue()));
                 filter();
             }
         });
@@ -255,7 +255,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         historySession.setUserIdToName(userIdToName);
         historySession.setCurrentPageIndex(currentPageIndex);
         historySession.setCategoryIdToName(categoryIdToName);
-        System.out.println("Filter data saved to HistorySession");
+        //System.out.println("Filter data saved to HistorySession");
     }
 
     private void loadFiltersAndSelectedQuery() {
@@ -280,7 +280,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         if (historySession.getCategoryIdToName() != null) {
             categoryIdToName = historySession.getCategoryIdToName();
         }
-        System.out.println("Filter data loaded from HistorySession");
+        //System.out.println("Filter data loaded from HistorySession");
         historySession.removeSessionData();
     }
 
@@ -290,7 +290,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         updateTableContent();
         calculatePageIndexesAndUpdate();
         updatePageButtonsDisabledStatus();
-        System.out.println("Updated filters, page buttons and table");
+        //System.out.println("Updated filters, page buttons and table");
     }
 
     @FXML
@@ -365,12 +365,13 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public void onNextPageButtonClick() {
         if (isNextValidIndexForward()) {
             currentPageIndex++;
-            System.out.printf("Moved from page %d to page %d.%n", currentPageIndex - 1, currentPageIndex);
+            //System.out.printf("Moved from page %d to page %d.%n", currentPageIndex - 1, currentPageIndex);
             updateTableContent();
             updatePageTextLabel();
-        } else {
-            System.out.println("No next page availible!");
         }
+//        else {
+//            System.out.println("No next page availible!");
+//        }
         updatePageButtonsDisabledStatus();
     }
 
@@ -378,12 +379,13 @@ public class HistoryMainController implements Initializable, FilterMasterControl
     public void onPreviousPageButtonClick() {
         if (isNextValidIndexBackward()) {
             currentPageIndex--;
-            System.out.printf("Moved from page %d to page %d.%n", currentPageIndex + 1, currentPageIndex);
+            //System.out.printf("Moved from page %d to page %d.%n", currentPageIndex + 1, currentPageIndex);
             updateTableContent();
             updatePageTextLabel();
-        } else {
-            System.out.println("No previous page availible!");
         }
+//        else {
+//            System.out.println("No previous page availible!");
+//        }
         updatePageButtonsDisabledStatus();
     }
 
@@ -425,7 +427,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         updateTableContent();
         calculatePageIndexesAndUpdate();
         updatePageButtonsDisabledStatus();
-        System.out.println("Performed table refresh!");
+        //System.out.println("Performed table refresh!");
     }
 
     public static void refreshTab(){
@@ -446,13 +448,13 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         resetFilters();
         date_picker_from.setValue(null);
         date_picker_to.setValue(null);
-        System.out.println("Filters cleared!");
+        //System.out.println("Filters cleared!");
         refreshTable();
     }
 
     @FXML
     public void openSelectedQuery() {
-        System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery().getQuery_id());
+        //System.out.printf("Opening query id: %d.%n", queries.get(currentSelectedIndex).getQuery().getQuery_id());
         saveCurrentFiltersAndSelectedQuery();
         openHistoryDetailFXML();
     }
