@@ -32,7 +32,7 @@ public class AdminMainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            HistoryMainController hmc = MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
+            MainController.setTab("/frontend/FXML/HistoryFXML/HistoryMain.fxml", historyTab);
             SESSION.setHistoryTab(historyTab);
 
             CategoryMainController cmc = MainController.setTab("/frontend/FXML/CategoryManagementFXML/CategoryMain.fxml", categoryTab);
@@ -46,7 +46,7 @@ public class AdminMainController implements Initializable {
             mainTabPane.getSelectionModel().selectedItemProperty().addListener(
                     (o, oldTab, newTab) -> {
                         if (newTab.equals(historyTab))
-                            hmc.refreshTable();
+                            HistoryMainController.refreshTab();
                         if (newTab.equals(categoryTab)) {
                             cmc.updateCategoryList();
                             cmc.clearPartsList();
