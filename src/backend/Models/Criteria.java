@@ -65,7 +65,7 @@ public class Criteria {
 
     }
 
-    public boolean hasPriorities(){
+    public boolean hasPriorities() {
         try {
             BeanInfo beanInfo = Introspector.getBeanInfo(Criteria.class);
             for (PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {

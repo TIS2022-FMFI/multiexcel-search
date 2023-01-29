@@ -3,7 +3,6 @@ package frontend.Controllers.SearchControllers.SecondSearchControllers;
 import backend.Entities.Category;
 import backend.Entities.Part;
 import backend.Managers.CategoryManager;
-import frontend.Controllers.AbstractControllers.FilterMasterController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

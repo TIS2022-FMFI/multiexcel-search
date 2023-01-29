@@ -16,7 +16,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class SecondSearchController implements Initializable {
 
@@ -99,11 +102,10 @@ public class SecondSearchController implements Initializable {
         initializeAlignment();
         initializeController();
 
-        if(!SESSION.getCriteria().hasPriorities()){
+        if (!SESSION.getCriteria().hasPriorities()) {
             orderByPriorityEnabled = false;
             orderByPriorityButton.setDisable(true);
-        }
-        else{
+        } else {
             orderByPriorityEnabled = true;
             orderByPriorityChecked = true;
             orderByPriorityButton.setStyle("-fx-background-color: #8a8f96");
@@ -298,7 +300,7 @@ public class SecondSearchController implements Initializable {
 
     @FXML
     public void onClickOrderByPriority() {
-        if(!orderByPriorityEnabled || orderByPriorityChecked)
+        if (!orderByPriorityEnabled || orderByPriorityChecked)
             return;
 
         SecondSearchManager.sortByPriority(resultOfFirstSearch, SESSION.getCriteria());
@@ -312,17 +314,17 @@ public class SecondSearchController implements Initializable {
 
     @FXML
     public void onClickOrderByRating() {
-        if(orderByPriorityEnabled && orderByRatingChecked)
+        if (orderByPriorityEnabled && orderByRatingChecked)
             return;
-        if(orderByRatingChecked){
+        if (orderByRatingChecked) {
             resultOfFirstSearch.sort((o1, o2) -> {
                 Double val1 = o1.getDiameter_AT();
                 Double val2 = o2.getDiameter_AT();
-                if(Objects.equals(val1, val2))
+                if (Objects.equals(val1, val2))
                     return 0;
-                if(val2 != null && val1 == null)
+                if (val2 != null && val1 == null)
                     return 1;
-                else if(val2 == null)
+                else if (val2 == null)
                     return -1;
                 else {
                     return Double.compare(o2.getDiameter_AT(), o1.getDiameter_AT());
@@ -337,7 +339,7 @@ public class SecondSearchController implements Initializable {
         SecondSearchManager.sortByRating(resultOfFirstSearch);
 
         orderByRatingButton.setStyle("-fx-background-color: #8a8f96");
-        if(orderByPriorityEnabled){
+        if (orderByPriorityEnabled) {
             orderByPriorityChecked = false;
             orderByPriorityButton.setStyle("-fx-base: #f2f2f2");
         }
@@ -372,7 +374,7 @@ public class SecondSearchController implements Initializable {
             confirmButton.setDisable(true);
             return;
         }
-        
+
         confirmButton.setDisable(false);
     }
 }

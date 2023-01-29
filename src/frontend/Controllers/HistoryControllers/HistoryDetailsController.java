@@ -25,8 +25,6 @@ import java.math.BigInteger;
 import java.net.URL;
 import java.util.*;
 
-import static backend.Models.Constants.*;
-
 public class HistoryDetailsController implements Initializable {
     @FXML
     public TableView<Part> table_parts;
