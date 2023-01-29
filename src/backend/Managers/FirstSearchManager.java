@@ -19,10 +19,7 @@ import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class FirstSearchManager {
     private static Double check(Double d) {
@@ -100,6 +97,9 @@ public class FirstSearchManager {
                     if (order != orders.get(orders.size() - 1))
                         statement.append(",");
                 }
+            }
+            else{
+                statement.append(" ORDER BY diameter_AT DESC");
             }
 
             PreparedStatement s = DBS.getConnection().prepareStatement(statement.toString());

@@ -3,7 +3,15 @@ package backend.Models;
 import backend.Entities.Category;
 import backend.Entities.Customer;
 import backend.Entities.Part_name;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,6 +63,28 @@ public class Criteria {
             return null;
         return partNames.stream().map(Part_name::getPart_name).collect(Collectors.toList());
 
+    }
+
+    public boolean hasPriorities(){
+        try {
+            BeanInfo beanInfo = Introspector.getBeanInfo(Criteria.class);
+            for (PropertyDescriptor propertyDesc : beanInfo.getPropertyDescriptors()) {
+                try {
+                    String propertyName = propertyDesc.getName();
+
+                    if (Arrays.asList("partNames", "partNamesStrings", "customers", "customersStrings", "categories", "categoriesStrings").contains(propertyName))
+                        continue;
+                    if (BeanUtils.getProperty(this, propertyName) != null) {
+                        Triple<Object, Object, Integer> property = (Triple<Object, Object, Integer>) PropertyUtils.getProperty(this, propertyName);
+                        if (property.third != Integer.MAX_VALUE)
+                            return true;
+                    }
+                } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException ignored) {
+                }
+            }
+        } catch (IntrospectionException ignored) {
+        }
+        return false;
     }
 
     public List<Category> getCategories() {
