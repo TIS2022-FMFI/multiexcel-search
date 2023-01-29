@@ -13,6 +13,6 @@
             prefHeight="30.0" prefWidth="130.0" text="Add cateogry"/>
     <Button fx:id="closeButton" layoutX="54.0" layoutY="143.0" mnemonicParsing="false" onAction="#Close"
             prefHeight="30.0" prefWidth="130.0" text="Back"/>
-    <Text layoutX="54.0" layoutY="63.0" text="Category name"/>
+    <Text layoutX="54.0" layoutY="63.0" text="Category name:"/>
     <Label fx:id="errorLabel" layoutX="54.0" layoutY="83.0" prefHeight="30.0" prefWidth="474.0" textFill="#ff0000"/>
 </AnchorPane>

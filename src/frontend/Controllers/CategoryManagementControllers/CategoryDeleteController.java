@@ -1,11 +1,10 @@
 package frontend.Controllers.CategoryManagementControllers;
 
 import backend.Managers.CategoryManager;
-import frontend.Controllers.AbstractControllers.MainController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -17,6 +16,7 @@ public class CategoryDeleteController implements Initializable {
     public Text deleteTextArea;
     public Button deleteButton;
     public Button closeButton;
+    public Label errorLabel;
 
     private CategoryMainController mainController;
     private Integer categoryIdToDelete;
@@ -45,7 +45,7 @@ public class CategoryDeleteController implements Initializable {
     @FXML
     public void deleteCategory() {
         if (!CategoryManager.deleteCategory(categoryIdToDelete)) {
-            MainController.showAlert(Alert.AlertType.ERROR, "Failure", "Deleting category has failed");
+            errorLabel.setText("Deleting category has failed");
             return;
         }
         Stage stage = (Stage) deleteButton.getScene().getWindow();
