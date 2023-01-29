@@ -194,7 +194,7 @@ public class HistoryDetailsController implements Initializable {
         if (!idToCustomerName.containsKey(customerId)) {
             Customer customer = CustomerManager.getCustomer(customerId);
             if (customer == null) {
-                return new ReadOnlyStringWrapper(CUSTOMER_NAME_NOT_FOUND);
+                return new ReadOnlyStringWrapper();
             }
             idToCustomerName.put(customerId, customer.getCustomer_name());
         }
@@ -206,7 +206,7 @@ public class HistoryDetailsController implements Initializable {
         if (!idToCategoryName.containsKey(categoryId)) {
             Category category = CategoryManager.getCategory(categoryId);
             if (category == null) {
-                return new ReadOnlyStringWrapper(CATEGORY_NAME_NOT_FOUND);
+                throw new RuntimeException("Unknown category for part");
             }
             idToCategoryName.put(categoryId, category.getCategory_name());
         }
@@ -218,7 +218,7 @@ public class HistoryDetailsController implements Initializable {
         if (!idToPartName.containsKey(partId)) {
             Part_name partName = PartNameManager.getPartName(partId);
             if (partName == null) {
-                return new ReadOnlyStringWrapper(PART_NAME_NOT_FOUND);
+                return new ReadOnlyStringWrapper();
             }
             idToPartName.put(partId, partName.getPart_name());
         }
