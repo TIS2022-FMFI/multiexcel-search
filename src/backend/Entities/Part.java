@@ -346,6 +346,7 @@ public class Part {
     }
 
     public String getRubberString() {
+        if (getRubber() == null) return "";
         return getRubber() + " ShA";
     }
 
