@@ -52,10 +52,12 @@
 
     <TableView fx:id="table_parts" editable="true" layoutX="50.0" layoutY="110.0" prefHeight="800.0" prefWidth="1810.0">
         <columns>
+            <TableColumn fx:id="col_part_number" editable="false" prefWidth="150.0" sortable="false"
+                         text="Part number"/>
             <TableColumn fx:id="col_customer_name" editable="false" prefWidth="100.0" sortable="false"
                          text="Customer"/>
             <TableColumn fx:id="col_part_name" editable="false" prefWidth="180.0" sortable="false"
-                         text="Part"/>
+                         text="Part name"/>
             <TableColumn fx:id="col_category_name" editable="false" prefWidth="180.0" sortable="false" text="Category"/>
             <TableColumn fx:id="col_drawing" editable="false" prefWidth="200.0" sortable="false" text="Drawing"/>
             <TableColumn fx:id="col_rubber" editable="false" prefWidth="75.0" sortable="false" text="Rubber"/>
