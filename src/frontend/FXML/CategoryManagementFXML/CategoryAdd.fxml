@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="196.0" prefWidth="589.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="198.0" prefWidth="579.0"
             xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.CategoryManagementControllers.CategoryAddController">
     <TextField fx:id="categoryNameField" layoutX="173.0" layoutY="43.0" prefHeight="30.0" prefWidth="300.0"/>
-    <Button fx:id="addButton" layoutX="398.0" layoutY="143.0" mnemonicParsing="false" onAction="#addCategory"
+    <Button fx:id="addButton" layoutX="398.0" layoutY="129.0" mnemonicParsing="false" onAction="#addCategory"
             prefHeight="30.0" prefWidth="130.0" text="Add category"/>
-    <Button fx:id="closeButton" layoutX="54.0" layoutY="143.0" mnemonicParsing="false" onAction="#Close"
+    <Button fx:id="closeButton" layoutX="54.0" layoutY="129.0" mnemonicParsing="false" onAction="#Close"
             prefHeight="30.0" prefWidth="130.0" text="Back"/>
     <Text layoutX="54.0" layoutY="63.0" text="Category name:"/>
     <Label fx:id="errorLabel" layoutX="54.0" layoutY="83.0" prefHeight="30.0" prefWidth="474.0" textFill="#ff0000"/>
