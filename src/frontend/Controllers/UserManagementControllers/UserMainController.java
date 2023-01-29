@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
@@ -31,6 +32,7 @@ public class UserMainController implements Initializable {
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/userAddImage.png")).toExternalForm());
         addButton.setGraphic(imageView);
+        addButton.setTooltip(new Tooltip("Add new user"));
 
         updateList();
     }
