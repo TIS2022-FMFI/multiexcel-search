@@ -10,7 +10,7 @@
             fx:controller="frontend.Controllers.CategoryManagementControllers.CategoryAddController">
     <TextField fx:id="categoryNameField" layoutX="173.0" layoutY="43.0" prefHeight="30.0" prefWidth="300.0"/>
     <Button fx:id="addButton" layoutX="398.0" layoutY="129.0" mnemonicParsing="false" onAction="#addCategory"
-            prefHeight="30.0" prefWidth="130.0" text="Add cateogry"/>
+            prefHeight="30.0" prefWidth="130.0" text="Add category"/>
     <Button fx:id="closeButton" layoutX="54.0" layoutY="129.0" mnemonicParsing="false" onAction="#Close"
             prefHeight="30.0" prefWidth="130.0" text="Back"/>
     <Text layoutX="54.0" layoutY="63.0" text="Category name:"/>
