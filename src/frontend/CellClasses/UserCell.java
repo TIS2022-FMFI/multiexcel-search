@@ -56,7 +56,7 @@ public class UserCell extends ListCell<User> {
 
                 ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/confirmImage.png")).toExternalForm());
                 button.setGraphic(imageView);
-                button.setTooltip(new Tooltip("Edit user status"));
+                button.setTooltip(new Tooltip("Enable User"));
 
                 button.setOnAction(x -> {
                     if (!UserManager.enableAccount(user)) {
@@ -72,7 +72,7 @@ public class UserCell extends ListCell<User> {
 
                 ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/blockImage.png")).toExternalForm());
                 button.setGraphic(imageView);
-                button.setTooltip(new Tooltip("Edit user status"));
+                button.setTooltip(new Tooltip("Suspend User"));
 
                 button.setOnAction(x -> {
                     if (!UserManager.suspendAccount(user)) {
