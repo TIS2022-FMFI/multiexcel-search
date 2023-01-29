@@ -59,8 +59,8 @@
                          text="Add Category"/>
             <TableColumn fx:id="col_part_number" editable="false" prefWidth="150.0" sortable="false" text="Part number"/>
             <TableColumn fx:id="col_customer" editable="false" prefWidth="100.0" sortable="false" text="Customer"/>
-            <TableColumn fx:id="col_part_name" editable="false" prefWidth="150.0" sortable="false" text="Part name"/>
-            <TableColumn fx:id="col_category" editable="false" prefWidth="100.0" sortable="false" text="Category"/>
+            <TableColumn fx:id="col_part_name" editable="false" prefWidth="180.0" sortable="false" text="Part name"/>
+            <TableColumn fx:id="col_category" editable="false" prefWidth="180.0" sortable="false" text="Category"/>
             <TableColumn fx:id="col_drawing" editable="false" prefWidth="200.0" sortable="false" text="Drawing"/>
             <TableColumn fx:id="col_rubber" editable="false" prefWidth="75.0" sortable="false" text="Rubber"/>
 
@@ -85,11 +85,11 @@
             <TableColumn fx:id="col_length_l_zt_tol" editable="false" prefWidth="130.0" sortable="false"
                          text="Length L ZT TOL"/>
 
-            <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="75.0" sortable="false" text="Cr steg"/>
-            <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="75.0" sortable="false" text="Cr niere"/>
-            <TableColumn fx:id="col_ca" editable="false" prefWidth="75.0" sortable="false" text="Ca"/>
-            <TableColumn fx:id="col_ct" editable="false" prefWidth="75.0" sortable="false" text="Ct"/>
-            <TableColumn fx:id="col_ck" editable="false" prefWidth="75.0" sortable="false" text="Ck"/>
+            <TableColumn fx:id="col_cr_steg" editable="false" prefWidth="90.0" sortable="false" text="Cr steg"/>
+            <TableColumn fx:id="col_cr_niere" editable="false" prefWidth="90.0" sortable="false" text="Cr niere"/>
+            <TableColumn fx:id="col_ca" editable="false" prefWidth="90.0" sortable="false" text="Ca"/>
+            <TableColumn fx:id="col_ct" editable="false" prefWidth="90.0" sortable="false" text="Ct"/>
+            <TableColumn fx:id="col_ck" editable="false" prefWidth="90.0" sortable="false" text="Ck"/>
         </columns>
     </TableView>
 
