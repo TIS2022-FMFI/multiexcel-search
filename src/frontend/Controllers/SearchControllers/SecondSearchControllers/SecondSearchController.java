@@ -322,4 +322,18 @@ public class SecondSearchController implements Initializable {
 
         table_parts.setItems(parts);
     }
+
+    public void enableConfirmButton() {
+
+        int counter = selectedParts().size();
+
+        if (counter == 0) {
+            confirmButton.setDisable(true);
+            return;
+        }
+        
+        confirmButton.setDisable(false);
+    }
 }
+
+
