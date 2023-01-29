@@ -396,14 +396,14 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
     @FXML
     public void onClickCategoryFilterButton() {
-        FilterController.onClickFilterButton("/frontend/FXML/HistoryFXML/HistoryCategoryFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/FiltersFXML/CategoryFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_HISTORY_CATEGORY_FILTER);
     }
 
     @FXML
     public void onClickUserFilterButton() {
-        FilterController.onClickFilterButton("/frontend/FXML/HistoryFXML/HistoryUserFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/FiltersFXML/UserFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_HISTORY_USER_FILTER);
     }

@@ -1,4 +1,4 @@
-package frontend.Controllers.SearchControllers.FirstSearchController;
+package frontend.Controllers.FilterControllers;
 
 import backend.Entities.Part_name;
 import backend.Managers.PartNameManager;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class FirstSearchPartNameFilterController extends FilterController<Part_name> {
+public class PartNameFilterController extends FilterController<Part_name> {
     @Override
     protected List<Part_name> getParameters() {
         return PartNameManager.getAllPartNames();

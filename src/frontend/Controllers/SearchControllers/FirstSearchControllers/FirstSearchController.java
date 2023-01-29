@@ -1,4 +1,4 @@
-package frontend.Controllers.SearchControllers.FirstSearchController;
+package frontend.Controllers.SearchControllers.FirstSearchControllers;
 
 import backend.Entities.Category;
 import backend.Entities.Customer;
@@ -316,21 +316,21 @@ public class FirstSearchController implements Initializable, FilterMasterControl
 
     @FXML
     public void onClickPartNameFilterButton() {
-        FilterController.onClickFilterButton("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchPartNameFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/FiltersFXML/PartNameFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_SEARCH_PART_NAME_FILTER);
     }
 
     @FXML
     public void onClickCustomerFilterButton() {
-        FilterController.onClickFilterButton("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchCustomerFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/FiltersFXML/CustomerFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_SEARCH_CUSTOMER_FILTER);
     }
 
     @FXML
     public void onClickCategoryFilterButton() {
-        FilterController.onClickFilterButton("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearchCategoryFilter.fxml",
+        FilterController.onClickFilterButton("/frontend/FXML/FiltersFXML/CategoryFilter.fxml",
                 this,
                 Constants.WINDOW_TITLE_HISTORY_CATEGORY_FILTER);
     }

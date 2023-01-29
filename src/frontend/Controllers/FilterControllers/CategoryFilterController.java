@@ -1,4 +1,4 @@
-package frontend.Controllers.HistoryControllers;
+package frontend.Controllers.FilterControllers;
 
 import backend.Entities.Category;
 import backend.Managers.CategoryManager;
@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class HistoryCategoryFilterController extends FilterController<Category> {
+public class CategoryFilterController extends FilterController<Category> {
     @Override
     protected List<Category> getParameters() {
         return CategoryManager.getAllCategories();
