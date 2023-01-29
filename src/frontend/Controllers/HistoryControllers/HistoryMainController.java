@@ -214,7 +214,7 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
         table_queries.setItems(queries);
 
-        System.out.printf("Updated table content. Total rows: %d. Current Page: %d. Max page index: %d.%n", totalItemCount, currentPageIndex, maxPagesIndex);
+        //System.out.printf("Updated table content. Total rows: %d. Current Page: %d. Max page index: %d.%n", totalItemCount, currentPageIndex, maxPagesIndex);
     }
 
     private boolean isNextValidIndexForward() {
@@ -343,21 +343,21 @@ public class HistoryMainController implements Initializable, FilterMasterControl
         if (selectedIndexes.size() == 1) {
             currentSelectedIndex = selectedIndexes.get(0);
             updateSelectButton();
-            System.out.printf("Selected index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery().getQuery_id());
+            //System.out.printf("Selected index: %d. Selected Query id: %d%n", currentSelectedIndex, queries.get(currentSelectedIndex).getQuery().getQuery_id());
         } else {
             currentSelectedIndex = -1;
             updateSelectButton();
         }
         currentSelectedIndexes.addAll(selectedIndexes);
         updateDeleteButton();
-        System.out.printf("Selected indexes size %d. Selected indexes: %s%n", selectedIndexes.size(), selectedIndexes);
+        //System.out.printf("Selected indexes size %d. Selected indexes: %s%n", selectedIndexes.size(), selectedIndexes);
     }
 
     @FXML
     public void openWithDoubleClick(MouseEvent event) {
         if (event.isPrimaryButtonDown() && event.getClickCount() == 2 && currentSelectedIndexes.size() == 1) {
             openSelectedQuery();
-            System.out.printf("Doubleclicked: %s ; Selected indexes size %d. Selected indexes: %s%n", queries.get(currentSelectedIndex).getQuery().getQuery_id(), currentSelectedIndexes.size(), currentSelectedIndexes);
+            //System.out.printf("Doubleclicked: %s ; Selected indexes size %d. Selected indexes: %s%n", queries.get(currentSelectedIndex).getQuery().getQuery_id(), currentSelectedIndexes.size(), currentSelectedIndexes);
         }
     }
 
