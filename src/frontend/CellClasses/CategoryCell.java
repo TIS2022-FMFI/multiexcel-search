@@ -9,6 +9,7 @@ import frontend.Controllers.CategoryManagementControllers.CategoryMainController
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -62,6 +63,8 @@ public class CategoryCell extends ListCell<Category> {
 
             ImageView editImageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/editImage.png")).toExternalForm());
             editButton.setGraphic(editImageView);
+            editButton.setTooltip(new Tooltip("Edit category name"));
+
             editButton.setOnAction(x -> {
                 String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryEdit.fxml";
 
@@ -73,6 +76,8 @@ public class CategoryCell extends ListCell<Category> {
 
             ImageView deleteImageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/deleteImage.png")).toExternalForm());
             deleteButton.setGraphic(deleteImageView);
+            deleteButton.setTooltip(new Tooltip("Delete category"));
+
             deleteButton.setOnAction(x -> {
                 String fxmlDocPath = "/frontend/FXML/CategoryManagementFXML/CategoryDelete.fxml";
 

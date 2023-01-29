@@ -115,15 +115,19 @@ public class HistoryMainController implements Initializable, FilterMasterControl
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/refreshImage.png")).toExternalForm());
         refreshButton.setGraphic(imageView);
+        refreshButton.setTooltip(new Tooltip("Refresh history"));
 
-        ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/clearAllImage.png")).toExternalForm());
+        ImageView imageView2 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/mopImage.png")).toExternalForm());
         clearAllButton.setGraphic(imageView2);
+        clearAllButton.setTooltip(new Tooltip("Clear all filters"));
 
         ImageView imageView3 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/showMoreImage.png")).toExternalForm());
         button_open_selected.setGraphic(imageView3);
+        button_open_selected.setTooltip(new Tooltip("Open selected query"));
 
         ImageView imageView4 = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/deleteImage.png")).toExternalForm());
         button_delte_selected.setGraphic(imageView4);
+        button_delte_selected.setTooltip(new Tooltip("Delete selected query"));
 
         initializeController();
         setFilterStyle();

@@ -97,8 +97,8 @@
     <Button fx:id="confirmButton" layoutX="1750.0" layoutY="15.0" mnemonicParsing="false"
             onAction="#onClickConfirmButton"/>
 
-    <Button fx:id="filterByPriorityButton" layoutX="400.0" layoutY="70.0" mnemonicParsing="false"
+    <Button fx:id="filterByPriorityButton" layoutX="250.0" layoutY="70.0" mnemonicParsing="false"
             onAction="#onClickFilterByPriority" text="Filter by Priority"/>
-    <Button fx:id="filterByRatingButton" layoutX="550.0" layoutY="70.0" mnemonicParsing="false"
+    <Button fx:id="filterByRatingButton" layoutX="400.0" layoutY="70.0" mnemonicParsing="false"
             onAction="#onClickFilterByRating" text="Filter by Rating"/>
 </AnchorPane>
