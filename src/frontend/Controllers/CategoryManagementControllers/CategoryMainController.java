@@ -205,7 +205,6 @@ public class CategoryMainController implements Initializable {
         checkPageButtonsVisible();
 
         if (!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
-            swapRatingFailedAlert();
             return;
         }
         updatePartListAndPageLabel(selectedCategoryId);
@@ -225,7 +224,6 @@ public class CategoryMainController implements Initializable {
         checkPageButtonsVisible();
 
         if (!PartManager.swapRatings(part.getPartNumber(), part2.getPartNumber())) {
-            swapRatingFailedAlert();
             return;
         }
         updatePartListAndPageLabel(selectedCategoryId);
@@ -251,13 +249,6 @@ public class CategoryMainController implements Initializable {
     private void checkPageButtonsVisible() {
         prevPageButton.setVisible(currentPage != 1);
         nextPageButton.setVisible(currentPage != pages);
-    }
-
-    /**
-     * swap of rating failed
-     */
-    private void swapRatingFailedAlert() {
-        MainController.showAlert(Alert.AlertType.INFORMATION, "INFO", "Swap ratings failed");
     }
 
     /**

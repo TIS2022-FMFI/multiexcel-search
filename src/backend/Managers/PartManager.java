@@ -219,18 +219,16 @@ public class PartManager {
 
             Integer part1Rating = part1.getRating();
             Integer part2Rating = part2.getRating();
+            Integer part1InternalRating = part1.getInternal_rating();
+            Integer part2InternalRating = part2.getInternal_rating();
 
-            if (Objects.equals(part1Rating, part2Rating)) {
-                Integer part1InternalRating = part1.getInternal_rating();
-                Integer part2InternalRating = part2.getInternal_rating();
-                setInternalRating(partNumber1, part2InternalRating);
-                setInternalRating(partNumber2, part1InternalRating);
-            } else {
-                part1.setRating(part2Rating);
-                part2.setRating(part1Rating);
-                part1.update();
-                part2.update();
-            }
+            part1.setRating(part2Rating);
+            part1.setInternal_rating(part2InternalRating);
+            part2.setRating(part1Rating);
+            part2.setInternal_rating(part1InternalRating);
+
+            part1.update();
+            part2.update();
 
             DBS.getConnection().commit();
             DBS.getConnection().setAutoCommit(true);

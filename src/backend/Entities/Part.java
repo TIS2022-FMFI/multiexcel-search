@@ -271,9 +271,8 @@ public class Part {
     }
 
     public void insert() throws SQLException {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating, part_number, internal_rating) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating, internal_rating, part_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             setVariables(s);
-            s.setObject(25, PartCountSession.getPartCount());
             s.executeUpdate();
             PartCountSession.incrememntPartCount();
         }
@@ -303,11 +302,12 @@ public class Part {
         s.setObject(21, ct);
         s.setObject(22, ck);
         s.setObject(23, rating);
-        s.setObject(24, part_number);
+        s.setObject(24, internal_rating);
+        s.setObject(25, part_number);
     }
 
     public void update() throws SQLException {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET customer_id = ?, part_name_id = ?, category_id = ?, drawing_id = ?, rubber = ?, diameter_AT = ?, diameter_AT_tol = ?, length_L_AT = ?, length_L_AT_tol = ?, diameter_IT = ?, diameter_IT_tol = ?, length_L_IT = ?, length_L_IT_tol = ?, diameter_ZT = ?, diameter_ZT_tol = ?, length_L_ZT = ?, length_L_ZT_tol = ?, cr_steg = ?, cr_niere = ?, ca = ?, ct = ?, ck = ?, rating = ? WHERE part_number = ?")) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET customer_id = ?, part_name_id = ?, category_id = ?, drawing_id = ?, rubber = ?, diameter_AT = ?, diameter_AT_tol = ?, length_L_AT = ?, length_L_AT_tol = ?, diameter_IT = ?, diameter_IT_tol = ?, length_L_IT = ?, length_L_IT_tol = ?, diameter_ZT = ?, diameter_ZT_tol = ?, length_L_ZT = ?, length_L_ZT_tol = ?, cr_steg = ?, cr_niere = ?, ca = ?, ct = ?, ck = ?, rating = ?, internal_rating = ? WHERE part_number = ?")) {
             setVariables(s);
 
             s.executeUpdate();
@@ -315,14 +315,16 @@ public class Part {
     }
 
     public boolean upsert() throws SQLException {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT part_number from parts WHERE part_number = ?", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("SELECT part_number, internal_rating from parts WHERE part_number = ?", Statement.RETURN_GENERATED_KEYS)) {
             s.setString(1, part_number);
 
             ResultSet rs = s.executeQuery();
             if (rs.next()) {
+                internal_rating = rs.getInt("internal_rating");
                 update();
                 return true;
             } else {
+                internal_rating = PartCountSession.getPartCount();
                 insert();
                 return false;
             }
