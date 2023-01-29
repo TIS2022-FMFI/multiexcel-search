@@ -4,9 +4,7 @@ import backend.Entities.Part;
 import backend.Managers.FirstSearchManager;
 import backend.Managers.SecondSearchManager;
 import backend.Models.Constants;
-import backend.Models.Filterable;
 import backend.Sessions.SESSION;
-import frontend.Controllers.AbstractControllers.FilterMasterController;
 import frontend.Controllers.AbstractControllers.MainController;
 import frontend.Wrappers.PartWrapper;
 import javafx.collections.FXCollections;
@@ -21,10 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class SecondSearchController implements Initializable {
 
@@ -82,12 +77,13 @@ public class SecondSearchController implements Initializable {
 
     public Button backButton;
     public Button confirmButton;
-    public Button filterByRatingButton;
-    public Button filterByPriorityButton;
+    public Button orderByRatingButton;
+    public Button orderByPriorityButton;
 
-
+    private boolean orderByPriorityEnabled;
+    private boolean orderByRatingChecked;
+    private boolean orderByPriorityChecked;
     private List<Part> resultOfFirstSearch;
-
     private ObservableList<PartWrapper> parts;
 
 
@@ -104,6 +100,17 @@ public class SecondSearchController implements Initializable {
 
         initializeAlignment();
         initializeController();
+
+        if(!SESSION.getCriteria().hasPriorities()){
+            orderByPriorityEnabled = false;
+            orderByPriorityButton.setDisable(true);
+        }
+        else{
+            orderByPriorityEnabled = true;
+            orderByPriorityChecked = true;
+            orderByPriorityButton.setStyle("-fx-background-color: #8a8f96");
+        }
+        orderByRatingChecked = false;
     }
 
     private void initializeController() {
@@ -292,18 +299,52 @@ public class SecondSearchController implements Initializable {
     }
 
     @FXML
-    public void onClickFilterByPriority() {
+    public void onClickOrderByPriority() {
+        if(!orderByPriorityEnabled || orderByPriorityChecked)
+            return;
+
         SecondSearchManager.sortByPriority(resultOfFirstSearch, SESSION.getCriteria());
 
-        filterByPriorityButton.setStyle("-fx-background-color: #8a8f96");
+        orderByPriorityChecked = true;
+        orderByRatingChecked = false;
+        orderByPriorityButton.setStyle("-fx-background-color: #8a8f96");
+        orderByRatingButton.setStyle("-fx-base: #f2f2f2");
         refreshTable();
     }
 
     @FXML
-    public void onClickFilterByRating() {
+    public void onClickOrderByRating() {
+        if(orderByPriorityEnabled && orderByRatingChecked)
+            return;
+        if(orderByRatingChecked){
+            resultOfFirstSearch.sort((o1, o2) -> {
+                Double val1 = o1.getDiameter_AT();
+                Double val2 = o2.getDiameter_AT();
+                if(Objects.equals(val1, val2))
+                    return 0;
+                if(val2 != null && val1 == null)
+                    return 1;
+                else if(val2 == null)
+                    return -1;
+                else {
+                    return Double.compare(o2.getDiameter_AT(), o1.getDiameter_AT());
+                }
+            });
+            orderByRatingChecked = false;
+            orderByRatingButton.setStyle("-fx-base: #f2f2f2");
+            refreshTable();
+            return;
+        }
+
         SecondSearchManager.sortByRating(resultOfFirstSearch);
 
-        filterByRatingButton.setStyle("-fx-background-color: #8a8f96");
+        orderByRatingButton.setStyle("-fx-background-color: #8a8f96");
+        if(orderByPriorityEnabled){
+            orderByPriorityChecked = false;
+            orderByPriorityButton.setStyle("-fx-base: #f2f2f2");
+        }
+        orderByRatingChecked = true;
+
         refreshTable();
     }
 
