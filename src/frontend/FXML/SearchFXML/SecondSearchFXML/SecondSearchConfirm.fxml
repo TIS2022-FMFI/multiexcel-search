@@ -15,7 +15,7 @@
                 onAction="#onClickExportToExcel"/>
         <Button layoutX="56.0" layoutY="292.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="77.0"
                 AnchorPane.leftAnchor="56.0" onAction="#onClickCancel"/>
-        <Button layoutX="206.0" layoutY="292.0" mnemonicParsing="false" text="Save Selection" AnchorPane.bottomAnchor="77.0"
+        <Button layoutX="206.0" layoutY="292.0" mnemonicParsing="false" text="Save selection" AnchorPane.bottomAnchor="77.0"
                 AnchorPane.rightAnchor="56.0" onAction="#onClickConfirm"/>
     </children>
 </AnchorPane>
