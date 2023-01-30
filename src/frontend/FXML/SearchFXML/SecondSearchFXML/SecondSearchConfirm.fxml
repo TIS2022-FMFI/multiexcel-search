@@ -3,6 +3,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="338.0"
             xmlns="http://javafx.com/javafx/8.0.161"
             fx:controller="frontend.Controllers.SearchControllers.SecondSearchControllers.SecondSearchConfirmController">
@@ -13,6 +14,9 @@
         <Button layoutX="107.0" layoutY="185.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="124.0"
                 text="Export To Excel" AnchorPane.leftAnchor="107.0" AnchorPane.rightAnchor="107.0"
                 onAction="#onClickExportToExcel"/>
+
+        <Label layoutX="85.0" layoutY="75.0" text="Path can't contain diacritics"/>
+
         <Button layoutX="56.0" layoutY="292.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="77.0"
                 AnchorPane.leftAnchor="56.0" onAction="#onClickCancel"/>
         <Button layoutX="206.0" layoutY="292.0" mnemonicParsing="false" text="Save selection"

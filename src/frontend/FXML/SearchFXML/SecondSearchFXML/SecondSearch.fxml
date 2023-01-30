@@ -104,8 +104,8 @@
     <Button fx:id="confirmButton" layoutX="1750.0" layoutY="15.0" mnemonicParsing="false" disable="true"
             onAction="#onClickConfirmButton"/>
 
-    <Button fx:id="orderByPriorityButton" layoutX="400.0" layoutY="70.0" mnemonicParsing="false"
+    <Button fx:id="orderByPriorityButton" layoutX="250.0" layoutY="70.0" mnemonicParsing="false"
             onAction="#onClickOrderByPriority" text="Order by Priority"/>
-    <Button fx:id="orderByRatingButton" layoutX="550.0" layoutY="70.0" mnemonicParsing="false"
+    <Button fx:id="orderByRatingButton" layoutX="400.0" layoutY="70.0" mnemonicParsing="false"
             onAction="#onClickOrderByRating" text="Order by Popularity"/>
 </AnchorPane>
