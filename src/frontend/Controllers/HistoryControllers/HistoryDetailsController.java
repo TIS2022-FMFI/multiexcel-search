@@ -54,6 +54,8 @@ public class HistoryDetailsController implements Initializable {
     @FXML
     public TableColumn<Part, String> col_part_number;
     @FXML
+    public Button exortToPdfButton;
+    @FXML
     private TableColumn<Part, String> col_customer_name;
     @FXML
     private TableColumn<Part, String> col_part_name;
@@ -121,6 +123,8 @@ public class HistoryDetailsController implements Initializable {
 
         ImageView imageView = new ImageView(Objects.requireNonNull(getClass().getResource("/frontend/Images/backImage.png")).toExternalForm());
         backButton.setGraphic(imageView);
+
+        exortToPdfButton.setTooltip(new Tooltip("Path can't contain diacritics"));
 
         initializeAlignment();
         initializeController();
