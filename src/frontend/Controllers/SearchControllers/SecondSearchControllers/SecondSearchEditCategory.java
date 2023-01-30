@@ -63,6 +63,7 @@ public class SecondSearchEditCategory implements Initializable {
 
         RadioButton radioButton = (RadioButton) group.getSelectedToggle();
         part.setCategory_id(CategoryManager.getCategoryId(radioButton.getText()));
+        part.setRating(0);
         part.update();
 
         secondSearchController.updateTable();

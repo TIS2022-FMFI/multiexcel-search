@@ -287,6 +287,7 @@ public class PartManager {
             List<Part> parts = getPartsByCategoryId(categoryID);
             for (Part part : parts) {
                 part.setCategory_id(WITHOUT_CATEGORY_ID);
+                part.setRating(0);
                 part.update();
             }
             DBS.getConnection().commit();
