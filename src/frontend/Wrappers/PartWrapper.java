@@ -148,8 +148,7 @@ public class PartWrapper {
     }
 
     public String getRubberValue() {
-        if (part.getRubber() == null) return "";
-        return part.getRubber() + " ShA";
+        return part.getRubberString();
     }
 
     public String getDiameterAT() {

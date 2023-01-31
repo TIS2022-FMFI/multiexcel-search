@@ -358,7 +358,10 @@ public class Part {
     }
 
     public String getRubberString() {
-        if (getRubber() == null) return "";
+        if (getRubber() == null && getRubber_string() == null)
+            return "";
+        else if (getRubber() == null)
+            return getRubber_string();
         return getRubber() + " ShA";
     }
 
