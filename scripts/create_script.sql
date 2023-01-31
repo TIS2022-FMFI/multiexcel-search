@@ -20,7 +20,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 create table users
 (
     user_id   serial primary key,
-    user_name varchar(30) not null,
+    user_name varchar(50) not null,
     password  varchar(20) not null,
     suspended boolean default 0
 );
@@ -67,31 +67,31 @@ create table categories_queries
 create table parts_queries
 (
     part_query_id serial primary key,
-    part_number   varchar(30)     not null,
+    part_number   varchar(40)     not null,
     query_id      bigint unsigned not null
 );
 
 create table part_names
 (
     part_name_id serial primary key,
-    part_name    varchar(50) not null
+    part_name    varchar(100) not null
 );
 
 create table categories
 (
     category_id   serial primary key,
-    category_name varchar(50) not null
+    category_name varchar(100) not null
 );
 
 create table customers
 (
     customer_id   serial primary key,
-    customer_name varchar(50) not null
+    customer_name varchar(150) not null
 );
 
 create table parts
 (
-    part_number     varchar(30) primary key,
+    part_number     varchar(40) primary key,
     customer_id     bigint unsigned,
     part_name_id    bigint unsigned,
     category_id     bigint unsigned,
@@ -99,17 +99,17 @@ create table parts
     rubber          smallint,
     rubber_string   varchar(30),
     diameter_AT     decimal(5, 2),
-    diameter_AT_tol varchar(20),
+    diameter_AT_tol varchar(30),
     length_L_AT     decimal(5, 2),
-    length_L_AT_tol varchar(20),
+    length_L_AT_tol varchar(30),
     diameter_IT     decimal(5, 2),
-    diameter_IT_tol varchar(20),
+    diameter_IT_tol varchar(30),
     length_L_IT     decimal(5, 2),
-    length_L_IT_tol varchar(20),
+    length_L_IT_tol varchar(30),
     diameter_ZT     decimal(5, 2),
-    diameter_ZT_tol varchar(20),
+    diameter_ZT_tol varchar(30),
     length_L_ZT     decimal(5, 2),
-    length_L_ZT_tol varchar(20),
+    length_L_ZT_tol varchar(30),
     cr_steg         mediumint,
     cr_niere        smallint,
     ca              smallint,
