@@ -27,6 +27,7 @@ public class Part {
     private BigInteger category_id = WITHOUT_CATEGORY_ID;
     private BigInteger drawing_id;
     private Short rubber = null;
+    private String rubber_string;
     private Double diameter_AT = null;
     private String diameter_AT_tol;
     private Double length_L_AT = null;
@@ -93,6 +94,14 @@ public class Part {
 
     public void setRubber(Short rubber) {
         this.rubber = rubber;
+    }
+
+    public String getRubber_string() {
+        return rubber_string;
+    }
+
+    public void setRubber_string(String rubber_string) {
+        this.rubber_string = rubber_string;
     }
 
     public Double getDiameter_AT() {
@@ -271,7 +280,7 @@ public class Part {
     }
 
     public void insert() throws SQLException {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating, internal_rating, part_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("INSERT INTO parts (customer_id, part_name_id, category_id, drawing_id, rubber, rubber_string, diameter_AT, diameter_AT_tol, length_L_AT, length_L_AT_tol, diameter_IT, diameter_IT_tol, length_L_IT, length_L_IT_tol, diameter_ZT, diameter_ZT_tol, length_L_ZT, length_L_ZT_tol, cr_steg, cr_niere, ca, ct, ck, rating, internal_rating, part_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             setVariables(s);
             s.executeUpdate();
             PartCountSession.incrememntPartCount();
@@ -284,30 +293,31 @@ public class Part {
         s.setObject(3, category_id);
         s.setObject(4, drawing_id);
         s.setObject(5, rubber);
-        s.setObject(6, diameter_AT);
-        s.setObject(7, diameter_AT_tol);
-        s.setObject(8, length_L_AT);
-        s.setObject(9, length_L_AT_tol);
-        s.setObject(10, diameter_IT);
-        s.setObject(11, diameter_IT_tol);
-        s.setObject(12, length_L_IT);
-        s.setObject(13, length_L_IT_tol);
-        s.setObject(14, diameter_ZT);
-        s.setObject(15, diameter_ZT_tol);
-        s.setObject(16, length_L_ZT);
-        s.setObject(17, length_L_ZT_tol);
-        s.setObject(18, cr_steg);
-        s.setObject(19, cr_niere);
-        s.setObject(20, ca);
-        s.setObject(21, ct);
-        s.setObject(22, ck);
-        s.setObject(23, rating);
-        s.setObject(24, internal_rating);
-        s.setObject(25, part_number);
+        s.setObject(6, rubber_string);
+        s.setObject(7, diameter_AT);
+        s.setObject(8, diameter_AT_tol);
+        s.setObject(9, length_L_AT);
+        s.setObject(10, length_L_AT_tol);
+        s.setObject(11, diameter_IT);
+        s.setObject(12, diameter_IT_tol);
+        s.setObject(13, length_L_IT);
+        s.setObject(14, length_L_IT_tol);
+        s.setObject(15, diameter_ZT);
+        s.setObject(16, diameter_ZT_tol);
+        s.setObject(17, length_L_ZT);
+        s.setObject(18, length_L_ZT_tol);
+        s.setObject(19, cr_steg);
+        s.setObject(20, cr_niere);
+        s.setObject(21, ca);
+        s.setObject(22, ct);
+        s.setObject(23, ck);
+        s.setObject(24, rating);
+        s.setObject(25, internal_rating);
+        s.setObject(26, part_number);
     }
 
     public void update() throws SQLException {
-        try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET customer_id = ?, part_name_id = ?, category_id = ?, drawing_id = ?, rubber = ?, diameter_AT = ?, diameter_AT_tol = ?, length_L_AT = ?, length_L_AT_tol = ?, diameter_IT = ?, diameter_IT_tol = ?, length_L_IT = ?, length_L_IT_tol = ?, diameter_ZT = ?, diameter_ZT_tol = ?, length_L_ZT = ?, length_L_ZT_tol = ?, cr_steg = ?, cr_niere = ?, ca = ?, ct = ?, ck = ?, rating = ?, internal_rating = ? WHERE part_number = ?")) {
+        try (PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET customer_id = ?, part_name_id = ?, category_id = ?, drawing_id = ?, rubber = ?, rubber_string = ?, diameter_AT = ?, diameter_AT_tol = ?, length_L_AT = ?, length_L_AT_tol = ?, diameter_IT = ?, diameter_IT_tol = ?, length_L_IT = ?, length_L_IT_tol = ?, diameter_ZT = ?, diameter_ZT_tol = ?, length_L_ZT = ?, length_L_ZT_tol = ?, cr_steg = ?, cr_niere = ?, ca = ?, ct = ?, ck = ?, rating = ?, internal_rating = ? WHERE part_number = ?")) {
             setVariables(s);
 
             s.executeUpdate();
@@ -348,7 +358,10 @@ public class Part {
     }
 
     public String getRubberString() {
-        if (getRubber() == null) return "";
+        if (getRubber() == null && getRubber_string() == null)
+            return "";
+        else if (getRubber() == null)
+            return getRubber_string();
         return getRubber() + " ShA";
     }
 

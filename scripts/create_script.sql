@@ -97,6 +97,7 @@ create table parts
     category_id     bigint unsigned,
     drawing_id      bigint unsigned,
     rubber          smallint,
+    rubber_string   varchar(30),
     diameter_AT     decimal(5, 2),
     diameter_AT_tol varchar(30),
     length_L_AT     decimal(5, 2),

@@ -121,6 +121,7 @@ public class FirstSearchManager {
                 part.setCategory_id((BigInteger) r.getObject("category_id"));
                 part.setDrawing_id((BigInteger) r.getObject("drawing_id"));
                 part.setRubber(check(r.getShort("rubber")));
+                part.setRubber_string(r.getString("rubber_string"));
                 part.setDiameter_AT(check(r.getDouble("diameter_AT")));
                 part.setDiameter_AT_tol(r.getString("diameter_AT_tol"));
                 part.setLength_L_AT(check(r.getDouble("length_L_AT")));

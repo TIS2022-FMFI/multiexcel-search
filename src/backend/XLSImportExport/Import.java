@@ -161,7 +161,9 @@ public class Import {
                     if (s != null)
                         try {
                             part.setRubber(Short.valueOf(s.split(" ")[0]));
-                        } catch (NumberFormatException ignored){}
+                        } catch (NumberFormatException ignored){
+                            part.setRubber_string(s);
+                        }
 
                     s = nextString(dataFormatter, cellIterator);
                     part.setDiameter_AT(getDouble(s));
