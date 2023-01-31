@@ -39,6 +39,7 @@ public class PartManager {
         part.setCategory_id((BigInteger) rs.getObject("category_id"));
         part.setDrawing_id((BigInteger) rs.getObject("drawing_id"));
         part.setRubber(check(rs.getShort("rubber")));
+        part.setRubber_string(rs.getString("rubber_string"));
         part.setDiameter_AT(check(rs.getDouble("diameter_AT")));
         part.setDiameter_AT_tol(rs.getString("diameter_AT_tol"));
         part.setLength_L_AT(check(rs.getDouble("length_L_AT")));
@@ -255,14 +256,6 @@ public class PartManager {
         }
         return null;
     }
-
-    private static void setInternalRating(String partNumber, Integer internalRating) throws SQLException {
-        PreparedStatement s = DBS.getConnection().prepareStatement("UPDATE parts SET internal_rating = ? WHERE part_number = ?");
-        s.setInt(1, internalRating);
-        s.setString(2, partNumber);
-        s.executeUpdate();
-    }
-
 
     private static List<Part> getPartsByCategoryId(Integer categoryID) throws SQLException {
         PreparedStatement s = DBS.getConnection().prepareStatement("SELECT * FROM parts p WHERE p.category_id = ?");
