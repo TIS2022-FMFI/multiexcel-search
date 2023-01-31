@@ -24,12 +24,13 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Import {
 
     private static String checkCell(String cell) {
-        if (cell == null || cell.equals("") || cell.equals("-"))
+        if (cell == null || cell.equals("") || cell.equals("-") || cell.equals("_") || cell.equals(" "))
             return null;
         return cell.trim();
     }
@@ -45,9 +46,14 @@ public class Import {
             try {
                 return Double.valueOf(s.split(" ")[1].replace(",", "."));
             } catch (ArrayIndexOutOfBoundsException e) {
-                return Double.valueOf(s.replace(",", "."));
-            } catch (NumberFormatException ignored) {
-            }
+                try {
+                    return Double.valueOf(s.replace(",", "."));
+                } catch (NumberFormatException ignored){
+                    try {
+                        return Double.valueOf(s.substring(1).replace(",", "."));
+                    } catch (NumberFormatException ignored1){}
+                }
+            } catch (NumberFormatException ignored) {}
         return null;
     }
 
@@ -108,7 +114,15 @@ public class Import {
         XSSFSheet sheet = XLSFile.getSheetAt(0);
         DataFormatter dataFormatter = new DataFormatter();
         XSSFDrawing dp = sheet.createDrawingPatriarch();
-        List<XSSFPicture> pics = dp.getShapes().stream().map(x -> (XSSFPicture) x).collect(Collectors.toList());
+        List<XSSFPicture> pics = dp.getShapes().stream()
+                .map(x -> {
+                    try {
+                        return (XSSFPicture) x;
+                    } catch (Exception ignored) {
+                        return null;
+                    }
+                }).filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         Iterator<Row> rowIterator = sheet.rowIterator();
         rowIterator.next();
@@ -145,7 +159,9 @@ public class Import {
 
                     s = nextString(dataFormatter, cellIterator);
                     if (s != null)
-                        part.setRubber(Short.valueOf(s.split(" ")[0]));
+                        try {
+                            part.setRubber(Short.valueOf(s.split(" ")[0]));
+                        } catch (NumberFormatException ignored){}
 
                     s = nextString(dataFormatter, cellIterator);
                     part.setDiameter_AT(getDouble(s));
