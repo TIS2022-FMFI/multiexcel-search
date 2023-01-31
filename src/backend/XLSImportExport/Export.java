@@ -134,6 +134,8 @@ public class Export {
                 c.setCellStyle(cellStyle);
                 if (part.getRubber() != null)
                     c.setCellValue(part.getRubber() + " ShA");
+                else if (part.getRubber_string() != null)
+                    c.setCellValue(part.getRubber_string());
 
                 c = row.createCell(6);
                 c.setCellStyle(cellStyle);
