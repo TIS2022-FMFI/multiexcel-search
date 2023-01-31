@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class Import {
 
     private static String checkCell(String cell) {
-        if (cell == null || cell.equals("") || cell.equals("-") || cell.equals("_"))
+        if (cell == null || cell.equals("") || cell.equals("-") || cell.equals("_") || cell.equals(" "))
             return null;
         return cell.trim();
     }
