@@ -30,6 +30,7 @@ public class BasicMainController implements Initializable {
             SESSION.setHistoryTab(historyTab);
 
             MainController.setTab("/frontend/FXML/SearchFXML/FirstSearchFXML/FirstSearch.fxml", searchTab);
+            SESSION.setSearchTab(searchTab);
 
             mainTabPane.getSelectionModel().selectedItemProperty().addListener(
                     (o, oldTab, newTab) -> {
