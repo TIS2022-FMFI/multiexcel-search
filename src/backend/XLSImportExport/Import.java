@@ -8,12 +8,14 @@ import backend.Sessions.DBS;
 import backend.Sessions.PartCountSession;
 import frontend.Controllers.AbstractControllers.MainController;
 import frontend.Controllers.CategoryManagementControllers.CategoryMainController;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import org.apache.poi.hemf.draw.HemfImageRenderer;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
+import sun.applet.Main;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -30,9 +33,12 @@ import java.util.stream.Collectors;
 public class Import {
 
     private static String checkCell(String cell) {
-        if (cell == null || cell.equals("") || cell.equals("-") || cell.equals("_") || cell.equals(" "))
+        if (cell == null)
             return null;
-        return cell.trim();
+        cell = cell.trim();
+        if (cell.equals("") || cell.equals("-") || cell.equals("_") || cell.equals(" "))
+            return null;
+        return cell;
     }
 
     private static String nextString(DataFormatter dataFormatter, Iterator<Cell> it) {
@@ -82,7 +88,7 @@ public class Import {
         if (image == null) {
             XSSFPicture pic = pics.stream().filter(x -> {
                 XSSFClientAnchor anchor = x.getClientAnchor();
-                return anchor.getCol1() == 0 && anchor.getRow1() == index;
+                return anchor.getCol1() == 0 && anchor.getRow1() == (index - 1);
             }).findFirst().orElse(null);
 
             if (pic != null) {
@@ -132,7 +138,6 @@ public class Import {
             DBS.getConnection().setAutoCommit(false);
 
             PartCountSession.initPartCount();
-
             while (rowIterator.hasNext()) {
                 try {
                     Row row = rowIterator.next();
@@ -261,11 +266,11 @@ public class Import {
                             readInsertUpdate.second++;
                         }
                     readInsertUpdate.first++;
-                } catch (SQLException ignored) {
+                } catch (SQLException e) {
                     DBS.getConnection().rollback();
                     DBS.getConnection().setAutoCommit(true);
                     throw new RuntimeException("Database error at line: " + index);
-                } catch (Exception ignored) {
+                } catch (Exception e) {
                     DBS.getConnection().rollback();
                     DBS.getConnection().setAutoCommit(true);
                     throw new RuntimeException("Error at line: " + index);

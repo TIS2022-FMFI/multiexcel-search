@@ -158,7 +158,7 @@ public class PartWrapper {
 
     public String getLengthLAT() {
         if (part.getLength_L_AT() == null) return "";
-        return "Ø " + part.getLength_L_AT();
+        return part.getLength_L_AT().toString();
     }
 
     public String getDiameterIT() {
@@ -168,7 +168,7 @@ public class PartWrapper {
 
     public String getLengthLIT() {
         if (part.getLength_L_IT() == null) return "";
-        return "Ø " + part.getLength_L_IT();
+        return part.getLength_L_IT().toString();
     }
 
     public String getDiameterZT() {
@@ -178,7 +178,7 @@ public class PartWrapper {
 
     public String getLengthLZT() {
         if (part.getLength_L_ZT() == null) return "";
-        return "Ø " + part.getLength_L_ZT();
+        return part.getLength_L_ZT().toString();
     }
 
     public String getCrSteg() {

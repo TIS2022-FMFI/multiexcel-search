@@ -372,7 +372,7 @@ public class Part {
 
     public String getLengthLATString() {
         if (getLength_L_AT() == null) return "";
-        return "Ø " + getLength_L_AT();
+        return getLength_L_AT().toString();
     }
 
     public String getDiameterITString() {
@@ -382,7 +382,7 @@ public class Part {
 
     public String getLengthLITString() {
         if (getLength_L_IT() == null) return "";
-        return "Ø " + getLength_L_IT();
+        return getLength_L_IT().toString();
     }
 
     public String getDiameterZTString() {
@@ -392,7 +392,7 @@ public class Part {
 
     public String getLengthLZTString() {
         if (getLength_L_ZT() == null) return "";
-        return "Ø " + getLength_L_ZT();
+        return  getLength_L_ZT().toString();
     }
 
     public String getCrStegString() {
