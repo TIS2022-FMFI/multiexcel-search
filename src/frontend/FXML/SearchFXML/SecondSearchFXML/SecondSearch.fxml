@@ -55,8 +55,6 @@
                prefWidth="1810.0">
         <columns>
             <TableColumn fx:id="col_check_box" editable="false" prefWidth="60.0" sortable="false" text="Submit"/>
-            <TableColumn fx:id="col_button_add_cat" editable="false" prefWidth="80.0" sortable="false"
-                         text="Add Category"/>
             <TableColumn fx:id="col_part_number" editable="false" prefWidth="150.0" sortable="false"
                          text="Part number"/>
             <TableColumn fx:id="col_customer" editable="false" prefWidth="100.0" sortable="false" text="Customer"/>
@@ -97,6 +95,8 @@
             <TableColumn fx:id="col_ca" editable="false" prefWidth="90.0" sortable="false" text="Ca"/>
             <TableColumn fx:id="col_ct" editable="false" prefWidth="90.0" sortable="false" text="Ct"/>
             <TableColumn fx:id="col_ck" editable="false" prefWidth="90.0" sortable="false" text="Ck"/>
+            <TableColumn fx:id="col_button_add_cat" editable="false" prefWidth="80.0" sortable="false"
+                         text="Add Category"/>
         </columns>
     </TableView>
 
